@@ -2,6 +2,8 @@ const express = require("express");
 const sqlite3 = require("sqlite3");
 const bodyParser = require("body-parser");
 const redisClient = require("./redisClient");
+const recettes = require("./fixtures/recettesFixtures");
+const users = require("./fixtures/userFixtures");
 
 // J'ai mis ca car react vient d'un port différents.
 const cors = require("cors");
@@ -81,6 +83,17 @@ app.get("/api/recettes", (req, res) => {
     }
   });
 });
+app.get("/api/users", (req, res) => {
+  db.all("SELECT * FROM Users", (err, rows) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Erreur interne du serveur");
+    } else {
+      console.log(`${rows.length} utilisateurs récupérées avec succès`);
+      res.json(rows);
+    }
+  });
+});
 
 // Exemple de point de terminaison pour ajouter une recette
 app.post("/api/recettes", (req, res) => {
@@ -111,30 +124,6 @@ app.post("/api/recettes", (req, res) => {
   );
 });
 
-// Test generation recettes :
-const recettes = [
-  {
-    nom: "Poulet au curry",
-    sommeCal: 500,
-    sommeLipide: 20,
-    sommeGlucide: 30,
-    sommeProteine: 40,
-  },
-  {
-    nom: "Salade César",
-    sommeCal: 300,
-    sommeLipide: 15,
-    sommeGlucide: 20,
-    sommeProteine: 25,
-  },
-  {
-    nom: "Spaghetti Bolognaise",
-    sommeCal: 700,
-    sommeLipide: 25,
-    sommeGlucide: 50,
-    sommeProteine: 35,
-  },
-];
 recettes.forEach((recette) => {
   const { nom, sommeCal, sommeLipide, sommeGlucide, sommeProteine } = recette;
   const sql = `INSERT INTO Recette (nom, sommeCal, sommeLipide, sommeGlucide, sommeProteine) VALUES (?, ?, ?, ?, ?)`;
@@ -150,11 +139,25 @@ recettes.forEach((recette) => {
     },
   );
 });
+users.forEach((user) => {
+  const { email, username, password } = user;
+  const sql = `INSERT INTO Users (email, username, password) VALUES (?, ?, ?)`;
 
+  db.run(sql, [email, username, password], function (err) {
+    if (err) {
+      return console.error(err.message);
+    }
+    console.log(`Utilisateur ajouté avec succès : ${this.lastID}`);
+  });
+});
+
+/*
 app.get("/api/redis/test", (req, res) => {
   // Logique pour utiliser Redis ou simplement renvoyer une réponse de test
   res.json({ message: "Réponse de test depuis l'endpoint /api/redis/test" });
 });
+
+ */
 
 app.listen(PORT, () => {
   console.log(`Serveur en cours d'exécution sur le port ${PORT}`);

@@ -13,7 +13,7 @@ export const fetchRecettes = () => {
 };
 
 export const fetchRedisTest = () => {
-  return fetch("http://localhost:5000/api/redis/test")
+  return fetch("http://localhost:5000/api/users")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Réponse réseau non OK");
