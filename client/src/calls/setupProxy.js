@@ -12,7 +12,7 @@ export default function (app) {
   app.use(
     "/api/redis",
     createProxyMiddleware({
-      target: "http://localhost:6380", // Supposons que c'est votre autre service
+      target: "http://localhost:6380",
       changeOrigin: true,
     }),
   );

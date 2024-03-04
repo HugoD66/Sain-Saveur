@@ -22,4 +22,24 @@ const recettes = [
   },
 ];
 
-module.exports = recettes;
+function insertRecettes(db) {
+  recettes.forEach((recette) => {
+    const { nom, sommeCal, sommeLipide, sommeGlucide, sommeProteine } = recette;
+    const sql = `INSERT INTO Recette (nom, sommeCal, sommeLipide, sommeGlucide, sommeProteine) VALUES (?, ?, ?, ?, ?)`;
+    db.run(
+      sql,
+      [nom, sommeCal, sommeLipide, sommeGlucide, sommeProteine],
+      function (err) {
+        if (err) {
+          console.error(
+            `Erreur lors de l'ajout de la recette ${nom}: ${err.message}`,
+          );
+        } else {
+          console.log(`Recette '${nom}' ajoutée avec succès.`);
+        }
+      },
+    );
+  });
+}
+
+module.exports = insertRecettes;
