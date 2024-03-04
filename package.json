@@ -12,12 +12,15 @@
   ],
   "dependencies": {
     "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
     "prettier": "^3.2.5"
   },
   "scripts": {
     "startd": "cd server && docker-compose up -d",
     "startf": "cd client && yarn start",
     "format:fix": "prettier --ignore-unknown --write .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   }
 }
