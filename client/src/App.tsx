@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/Register';
+import HomePage from './pages/HomePage';
 import './App.css';
 
 const App: React.FC = () => {
@@ -9,9 +10,9 @@ const App: React.FC = () => {
   return (
     <div className="App">
       {isSigningUp ? (
-        <LoginPage onRegisterClick={() => setIsSigningUp(false)} /> 
+        <LoginPage onRegisterClick={() => setIsSigningUp(false)} />
       ) : (
-        <RegisterPage onLoginClick={() => setIsSigningUp(true)} />
+        <HomePage onLoginClick={() => setIsSigningUp(true)} />
       )}
     </div>
   );

@@ -1,3 +1,152 @@
+:root {
+  --white-font-color: #ffffff;
+  --black-font-color: #000000;
+  --light-green-color: #27bf3b;
+  --dark-green-color: #176f22;
+  --white-color: #ffffff;
+  --black-color: #000000;
+}
+
+/* ------------------------ HEADER -------------------------- */
+
+.header {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  background-color: var(--white-color);
+  color: var(--black-font-color);
+}
+
+.logoPannel {
+  display: flex;
+  flex-shrink: 1; 
+  width: fit-content;
+  width: 10%;
+  align-items: center;
+  justify-content: center;
+}
+
+.header img {
+  width: 30%;
+  margin-left: 4%;
+}
+
+.pagePannel {
+  display: flex;
+  flex-grow: 1; 
+  justify-content: center;
+  
+}
+
+.header p {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--black-font-color);
+}
+
+
+.loginPannel {
+  display: flex;
+  justify-content: space-evenly;
+  margin-right: 16px;
+  width: 15%;
+}
+
+.header button {
+  border-radius: 15px;
+  border: 2px solid var(--light-green-color);
+  box-sizing: border-box;
+  background-color: transparent;
+  color: var(--black-font-color);
+  font-size: 16px;
+  font-weight: bold;
+  align-items: center;
+  height: 3rem;
+  
+}
+
+.header button:hover {
+  background-color: var(--light-green-color);
+  transform: translateY(-2px);
+}
+
+
+/* ------------------------ SEARCHBAR -------------------------- */
+
+.searchbar {
+  padding: 10px;
+  background-image: url('assets/background.jpg');
+  background-size: contain; 
+  background-position: center;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  height: 30rem;
+}
+
+.inputForm {
+  border-radius: 10px;
+  /* border: 1px solid var(--black-color); */
+  background-color: var(--white-color);
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  width: 50%;
+}
+
+.searchIcon {
+  width: 30px;
+  height: 30px;
+  padding-left: 10px;
+}
+
+.inputBar {
+  flex-grow: 1;
+  height: 100%;
+  outline: none;
+  padding: 16px;
+  border: hidden;
+  font-size: 16px;
+}
+
+.inputBar:focus {
+  outline: none;
+}
+
+.searchButton {
+  border-radius: 10px;
+  border: 2px solid var(--light-green-color);
+  box-sizing: border-box;
+  background-color: transparent;
+  color: var(--black-font-color);
+  font-size: 16px;
+  font-weight: bold;
+  align-items: center;
+  height: auto;
+  padding: 10px;
+}
+
+
+.searchButton:hover {
+  background-color: var(--light-green-color);
+}
+
+/* ------------------------ CARROUSSEL --------------------------  */
+
+
+.carrousselRecipe {
+}
+
+.titleCarroussel {
+  font-weight: bold;
+  font-size: 24px;
+
+
+}
+
+/* ------------------------ APP -------------------------- */
+
+
 .App {
   text-align: center;
 }
