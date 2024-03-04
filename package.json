@@ -19,5 +19,8 @@
     "startf": "cd client && yarn start",
     "format:fix": "prettier --ignore-unknown --write .",
     "lint:fix": "eslint --fix ."
+  },
+  "devDependencies": {
+    "webpack-cli": "^5.1.4"
   }
 }
