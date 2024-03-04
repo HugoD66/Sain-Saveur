@@ -16,7 +16,7 @@
   },
   "scripts": {
     "startd": "cd server && docker-compose up -d",
-    "startf": "cd client && npm start",
+    "startf": "cd client && yarn start",
     "format:fix": "prettier --ignore-unknown --write .",
     "lint:fix": "eslint --fix ."
   }
