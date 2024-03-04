@@ -22,5 +22,6 @@
     "format:fix": "prettier --ignore-unknown --write .",
     "lint:fix": "eslint --fix .",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
-  }
+  },
+  "proxy": "http://localhost:5000"
 }

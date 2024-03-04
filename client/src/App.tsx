@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
-function App(){
+function App() {
+  useEffect(() => {
+    fetch("/api/recettes")
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
+  }, []);
   return (
     <div className="App">
       <header className="App-header">
