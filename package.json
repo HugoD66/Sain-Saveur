@@ -22,5 +22,8 @@
     "format:fix": "prettier --ignore-unknown --write .",
     "lint:fix": "eslint --fix .",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+  },
+  "devDependencies": {
+    "webpack-cli": "^5.1.4"
   }
 }

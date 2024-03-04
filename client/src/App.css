@@ -36,3 +36,72 @@
     transform: rotate(360deg);
   }
 }
+
+/* ------------------------ LOGIN / REGISTER -------------------------- */
+
+.login-page, .register-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #2ecc71; 
+}
+
+.login-form, .register-form {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  width: 300px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.login-form h2, .register-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #27ae60;
+  text-transform: uppercase;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.input-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #27ae60;
+}
+
+.input-group input {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #27ae60; 
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.login-prompt {
+  text-align: center;
+  margin-top: 20px;
+  color: #547e86;
+}
+
+.login-link {
+  color: #3498db;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
