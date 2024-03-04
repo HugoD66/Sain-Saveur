@@ -2,6 +2,12 @@ const express = require("express");
 const sqlite3 = require("sqlite3");
 const bodyParser = require("body-parser");
 
+
+// J'ai mis ca car react vient d'un port différents.
+const cors = require('cors');
+
+
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -9,6 +15,7 @@ const db = new sqlite3.Database("database.db");
 
 // Middleware pour parser les données JSON dans les requêtes
 app.use(bodyParser.json());
+app.use(cors());
 
 // Création des tables dans la base de données
 db.serialize(() => {
@@ -71,6 +78,7 @@ app.get("/api/recettes", (req, res) => {
       console.error(err);
       res.status(500).send("Erreur interne du serveur");
     } else {
+      console.log(`${rows.length} recettes récupérées avec succès`);
       res.json(rows);
     }
   });
@@ -105,9 +113,42 @@ app.post("/api/recettes", (req, res) => {
   );
 });
 
-// ... Ajoutez d'autres points de terminaison pour les autres opérations CRUD
+// Test generation recettes :
+const recettes = [
+  {
+    nom: "Poulet au curry",
+    sommeCal: 500,
+    sommeLipide: 20,
+    sommeGlucide: 30,
+    sommeProteine: 40
+  },
+  {
+    nom: "Salade César",
+    sommeCal: 300,
+    sommeLipide: 15,
+    sommeGlucide: 20,
+    sommeProteine: 25
+  },
+  {
+    nom: "Spaghetti Bolognaise",
+    sommeCal: 700,
+    sommeLipide: 25,
+    sommeGlucide: 50,
+    sommeProteine: 35
+  }
+];
+recettes.forEach(recette => {
+  const { nom, sommeCal, sommeLipide, sommeGlucide, sommeProteine } = recette;
+  const sql = `INSERT INTO Recette (nom, sommeCal, sommeLipide, sommeGlucide, sommeProteine) VALUES (?, ?, ?, ?, ?)`;
 
-// Lancement du serveur
+  db.run(sql, [nom, sommeCal, sommeLipide, sommeGlucide, sommeProteine], function(err) {
+    if (err) {
+      return console.error(err.message);
+    }
+    console.log(`Recette ajoutée avec succès : ${this.lastID}`);
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Serveur en cours d'exécution sur le port ${PORT}`);
 });

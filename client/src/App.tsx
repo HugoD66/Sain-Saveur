@@ -5,12 +5,20 @@ import "./App.css";
 
 const App: React.FC = () => {
   const [isSigningUp, setIsSigningUp] = useState(false);
+
   useEffect(() => {
     fetch("/api/recettes")
-      .then((response) => response.json())
-      .then((data) => console.log(data))
+      .then((response) => {
+        if (response.ok) {
+          return response.json(); // Convertit la réponse en JSON
+        }
+        throw new Error('Réponse réseau non OK');
+      })
+      .then((data) => console.log(data)) // `data` est maintenant un objet JavaScript
       .catch((error) => console.error(error));
   }, []);
+
+
   return (
     <div className="App">
       {isSigningUp ? (

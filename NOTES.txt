@@ -1,3 +1,23 @@
+!!! IMPORTANT !!!!
+
+
+Pour lancer le projet, il faut lancer les commandes suivantes :
+
+ yarn startd (lancer le docker)
+ yarn starts (lancer le serveur, et generation des "fixtures")
+
+ nouveau terminal,
+ yarn startf (lancer le front, la requete se fera sur le port 5000)
+
+
+
+
+
+
+
+
+-------------------------------------
+
 Commment parcourir un workspace:
 
 yarn workspace <nom-du-workspace> add <nom-du-package>
