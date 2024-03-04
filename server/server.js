@@ -1,11 +1,18 @@
 const express = require("express");
 const sqlite3 = require("sqlite3");
+const redis = require("redis");
+
 const bodyParser = require("body-parser");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 const db = new sqlite3.Database("database.db");
+
+const redisClient = redis.createClient({
+  host: "localhost",
+  port: 6379, // Port par défaut de Redis
+});
 
 // Middleware pour parser les données JSON dans les requêtes
 app.use(bodyParser.json());
@@ -64,19 +71,39 @@ db.serialize(() => {
   `);
 });
 
-// Exemple de point de terminaison pour récupérer toutes les recettes
-app.get("/api/recettes", (req, res) => {
-  db.all("SELECT * FROM Recette", (err, rows) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send("Erreur interne du serveur");
+redisClient
+  .connect()
+  .catch((err) => console.error("Erreur de connexion Redis", err));
+
+app.get("/api/recettes", async (req, res) => {
+  const cacheKey = "recettesAll";
+
+  try {
+    // Vérifier si les données sont dans Redis
+    const cachedData = await redisClient.get(cacheKey);
+    if (cachedData != null) {
+      console.log("Cache non null");
+      return res.json(JSON.parse(cachedData));
     } else {
-      res.json(rows);
+      console.log("Cache null, set du redis");
+      db.all("SELECT * FROM Recette", async (err, rows) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send("Erreur interne du serveur");
+        } else {
+          await redisClient.set(cacheKey, JSON.stringify(rows), {
+            EX: 3600,
+          });
+          res.json(rows);
+        }
+      });
     }
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erreur interne du serveur");
+  }
 });
 
-// Exemple de point de terminaison pour ajouter une recette
 app.post("/api/recettes", (req, res) => {
   const { nom, sommeCal, sommeLipide, sommeGlucide, sommeProteine } = req.body;
 
@@ -101,13 +128,10 @@ app.post("/api/recettes", (req, res) => {
           sommeProteine,
         });
       }
-    }
+    },
   );
 });
 
-// ... Ajoutez d'autres points de terminaison pour les autres opérations CRUD
-
-// Lancement du serveur
 app.listen(PORT, () => {
   console.log(`Serveur en cours d'exécution sur le port ${PORT}`);
 });

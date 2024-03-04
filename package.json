@@ -19,6 +19,7 @@
   "scripts": {
     "startd": "cd server && docker-compose up -d",
     "startf": "cd client && yarn start",
+    "starts": "cd server && node server.js",
     "format:fix": "prettier --ignore-unknown --write .",
     "lint:fix": "eslint --fix .",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"

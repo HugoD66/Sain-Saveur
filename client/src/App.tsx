@@ -6,6 +6,7 @@ import "./App.css";
 const App: React.FC = () => {
   const [isSigningUp, setIsSigningUp] = useState(false);
   useEffect(() => {
+    console.log("Début useEffect fetch recettes");
     fetch("/api/recettes")
       .then((response) => response.json())
       .then((data) => console.log(data))
