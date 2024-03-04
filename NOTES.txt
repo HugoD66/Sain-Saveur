@@ -1,0 +1,7 @@
+Commment parcourir un workspace:
+
+yarn workspace <nom-du-workspace> add <nom-du-package>
+
+Exemple :
+yarn workspace server add express
+
