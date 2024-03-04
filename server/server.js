@@ -1,12 +1,10 @@
 const express = require("express");
 const sqlite3 = require("sqlite3");
 const bodyParser = require("body-parser");
-
+const redisClient = require("./redisClient");
 
 // J'ai mis ca car react vient d'un port différents.
-const cors = require('cors');
-
-
+const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -109,7 +107,7 @@ app.post("/api/recettes", (req, res) => {
           sommeProteine,
         });
       }
-    }
+    },
   );
 });
 
@@ -120,33 +118,42 @@ const recettes = [
     sommeCal: 500,
     sommeLipide: 20,
     sommeGlucide: 30,
-    sommeProteine: 40
+    sommeProteine: 40,
   },
   {
     nom: "Salade César",
     sommeCal: 300,
     sommeLipide: 15,
     sommeGlucide: 20,
-    sommeProteine: 25
+    sommeProteine: 25,
   },
   {
     nom: "Spaghetti Bolognaise",
     sommeCal: 700,
     sommeLipide: 25,
     sommeGlucide: 50,
-    sommeProteine: 35
-  }
+    sommeProteine: 35,
+  },
 ];
-recettes.forEach(recette => {
+recettes.forEach((recette) => {
   const { nom, sommeCal, sommeLipide, sommeGlucide, sommeProteine } = recette;
   const sql = `INSERT INTO Recette (nom, sommeCal, sommeLipide, sommeGlucide, sommeProteine) VALUES (?, ?, ?, ?, ?)`;
 
-  db.run(sql, [nom, sommeCal, sommeLipide, sommeGlucide, sommeProteine], function(err) {
-    if (err) {
-      return console.error(err.message);
-    }
-    console.log(`Recette ajoutée avec succès : ${this.lastID}`);
-  });
+  db.run(
+    sql,
+    [nom, sommeCal, sommeLipide, sommeGlucide, sommeProteine],
+    function (err) {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(`Recette ajoutée avec succès : ${this.lastID}`);
+    },
+  );
+});
+
+app.get("/api/redis/test", (req, res) => {
+  // Logique pour utiliser Redis ou simplement renvoyer une réponse de test
+  res.json({ message: "Réponse de test depuis l'endpoint /api/redis/test" });
 });
 
 app.listen(PORT, () => {

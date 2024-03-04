@@ -10,12 +10,6 @@ Pour lancer le projet, il faut lancer les commandes suivantes :
  yarn startf (lancer le front, la requete se fera sur le port 5000)
 
 
-
-
-
-
-
-
 -------------------------------------
 
 Commment parcourir un workspace:

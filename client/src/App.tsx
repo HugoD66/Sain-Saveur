@@ -12,12 +12,21 @@ const App: React.FC = () => {
         if (response.ok) {
           return response.json(); // Convertit la réponse en JSON
         }
-        throw new Error('Réponse réseau non OK');
+        throw new Error("Réponse réseau non OK");
+      })
+      .then((data) => console.log(data)) // `data` est maintenant un objet JavaScript
+      .catch((error) => console.error(error));
+
+    fetch("/api/redis/test")
+      .then((response) => {
+        if (response.ok) {
+          return response.json(); // Convertit la réponse en JSON
+        }
+        throw new Error("Réponse réseau non OK");
       })
       .then((data) => console.log(data)) // `data` est maintenant un objet JavaScript
       .catch((error) => console.error(error));
   }, []);
-
 
   return (
     <div className="App">
