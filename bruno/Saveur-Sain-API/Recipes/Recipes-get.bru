@@ -1,11 +1,11 @@
 meta {
-  name: Recipes
+  name: Recipes-get
   type: http
   seq: 2
 }
 
 get {
-  url: a
+  url: http://{{url}}:{{port}}/api/recipes
   body: none
   auth: none
 }

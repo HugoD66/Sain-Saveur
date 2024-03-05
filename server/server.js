@@ -45,6 +45,23 @@ app.delete("/api/recipes", removeAllRecipes);
 app.delete("/api/user/:userId", removeUser);
 app.delete("/api/users", removeAllUsers);
 
+// -------------- FIXTURES ---------------- //
+app.post("/api/fixtures/users", (req, res) => {
+  insertUsers(db);
+  res.send("Les utilisateurs fixtures ont été insérés avec succès.");
+});
+
+app.post("/api/fixtures/recipes", (req, res) => {
+  insertRecipes(db);
+  res.send("Les recettes fixtures ont été insérées avec succès.");
+});
+
+app.post("/api/fixtures/all", (req, res) => {
+  insertRecipes(db);
+  insertUsers(db);
+  res.send("Toutes les fixtures ont été insérées avec succès.");
+});
+
 db.serialize(() => {
   //Pour insérer des données au lancement serveur ( ça lance les fixtures )
   //insertRecipes(db);

@@ -1,0 +1,11 @@
+meta {
+  name: Recipes-delete
+  type: http
+  seq: 5
+}
+
+delete {
+  url: http://{{url}}:{{port}}/api/recipes
+  body: none
+  auth: none
+}
