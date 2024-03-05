@@ -1,4 +1,4 @@
-const recettes = [
+const recipes = [
   {
     nom: "Poulet au curry",
     sommeCal: 500,
@@ -22,9 +22,9 @@ const recettes = [
   },
 ];
 
-function insertRecettes(db) {
-  recettes.forEach((recette) => {
-    const { nom, sommeCal, sommeLipide, sommeGlucide, sommeProteine } = recette;
+function insertRecipes(db) {
+  recipes.forEach((recipe) => {
+    const { nom, sommeCal, sommeLipide, sommeGlucide, sommeProteine } = recipe;
     const sql = `INSERT INTO Recette (nom, sommeCal, sommeLipide, sommeGlucide, sommeProteine) VALUES (?, ?, ?, ?, ?)`;
     db.run(
       sql,
@@ -42,4 +42,4 @@ function insertRecettes(db) {
   });
 }
 
-module.exports = insertRecettes;
+module.exports = insertRecipes;
