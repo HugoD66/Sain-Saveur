@@ -39,15 +39,17 @@
 
 /* ------------------------ LOGIN / REGISTER -------------------------- */
 
-.login-page, .register-page {
+.login-page,
+.register-page {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #2ecc71; 
+  background-color: #2ecc71;
 }
 
-.login-form, .register-form {
+.login-form,
+.register-form {
   padding: 20px;
   background: rgba(255, 255, 255, 0.7);
   border-radius: 8px;
@@ -55,7 +57,8 @@
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
 
-.login-form h2, .register-form h2 {
+.login-form h2,
+.register-form h2 {
   text-align: center;
   margin-bottom: 20px;
   font-size: 2rem;
@@ -87,7 +90,7 @@
   padding: 10px;
   border: none;
   border-radius: 4px;
-  background-color: #27ae60; 
+  background-color: #27ae60;
   color: white;
   cursor: pointer;
   font-size: 16px;
@@ -104,4 +107,3 @@
   cursor: pointer;
   text-decoration: underline;
 }
-

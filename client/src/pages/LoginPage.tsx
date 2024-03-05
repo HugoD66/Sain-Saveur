@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import logo from '../logo.svg';
+import React, { useState } from "react";
+import logo from "../logo.svg";
 
 interface LoginPageProps {
-  onRegisterClick: () => void; 
+  onRegisterClick: () => void;
 }
 
 const LoginPage: React.FC<LoginPageProps> = ({ onRegisterClick }) => {
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // Appel au serveur pour vérifier les identifiants
-    const response = await fetch('/api/login', {
-      method: 'POST',
+    const response = await fetch("/api/login", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ username, password }),
     });
@@ -48,10 +48,15 @@ const LoginPage: React.FC<LoginPageProps> = ({ onRegisterClick }) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button type="submit" className="submit-btn">Valider</button>
+          <button type="submit" className="submit-btn">
+            Valider
+          </button>
         </form>
         <p className="login-prompt">
-          Si vous n'avez pas de compte <span className="login-link" onClick={onRegisterClick}>cliquez ici</span>
+          Si vous n'avez pas de compte{" "}
+          <span className="login-link" onClick={onRegisterClick}>
+            cliquez ici
+          </span>
         </p>
       </div>
     </div>

@@ -18,7 +18,7 @@
   },
   "scripts": {
     "startd": "cd server && docker-compose up -d",
-    "stopd":"cd server && docker-compose down",
+    "stopd": "cd server && docker-compose down",
     "startf": "cd client && yarn start",
     "starts": "cd server && node server.js",
     "startd:clean": "cd server && docker-compose up -d --force-recreate",
