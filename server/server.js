@@ -1,15 +1,27 @@
 const express = require("express");
-const sqlite3 = require("sqlite3");
 const bodyParser = require("body-parser");
-const redisClient = require("./redisClient");
 const db = require("../server/db/dbSetup");
-const recettes = require("./fixtures/recettesFixtures");
-const users = require("./fixtures/userFixtures");
-const { getRecettes, getUsers, addRecette } = require("./calls/call");
+const {
+  getRecipe,
+  getRecipes,
+  addRecipe,
+  removeRecipe,
+  removeAllRecipes,
+} = require("./calls/callRecipes");
+const {
+  getUser,
+  getUsers,
+  addUser,
+  removeUser,
+  removeAllUsers,
+} = require("./calls/callUsers");
 const cors = require("cors");
 
+/// A BOUGER
+const redisClient = require("./redisClient");
+
 // FIXTURES
-const insertRecettes = require("./fixtures/recettesFixtures");
+const insertRecipes = require("./fixtures/recipesFixtures");
 const insertUsers = require("./fixtures/userFixtures");
 
 const app = express();
@@ -20,15 +32,27 @@ app.use(bodyParser.json());
 app.use(cors());
 
 //-------------- GET ---------------- //
-app.get("/api/recettes", getRecettes);
+app.get("/api/user/:userId", getUser);
 app.get("/api/users", getUsers);
-
+app.get("/api/recipe/:recipeId", getRecipe);
+app.get("/api/recipes", getRecipes);
 // -------------- POST ---------------- //
-app.post("/api/recettes", addRecette);
+app.post("/api/recipe", addRecipe);
+app.post("/api/users", addUser);
+// -------------- DELETE ---------------- //
+app.delete("/api/recipe/:recipeId", removeRecipe);
+app.delete("/api/recipes", removeAllRecipes);
+app.delete("/api/user/:userId", removeUser);
+app.delete("/api/users", removeAllUsers);
 
 db.serialize(() => {
-  insertRecettes(db);
-  insertUsers(db);
+  //Pour insérer des données au lancement serveur ( ça lance les fixtures )
+  //insertRecipes(db);
+  //insertUsers(db);
+  // Permet de !!!!!!!supprimer!!!!!!!! toutes les données au lancement du serveur
+  // Pas faire le/la con !
+  //removeAllReccipes();
+  //removeAllUsers();
 });
 
 app.listen(PORT, () => {

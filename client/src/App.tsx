@@ -2,17 +2,26 @@ import React, { useState, useEffect } from "react";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/Register";
 import "./App.css";
-import { fetchRecettes, fetchRedisTest } from "./calls/redis";
+import { fetchRecipes, fetchRecipe } from "./calls/sqlite/recipe";
+import { fetchUser, fetchUsers } from "./calls/sqlite/user";
 
 const App: React.FC = () => {
   const [isSigningUp, setIsSigningUp] = useState(false);
 
   useEffect(() => {
-    fetchRecettes()
+    fetchRecipes()
       .then((data) => console.log(data))
       .catch((error) => console.error(error));
 
-    fetchRedisTest()
+    fetchRecipe(1)
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
+
+    fetchUsers()
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
+
+    fetchUser(1)
       .then((data) => console.log(data))
       .catch((error) => console.error(error));
   }, []);
