@@ -4,17 +4,17 @@ services:
   redis:
     image: redis:latest
     ports:
-      - 6380:6379
+      - ${REDIS_PORT}:6379
 
   redisinsight:
     image: redislabs/redisinsight:1.14.0
     ports:
-      - 8002:8001
+      - ${REDIS_INSIGHT_PORT}:8001
     volumes:
       - ./redisinsight:/db
 
   sqlite:
     image: alpine
     volumes:
-      - ./sqlite:/db
+      - ${SQLITE_DB_PATH}:/db
     command: sh -c "apk add --no-cache sqlite && sqlite3 /db/database.db"

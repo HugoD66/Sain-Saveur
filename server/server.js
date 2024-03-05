@@ -18,7 +18,7 @@ const {
 const cors = require("cors");
 
 /// A BOUGER
-const redisClient = require("./redisClient");
+//const redisClient = require("./redisClient");
 
 // FIXTURES
 const insertRecipes = require("./fixtures/recipesFixtures");
