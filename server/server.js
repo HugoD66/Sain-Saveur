@@ -3,7 +3,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const db = require("../server/db/dbSetup");
 
-const redisClient = require("./redisClient");
 const {
   getRecipe,
   getRecipes,
@@ -70,13 +69,6 @@ db.serialize(async () => {
   // Pas faire le/la con !
   //removeAllReccipes();
   //removeAllUsers();
-
-  const cachedData = await redisClient.get("recipes");
-  if (cachedData) {
-    console.log("Données en cache:", cachedData);
-  } else {
-    console.log("Aucune donnée en cache.");
-  }
 });
 
 app.listen(PORT, () => {

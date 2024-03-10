@@ -1,5 +1,5 @@
 const db = require("../db/dbSetup");
-const redisClient = require("../redisClient");
+const redisClient = require("../db/redis/redisClient");
 // ---------- GET ---------------- //
 
 const getRecipe = (req, res) => {
@@ -59,18 +59,6 @@ const addRecipe = (req, res) => {
       }
     },
   );
-
-  /*
-  // Publier la recette sur Redis
-  const recipeDetails = JSON.stringify({
-    nom,
-    sommeCal,
-    sommeLipide,
-    sommeGlucide,
-    sommeProteine,
-  });
-  await redisClient.publish("newRecipeChannel", recipeDetails);
-  */
 };
 
 // ---------- REMOVE ---------------- //

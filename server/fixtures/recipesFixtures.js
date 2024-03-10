@@ -1,3 +1,4 @@
+const publishRecipeCreated = require("../db/redis/subscribeOnCreateRecipe");
 const recipes = [
   {
     nom: "Poulet au curry",
@@ -29,13 +30,17 @@ function insertRecipes(db) {
     db.run(
       sql,
       [nom, sommeCal, sommeLipide, sommeGlucide, sommeProteine],
-      function (err) {
+      async function (err) {
         if (err) {
           console.error(
-            `Erreur lors de l'ajout de la recette ${nom}: ${err.message}`,
+            `Retour sqlit | Erreur lors de l'ajout de la recette ${nom}: ${err.message}`,
           );
         } else {
-          console.log(`Recette '${nom}' ajoutée avec succès.`);
+          publishRecipeCreated(nom).catch(console.error);
+
+          console.log(
+            `Retour sqlit | Message publié pour la recette '${nom}'.`,
+          );
         }
       },
     );
