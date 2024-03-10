@@ -1,6 +1,9 @@
+require("dotenv").config({ path: "../.env" });
 const express = require("express");
 const bodyParser = require("body-parser");
 const db = require("../server/db/dbSetup");
+
+const redisClient = require("./redisClient");
 const {
   getRecipe,
   getRecipes,
@@ -16,9 +19,6 @@ const {
   removeAllUsers,
 } = require("./calls/callUsers");
 const cors = require("cors");
-
-/// A BOUGER
-//const redisClient = require("./redisClient");
 
 // FIXTURES
 const insertRecipes = require("./fixtures/recipesFixtures");
@@ -62,7 +62,7 @@ app.post("/api/fixtures/all", (req, res) => {
   res.send("Toutes les fixtures ont été insérées avec succès.");
 });
 
-db.serialize(() => {
+db.serialize(async () => {
   //Pour insérer des données au lancement serveur ( ça lance les fixtures )
   //insertRecipes(db);
   //insertUsers(db);
@@ -70,6 +70,13 @@ db.serialize(() => {
   // Pas faire le/la con !
   //removeAllReccipes();
   //removeAllUsers();
+
+  const cachedData = await redisClient.get("recipes");
+  if (cachedData) {
+    console.log("Données en cache:", cachedData);
+  } else {
+    console.log("Aucune donnée en cache.");
+  }
 });
 
 app.listen(PORT, () => {
