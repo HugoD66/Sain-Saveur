@@ -1,5 +1,5 @@
 const db = require("../db/dbSetup");
-
+const redisClient = require("../db/redis/redisClient");
 // ---------- GET ---------------- //
 
 const getRecipe = (req, res) => {
