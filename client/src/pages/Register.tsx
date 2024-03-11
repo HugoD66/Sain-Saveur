@@ -10,10 +10,49 @@ const RegisterPage: FC<RegisterPageProps> = ({ onLoginClick }) => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  // OPTIONNEL, tu verras si tu veux garder ca //
+  const checkPasswordStrength = (password: string) => {
+    let strength = 0;
+    if (password.length >= 8) strength += 1;
+    if (/[A-Z]/.test(password)) strength += 1;
+    if (/[a-z]/.test(password)) strength += 1;
+    if (/[0-9]/.test(password)) strength += 1;
+    if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+    return strength >= 4; // Considère le mot de passe comme fort s'il passe 4 tests ou plus
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // intégrer la logique pour envoyer ces données à votre serveur
-    console.log({ email, username, password });
+
+    if (!checkPasswordStrength(password)) {
+      alert(
+        "Le mot de passe doit contenir au moins 8 caractères, dont des lettres majuscules et minuscules, des chiffres et des caractères spéciaux.",
+      );
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, username, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Erreur lors de l'enregistrement");
+      }
+
+      const data = await response.json();
+
+      localStorage.setItem("token", data.token);
+      console.log("Enregistrement réussi, token:", data.token);
+      // Redirection page ?
+    } catch (error) {
+      console.error("Erreur lors de l'envoi des données", error);
+      alert("Une erreur est survenue lors de l'enregistrement.");
+    }
   };
 
   return (

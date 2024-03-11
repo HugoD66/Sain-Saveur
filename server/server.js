@@ -22,6 +22,7 @@ const cors = require("cors");
 // FIXTURES
 const insertRecipes = require("./fixtures/recipesFixtures");
 const insertUsers = require("./fixtures/userFixtures");
+const registerUser = require("./security/registration");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -43,6 +44,10 @@ app.delete("/api/recipe/:recipeId", removeRecipe);
 app.delete("/api/recipes", removeAllRecipes);
 app.delete("/api/user/:userId", removeUser);
 app.delete("/api/users", removeAllUsers);
+
+// -------------- SECURITY ---------------- //
+
+app.post("/api/register", registerUser);
 
 // -------------- FIXTURES ---------------- //
 
