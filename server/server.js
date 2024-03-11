@@ -1,8 +1,8 @@
 require("dotenv").config({ path: "../.env" });
 const express = require("express");
 const bodyParser = require("body-parser");
-const db = require("../server/db/dbSetup");
-
+const mongoose = require("mongoose");
+const initMongo = require("./db/mongoDB/mongoSetup");
 const {
   getRecipe,
   getRecipes,
@@ -33,43 +33,63 @@ app.use(cors());
 //-------------- GET ---------------- //
 app.get("/api/user/:userId", getUser);
 app.get("/api/users", getUsers);
-app.get("/api/recipe/:recipeId", getRecipe);
-app.get("/api/recipes", getRecipes);
-// -------------- POST ---------------- //
-app.post("/api/recipe", addRecipe);
+//app.get("/api/recipe/:recipeId", getRecipe);
+//app.get("/api/recipes", getRecipes);
+//// -------------- POST ---------------- //
+//app.post("/api/recipe", addRecipe);
 app.post("/api/users", addUser);
-// -------------- DELETE ---------------- //
-app.delete("/api/recipe/:recipeId", removeRecipe);
-app.delete("/api/recipes", removeAllRecipes);
+//// -------------- DELETE ---------------- //
+//app.delete("/api/recipe/:recipeId", removeRecipe);
+//app.delete("/api/recipes", removeAllRecipes);
 app.delete("/api/user/:userId", removeUser);
 app.delete("/api/users", removeAllUsers);
 
 // -------------- FIXTURES ---------------- //
-app.post("/api/fixtures/users", (req, res) => {
-  insertUsers(db);
-  res.send("Les utilisateurs fixtures ont été insérés avec succès.");
+app.post("/api/fixtures/users", async (req, res) => {
+  try {
+    const result = await insertUsers();
+    console.log(result); // Log le résultat pour le débogage
+    res.send({ message: "Utilisateurs ajoutés avec succès.", result: result });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({
+      message: "Erreur lors de l'ajout des utilisateurs.",
+      error: error.message,
+    });
+  }
 });
 
-app.post("/api/fixtures/recipes", (req, res) => {
-  insertRecipes(db);
-  res.send("Les recettes fixtures ont été insérées avec succès.");
-});
+//app.post("/api/fixtures/recipes", (req, res) => {
+//  insertRecipes(db);
+//  res.send("Les recettes fixtures ont été insérées avec succès.");
+//});
 
-app.post("/api/fixtures/all", (req, res) => {
-  insertRecipes(db);
-  insertUsers(db);
-  res.send("Toutes les fixtures ont été insérées avec succès.");
-});
+//app.post("/api/fixtures/all", (req, res) => {
+//  insertRecipes(db);
+//  insertUsers(db);
+//  res.send("Toutes les fixtures ont été insérées avec succès.");
+//});
 
-db.serialize(async () => {
-  //Pour insérer des données au lancement serveur ( ça lance les fixtures )
-  //insertRecipes(db);
-  //insertUsers(db);
-  // Permet de !!!!!!!supprimer!!!!!!!! toutes les données au lancement du serveur
-  // Pas faire le/la con !
-  //removeAllReccipes();
-  //removeAllUsers();
-});
+//db.serialize(async () => {
+//Pour insérer des données au lancement serveur ( ça lance les fixtures )
+//insertRecipes(db);
+//insertUsers(db);
+// Permet de !!!!!!!supprimer!!!!!!!! toutes les données au lancement du serveur
+// Pas faire le/la con !
+//removeAllReccipes();
+//removeAllUsers();
+//});
+
+initMongo().catch(console.error);
+
+//insertUsers().catch(console.error);
+/*
+async function mangoServLaunch() {
+  await mongoose.connect("mongodb://127.0.0.1:27017/mongo-data");
+
+  use`await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');`;
+}
+ */
 
 app.listen(PORT, () => {
   console.log(`Serveur en cours d'exécution sur le port ${PORT}`);

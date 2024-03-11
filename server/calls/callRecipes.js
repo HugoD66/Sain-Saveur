@@ -2,19 +2,17 @@ const db = require("../db/dbSetup");
 const redisClient = require("../db/redis/redisClient");
 // ---------- GET ---------------- //
 
-const getRecipe = (req, res) => {
-  const recipeId = req.params.recipeId;
-  const sql = `SELECT * FROM Recette WHERE id = ?`;
-  db.get(sql, [recipeId], (err, row) => {
-    if (err) {
-      res.status(500).send("Erreur interne du serveur");
-      console.error(err.message);
-    } else if (row) {
-      res.json(row);
-    } else {
-      res.status(404).send("Recette non trouvé.");
-    }
-  });
+const getRecipe = async (req, res) => {
+  try { const recipeId = req.params.recipeId;
+  const recipe = await Recipe.findById(recipeId);
+  if (recipe) {
+    res.json(recipe);
+  } else {
+    res.status(404).send('recette non trouvée');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erreur interne du serveur");
+  }
 };
 
 const getRecipes = (req, res) => {

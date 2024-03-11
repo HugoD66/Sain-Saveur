@@ -1,5 +1,6 @@
+/*
+require("dotenv").config({ path: "../../.env" });
 const Redis = require("ioredis");
-require("dotenv").config({ path: "../../.env" }); // Assurez-vous que le chemin est correct pour votre configuration
 
 const redisPublisher = new Redis({
   host: process.env.REDIS_HOST,
@@ -29,3 +30,5 @@ const publishRecipeCreated = (recipeName) => {
 };
 
 module.exports = publishRecipeCreated;
+
+ */

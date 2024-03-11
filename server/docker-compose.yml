@@ -1,20 +1,9 @@
 version: "3"
 
 services:
-  redis:
-    image: redis:latest
+  mongo:
+    image: mongo:latest
     ports:
-      - 6380:6379
-
-  redisinsight:
-    image: redislabs/redisinsight:1.14.0
-    ports:
-      - 8002:8001
+      - 27017:27017
     volumes:
-      - ./redisinsight:/db
-
-  sqlite:
-    image: alpine
-    volumes:
-      - ./sqlite:/db
-    command: sh -c "apk add --no-cache sqlite && sqlite3 /db/database.db"
+      - ./mongo-data:/data/db

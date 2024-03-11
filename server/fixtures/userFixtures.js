@@ -1,3 +1,6 @@
+const mongoose = require("mongoose");
+const User = require("../models/UserModel");
+
 const users = [
   {
     email: "user1@example.com",
@@ -16,20 +19,28 @@ const users = [
   },
 ];
 
-function insertUsers(db) {
-  users.forEach((user) => {
-    const { email, username, password } = user;
-    const sql = `INSERT INTO Users (email, username, password) VALUES (?, ?, ?)`;
-    db.run(sql, [email, username, password], function (err) {
-      if (err) {
-        console.error(
-          `Erreur lors de l'ajout de l'utilisateur ${username}: ${err.message}`,
-        );
-      } else {
-        console.log(`Utilisateur '${username}' ajouté avec succès.`);
-      }
-    });
-  });
+async function insertUsers() {
+  try {
+    // Vérifiez si mongoose est déjà connecté, sinon connectez-vous
+    if (mongoose.connection.readyState !== 1) {
+      await mongoose.connect(
+        "mongodb://mongoadmin:secret@localhost:27017/mydbname",
+        {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+        },
+      );
+    }
+
+    // Optionnel : Supprimez tous les utilisateurs existant
+    await User.deleteMany({});
+
+    const createdUsers = await User.insertMany(users);
+    console.log(`Utilisateurs ajoutés avec succès:`, createdUsers);
+  } catch (error) {
+    console.error(`Erreur lors de l'ajout des utilisateurs:`, error);
+    await mongoose.connection.close();
+  }
 }
 
 module.exports = insertUsers;
