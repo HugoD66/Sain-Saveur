@@ -38,11 +38,11 @@ const addUser = async (req, res) => {
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      console.log("L'email est déjà utilisé par un autre compte.");
+      console.log("Email ou mot de passe incorrect.");
 
       return res
         .status(409)
-        .json({ error: "L'email est déjà utilisé par un autre compte." });
+        .json({ error: "Email ou mot de passe incorrect." });
     }
     const newUser = new User({ email, username, password });
     const savedUser = await newUser.save();

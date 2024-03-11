@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/Register";
+import LoginPage from "./pages/security/LoginPage";
+import RegisterPage from "./pages/security/Register";
 import "./App.css";
 import { fetchRecipes, fetchRecipe } from "./calls/sqlite/recipe";
 import { fetchUser, fetchUsers } from "./calls/sqlite/user";
