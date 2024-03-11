@@ -84,16 +84,10 @@ const recipe = [
 
 async function insertRecipes() {
   try {
-    // Optionnel: Supprimez toutes les recettes existantes
-    // await Recipe.deleteMany({});
-
     const createdRecipes = await Recipe.insertMany(recipe);
     console.log(`Recettes ajoutées avec succès: ${createdRecipes.length}`);
   } catch (error) {
     console.error(`Erreur lors de l'ajout des recettes:`, error);
   }
 }
-
-// Exécutez la fonction de fixtures
-insertRecipes().catch(console.error);
 module.exports = insertRecipes;

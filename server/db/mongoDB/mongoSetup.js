@@ -8,7 +8,6 @@ async function initMongo() {
         useUnifiedTopology: true,
       });
     }
-
     console.log("Connecté à MongoDB avec succès.");
   } catch (error) {
     console.error("Erreur de connexion à MongoDB:", error);

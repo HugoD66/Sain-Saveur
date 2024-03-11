@@ -1,4 +1,5 @@
 const User = require("../models/UserModel");
+const publishUserTempCreated = require("../db/redis/test");
 
 // ---------- GET ---------------- //
 const getUser = async (req, res) => {
@@ -34,11 +35,19 @@ const addUser = async (req, res) => {
     if (!email || !username || !password) {
       return res.status(400).json({ error: "Tous les champs sont requis" });
     }
+    const existingUser = await User.findOne({ email });
 
+    if (existingUser) {
+      console.log("L'email est déjà utilisé par un autre compte.");
+
+      return res
+        .status(409)
+        .json({ error: "L'email est déjà utilisé par un autre compte." });
+    }
     const newUser = new User({ email, username, password });
     const savedUser = await newUser.save();
-
     res.status(201).json(savedUser);
+    await publishUserTempCreated(savedUser.username);
   } catch (err) {
     console.error(err);
     res.status(500).send("Erreur interne du serveur");

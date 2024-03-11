@@ -6,6 +6,14 @@ meta {
 
 post {
   url: http://{{url}}:{{port}}/api/users
-  body: none
+  body: json
   auth: none
+}
+
+body:json {
+   {
+      "email": "user4@example.com",
+      "username": "user4",
+      "password": "password4"
+    }
 }

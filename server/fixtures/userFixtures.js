@@ -21,11 +21,6 @@ const users = [
 
 async function insertUsers() {
   try {
-    // Vérifiez si mongoose est déjà connecté, sinon connectez-vous
-
-    // Optionnel : Supprimez tous les utilisateurs existant
-    // await User.deleteMany({});
-
     const createdUsers = await User.insertMany(users);
     console.log(`Utilisateurs ajoutés avec succès:`, createdUsers);
   } catch (error) {

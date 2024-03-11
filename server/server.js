@@ -50,11 +50,14 @@ app.post("/api/fixtures/users", async (req, res) => {
   try {
     const result = await insertUsers();
     console.log(result); // Log le résultat pour le débogage
-    res.send({ message: "Utilisateurs ajoutés avec succès.", result: result });
+    res.send({
+      message: "REDIS |Utilisateurs ajoutés avec succès.",
+      result: result,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).send({
-      message: "Erreur lors de l'ajout des utilisateurs.",
+      message: "REDIS |Erreur lors de l'ajout des utilisateurs.",
       error: error.message,
     });
   }

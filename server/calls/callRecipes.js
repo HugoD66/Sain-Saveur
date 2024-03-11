@@ -32,19 +32,17 @@ const getRecipes = async (req, res) => {
 const addRecipe = async (req, res) => {
   try {
     const recipeData = req.body;
-
-    if (!recipeData.recipe_name || recipeData.ingredients.length === 0) {
-      return res.status(400).json({
-        error: "Des informations essentielles sur la recette manquent.",
-      });
-    }
+    console.log(`recipeData: ${recipeData}`);
+    //if (!recipeData.recipe_name || recipeData.ingredients.length === 0) {
+    //  return res.status(400).json({
+    //    error: "Des informations essentielles sur la recette manquent.",
+    //  });
+    //}
     const newRecipe = new Recipe(recipeData);
-
     const savedRecipe = await newRecipe.save();
 
-    await publishRecipeCreated(savedRecipe.recipe_name);
-
     res.status(201).json(savedRecipe);
+    await publishRecipeCreated(savedRecipe.recipe_name);
   } catch (err) {
     console.error(err);
     res.status(500).send("Erreur interne du serveur");
@@ -57,7 +55,7 @@ const removeRecipe = async (req, res) => {
     const recipeId = req.params.recipeId;
     const result = await Recipe.deleteOne({ _id: recipeId });
     if (result.deletedCount === 0) {
-      return res.status(404).send("Utilisateur non trouvé.");
+      return res.status(404).send("Recette non trouvée.");
     }
     console.log(`Recette ${recipeId} supprimé avec succès`);
     res.status(204).send();
