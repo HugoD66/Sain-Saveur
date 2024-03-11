@@ -22,18 +22,9 @@ const users = [
 async function insertUsers() {
   try {
     // Vérifiez si mongoose est déjà connecté, sinon connectez-vous
-    if (mongoose.connection.readyState !== 1) {
-      await mongoose.connect(
-        "mongodb://mongoadmin:secret@localhost:27017/mydbname",
-        {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-        },
-      );
-    }
 
     // Optionnel : Supprimez tous les utilisateurs existant
-    await User.deleteMany({});
+    // await User.deleteMany({});
 
     const createdUsers = await User.insertMany(users);
     console.log(`Utilisateurs ajoutés avec succès:`, createdUsers);

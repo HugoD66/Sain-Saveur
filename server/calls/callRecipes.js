@@ -1,86 +1,78 @@
-const db = require("../db/dbSetup");
+const Recipe = require("../models/RecipeModel");
 const redisClient = require("../db/redis/redisClient");
+const User = require("../models/UserModel");
 // ---------- GET ---------------- //
 
 const getRecipe = async (req, res) => {
-  try { const recipeId = req.params.recipeId;
-  const recipe = await Recipe.findById(recipeId);
-  if (recipe) {
-    res.json(recipe);
-  } else {
-    res.status(404).send('recette non trouvée');
+  try {
+    const recipeId = req.params.userId;
+    const user = await Recipe.findById(recipeId);
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).send("Utilisateur non trouvé.");
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erreur interne du serveur");
+  }
+};
+const getRecipes = async (req, res) => {
+  try {
+    const recipes = await Recipe.find({});
+    console.log(`${recipes.length} recettes récupérées avec succès`);
+    res.json(recipes);
   } catch (err) {
     console.error(err);
     res.status(500).send("Erreur interne du serveur");
   }
 };
 
-const getRecipes = (req, res) => {
-  db.all("SELECT * FROM Recette", (err, rows) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send("Erreur interne du serveur");
-    } else {
-      console.log(`${rows.length} recettes récupérées avec succès`);
-      res.json(rows);
-    }
-  });
-};
-
 // -------------- POST ---------------- //
-const addRecipe = (req, res) => {
-  const { nom, sommeCal, sommeLipide, sommeGlucide, sommeProteine } = req.body;
 
-  if (!nom || !sommeCal || !sommeLipide || !sommeGlucide || !sommeProteine) {
-    return res.status(400).json({ error: "Tous les champs sont requis" });
+const addRecipe = async (req, res) => {
+  try {
+    const recipeData = req.body;
+
+    if (!recipeData.recipe_name || recipeData.ingredients.length === 0) {
+      return res.status(400).json({
+        error: "Des informations essentielles sur la recette manquent.",
+      });
+    }
+    const newRecipe = new Recipe(recipeData);
+
+    const savedRecipe = await newRecipe.save();
+    res.status(201).json(savedRecipe);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erreur interne du serveur");
   }
-
-  const sql =
-    "INSERT INTO Recette (nom, sommeCal, sommeLipide, sommeGlucide, sommeProteine) VALUES (?, ?, ?, ?, ?)";
-
-  db.run(
-    sql,
-    [nom, sommeCal, sommeLipide, sommeGlucide, sommeProteine],
-    function (err) {
-      if (err) {
-        console.error(err);
-        res.status(500).send("Erreur interne du serveur");
-      } else {
-        res.json({
-          id: this.lastID,
-          nom,
-          sommeCal,
-          sommeLipide,
-          sommeGlucide,
-          sommeProteine,
-        });
-      }
-    },
-  );
 };
-
 // ---------- REMOVE ---------------- //
-const removeRecipe = (req, res) => {
-  const recipeId = req.params.recipeId;
-  const sql = `DELETE FROM Recette WHERE id = ?`;
-  db.run(sql, [recipeId], (err) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send("Erreur interne du serveur");
-    } else {
-      res.status(200).send("Recette supprimée avec succès");
+
+const removeRecipe = async (req, res) => {
+  try {
+    const recipeId = req.params.recipeId;
+    const result = await Recipe.deleteOne({ _id: recipeId });
+    if (result.deletedCount === 0) {
+      return res.status(404).send("Utilisateur non trouvé.");
     }
-  });
+    console.log(`Recette ${recipeId} supprimé avec succès`);
+    res.status(204).send();
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erreur interne du serveur");
+  }
 };
-const removeAllRecipes = (req, res) => {
-  db.run("DELETE FROM Recette", (err) => {
-    if (err) {
-      console.error(err);
-      if (res) res.status(500).send("Erreur interne du serveur");
-    } else {
-      console.log(`Toutes les recettes ont été supprimées avec succès`);
-    }
-  });
+const removeAllRecipes = async (req, res) => {
+  try {
+    await Recipe.deleteMany({});
+    console.log(`Toutes les recettes ont étées supprimés avec succès`);
+    res.status(204).send();
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erreur interne du serveur");
+  }
 };
 
 module.exports = {

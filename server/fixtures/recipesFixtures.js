@@ -85,7 +85,7 @@ const recipe = [
 async function insertRecipes() {
   try {
     // Optionnel: Supprimez toutes les recettes existantes
-    await Recipe.deleteMany({});
+    // await Recipe.deleteMany({});
 
     const createdRecipes = await Recipe.insertMany(recipe);
     console.log(`Recettes ajoutées avec succès: ${createdRecipes.length}`);

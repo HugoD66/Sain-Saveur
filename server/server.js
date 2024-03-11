@@ -33,14 +33,14 @@ app.use(cors());
 //-------------- GET ---------------- //
 app.get("/api/user/:userId", getUser);
 app.get("/api/users", getUsers);
-//app.get("/api/recipe/:recipeId", getRecipe);
-//app.get("/api/recipes", getRecipes);
+app.get("/api/recipe/:recipeId", getRecipe);
+app.get("/api/recipes", getRecipes);
 //// -------------- POST ---------------- //
 //app.post("/api/recipe", addRecipe);
 app.post("/api/users", addUser);
 //// -------------- DELETE ---------------- //
-//app.delete("/api/recipe/:recipeId", removeRecipe);
-//app.delete("/api/recipes", removeAllRecipes);
+app.delete("/api/recipe/:recipeId", removeRecipe);
+app.delete("/api/recipes", removeAllRecipes);
 app.delete("/api/user/:userId", removeUser);
 app.delete("/api/users", removeAllUsers);
 
@@ -59,14 +59,14 @@ app.post("/api/fixtures/users", async (req, res) => {
   }
 });
 
-//app.post("/api/fixtures/recipes", (req, res) => {
-//  insertRecipes(db);
-//  res.send("Les recettes fixtures ont été insérées avec succès.");
-//});
+app.post("/api/fixtures/recipes", (req, res) => {
+  insertRecipes();
+  res.send("Les recettes fixtures ont été insérées avec succès.");
+});
 
 //app.post("/api/fixtures/all", (req, res) => {
-//  insertRecipes(db);
-//  insertUsers(db);
+//  insertRecipes();
+//  insertUsers();
 //  res.send("Toutes les fixtures ont été insérées avec succès.");
 //});
 
@@ -81,15 +81,6 @@ app.post("/api/fixtures/users", async (req, res) => {
 //});
 
 initMongo().catch(console.error);
-
-//insertUsers().catch(console.error);
-/*
-async function mangoServLaunch() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/mongo-data");
-
-  use`await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');`;
-}
- */
 
 app.listen(PORT, () => {
   console.log(`Serveur en cours d'exécution sur le port ${PORT}`);

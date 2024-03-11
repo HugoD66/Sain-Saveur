@@ -1,14 +1,13 @@
 const mongoose = require("mongoose");
-const insertRecipes = require("../../fixtures/recipesFixtures");
 
 async function initMongo() {
   try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/mongo-data", {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-
-    await insertRecipes();
+    if (mongoose.connection.readyState !== 1) {
+      await mongoose.connect("mongodb://localhost:27017/mydatabase", {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      });
+    }
 
     console.log("Connecté à MongoDB avec succès.");
   } catch (error) {
