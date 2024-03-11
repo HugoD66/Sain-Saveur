@@ -1,10 +1,9 @@
-/*
-require("dotenv").config({ path: "../../.env" });
+require("dotenv").config({ path: "../.env" });
 const Redis = require("ioredis");
 
 const redisPublisher = new Redis({
-  host: process.env.REDIS_HOST,
-  port: process.env.REDIS_PORT,
+  port: 6380,
+  host: "127.0.0.1",
 });
 
 const publishRecipeCreated = (recipeName) => {
@@ -30,5 +29,3 @@ const publishRecipeCreated = (recipeName) => {
 };
 
 module.exports = publishRecipeCreated;
-
- */

@@ -1,8 +1,8 @@
 require("dotenv").config({ path: "../.env" });
 const express = require("express");
 const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
 const initMongo = require("./db/mongoDB/mongoSetup");
+
 const {
   getRecipe,
   getRecipes,
@@ -36,7 +36,7 @@ app.get("/api/users", getUsers);
 app.get("/api/recipe/:recipeId", getRecipe);
 app.get("/api/recipes", getRecipes);
 //// -------------- POST ---------------- //
-//app.post("/api/recipe", addRecipe);
+app.post("/api/recipe", addRecipe);
 app.post("/api/users", addUser);
 //// -------------- DELETE ---------------- //
 app.delete("/api/recipe/:recipeId", removeRecipe);
@@ -45,6 +45,7 @@ app.delete("/api/user/:userId", removeUser);
 app.delete("/api/users", removeAllUsers);
 
 // -------------- FIXTURES ---------------- //
+
 app.post("/api/fixtures/users", async (req, res) => {
   try {
     const result = await insertUsers();
@@ -58,17 +59,15 @@ app.post("/api/fixtures/users", async (req, res) => {
     });
   }
 });
-
 app.post("/api/fixtures/recipes", (req, res) => {
   insertRecipes();
   res.send("Les recettes fixtures ont été insérées avec succès.");
 });
-
-//app.post("/api/fixtures/all", (req, res) => {
-//  insertRecipes();
-//  insertUsers();
-//  res.send("Toutes les fixtures ont été insérées avec succès.");
-//});
+app.post("/api/fixtures/all", (req, res) => {
+  insertRecipes();
+  insertUsers();
+  res.send("Toutes les fixtures ont été insérées avec succès.");
+});
 
 //db.serialize(async () => {
 //Pour insérer des données au lancement serveur ( ça lance les fixtures )

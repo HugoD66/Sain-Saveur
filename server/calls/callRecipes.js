@@ -1,6 +1,5 @@
 const Recipe = require("../models/RecipeModel");
-const redisClient = require("../db/redis/redisClient");
-const User = require("../models/UserModel");
+const publishRecipeCreated = require("../db/redis/subscribeOnCreateRecipe");
 // ---------- GET ---------------- //
 
 const getRecipe = async (req, res) => {
@@ -42,6 +41,9 @@ const addRecipe = async (req, res) => {
     const newRecipe = new Recipe(recipeData);
 
     const savedRecipe = await newRecipe.save();
+
+    await publishRecipeCreated(savedRecipe.recipe_name);
+
     res.status(201).json(savedRecipe);
   } catch (err) {
     console.error(err);
