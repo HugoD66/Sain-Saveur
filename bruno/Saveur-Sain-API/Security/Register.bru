@@ -5,7 +5,15 @@ meta {
 }
 
 post {
-  url: 
-  body: none
+  url: http://{{url}}:{{port}}/api/security/register
+  body: json
   auth: none
+}
+
+body:json {
+   {
+      "email": "user45445@example.com",
+      "username": "user45445@example.com",
+      "password": "user45445@example.com"
+    }
 }
