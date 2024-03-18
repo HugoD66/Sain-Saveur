@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { addRecipe } from "../../calls/mongo/recipe";
+import { fetchTypes } from "../../calls/mongo/type";
+import { TypeModel } from "../../models/Type";
 
 const AddRecipe = () => {
   const [recipe, setRecipe] = useState({
@@ -7,9 +9,16 @@ const AddRecipe = () => {
     preparation_time_min: "",
     description: "",
     recipe_name: "",
-    recipe_type: "",
+    recipe_types: "",
     recipe_picture: "",
   });
+  const [types, setTypes] = useState<TypeModel[]>([]);
+
+  useEffect(() => {
+    fetchTypes()
+      .then((data: TypeModel[]) => setTypes(data))
+      .catch(console.error);
+  }, []);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -22,13 +31,24 @@ const AddRecipe = () => {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
+    const selectedType = types.find(
+      (type) => type.type_name === recipe.recipe_types,
+    );
+
+    // Si on ne trouve pas le type, on peut lancer une erreur ou gérer ce cas spécifique
+    if (!selectedType) {
+      console.error("Type de recette non trouvé.");
+      return; // Stoppe la fonction
+    }
+
     // Création de l'objet FormData
     const formData = new FormData();
     formData.append("cooking_time_min", recipe.cooking_time_min);
     formData.append("preparation_time_min", recipe.preparation_time_min);
     formData.append("recipe_description", recipe.description);
     formData.append("recipe_name", recipe.recipe_name);
-    formData.append("recipe_type", recipe.recipe_type);
+
+    formData.append("recipe_types", selectedType._id);
 
     // Accès au fichier sélectionné par l'utilisateur
     // Assurez-vous que l'input de type file ait l'attribut 'id' ou 'ref' pour y accéder
@@ -41,6 +61,7 @@ const AddRecipe = () => {
       formData.append("recipe_picture", fileInput.files[0]);
     }
 
+    console.log(recipe);
     try {
       const response = await fetch("http://localhost:4700/api/recipes/add", {
         method: "POST",
@@ -103,12 +124,18 @@ const AddRecipe = () => {
 
           <label>
             Type de plat
-            <input
-              type="text"
-              name="recipe_type"
-              value={recipe.recipe_type}
+            <select
+              name="recipe_types"
+              value={recipe.recipe_types}
               onChange={handleChange}
-            />
+            >
+              <option value="">Sélectionnez un type</option>
+              {types.map((type) => (
+                <option key={type._id} value={type._id}>
+                  {type.type_name}
+                </option>
+              ))}
+            </select>
           </label>
 
           <label>
