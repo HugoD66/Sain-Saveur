@@ -6,7 +6,13 @@ import Register from "../pages/security/Register";
 import Logout from "../components/Logout";
 import AddRecipe from "../pages/recipes/AddRecipe";
 
-const isAuthenticated = () => !!localStorage.getItem("token");
+const isAuthenticated = (): boolean => {
+  if (localStorage.getItem("token")) {
+    return isAuthenticated();
+  } else {
+    return !isAuthenticated();
+  }
+};
 
 export const router = createBrowserRouter([
   {
@@ -23,7 +29,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/add-recipe",
-    element: !isAuthenticated() ? <AddRecipe /> : <Navigate to="/" />,
+    element: <AddRecipe />,
   },
   {
     path: "/logout",
