@@ -1,8 +1,8 @@
-const publishRecipeCreated = require("../db/redis/subscribeOnCreateRecipe");
 const mongoose = require("mongoose");
 const Recipe = require("../models/RecipeModel");
+const Type = require("../models/TypeModel");
 
-const recipe = [
+const recipes = [
   {
     recipe_id: "91",
     recipe_name: "Poulet au curry",
@@ -22,182 +22,192 @@ const recipe = [
     isFavorite: true,
     recipe_description:
       "Un délicieux poulet au curry, parfait pour un repas en famille.",
-    recipe_picture: "upload/...",
-    recipe_types: {
-      recipe_type: ["Vege"],
-    },
+    recipe_picture: "upload/poulet_curry.jpg",
+    type_id: "1", // Ceci sera remplacé par un _id de type existant
     created_by: "Hugo",
     created_at: new Date(),
   },
   {
-    recipe_id: "92",
-    recipe_name: "Salade César",
+    recipe_name: "Quiche aux épinards",
     directions: [
       {
-        direction_description:
-          "Coupez la laitue et disposez-la dans un grand saladier.",
+        direction_description: "Préchauffez votre four à 200°C.",
         direction_number: 1,
       },
       {
         direction_description:
-          "Ajoutez le poulet grillé, les croûtons, le parmesan, et la sauce César.",
+          "Mélangez les œufs, les épinards, la crème fraîche et assaisonnez.",
         direction_number: 2,
       },
+      {
+        direction_description:
+          "Versez la préparation dans une pâte brisée et enfournez pendant 25 minutes.",
+        direction_number: 3,
+      },
     ],
-    preparation_time_min: "10",
-    cooking_time_min: "0",
+    preparation_time_min: "15",
+    cooking_time_min: "25",
     isFavorite: false,
-    recipe_description: "Une salade César classique et rafraîchissante.",
-    recipe_picture: "upload/salade_cesar.jpg",
-    recipe_types: {
-      recipe_type: ["Salade", "Poulet"],
-    },
-    created_by: "Marie",
+    recipe_description: "Une quiche savoureuse riche en légumes.",
+    recipe_picture: "upload/quiche_epinards.jpg",
+    type_id: "Vegetarien",
+    created_by: "Alice",
     created_at: new Date(),
   },
   {
-    recipe_id: "93",
-    recipe_name: "Lasagnes à la bolognaise",
+    recipe_name: "Sushi Maki",
     directions: [
       {
-        direction_description:
-          "Préparez la sauce bolognaise en faisant revenir la viande avec les oignons et la tomate.",
+        direction_description: "Préparez le riz à sushi.",
         direction_number: 1,
       },
       {
-        direction_description:
-          "Montez les lasagnes en alternant couches de pâtes, de sauce bolognaise, et de béchamel.",
+        direction_description: "Étalez le riz sur une feuille d'algue nori.",
         direction_number: 2,
+      },
+      {
+        direction_description:
+          "Ajoutez du poisson cru et des légumes, puis roulez.",
+        direction_number: 3,
       },
     ],
     preparation_time_min: "30",
-    cooking_time_min: "60",
+    cooking_time_min: "0",
     isFavorite: true,
-    recipe_description:
-      "Des lasagnes à la bolognaise, un plat réconfortant pour toute la famille.",
-    recipe_picture: "upload/lasagnes_bolognaise.jpg",
-    recipe_types: {
-      recipe_type: ["Pâtes", "Viande"],
-    },
-    created_by: "Lucas",
+    recipe_description: "Des sushis Maki frais et délicieux.",
+    recipe_picture: "upload/sushi_maki.jpg",
+    type_id: "Japonaise",
+    created_by: "Ben",
     created_at: new Date(),
   },
   {
-    recipe_id: "94",
-    recipe_name: "Tarte aux pommes",
+    recipe_name: "Ratatouille niçoise",
     directions: [
       {
-        direction_description:
-          "Étalez la pâte dans un moule à tarte et piquez le fond avec une fourchette.",
+        direction_description: "Coupez les légumes en rondelles fines.",
         direction_number: 1,
       },
       {
         direction_description:
-          "Disposez les tranches de pommes sur la pâte et saupoudrez de sucre et de cannelle avant de cuire.",
+          "Faites-les revenir séparément, puis assemblez-les dans une grande casserole.",
         direction_number: 2,
+      },
+      {
+        direction_description: "Laissez mijoter à feu doux pendant 45 minutes.",
+        direction_number: 3,
       },
     ],
     preparation_time_min: "20",
     cooking_time_min: "45",
-    isFavorite: false,
-    recipe_description:
-      "Une tarte aux pommes classique, croustillante et dorée.",
-    recipe_picture: "upload/tarte_aux_pommes.jpg",
-    recipe_types: {
-      recipe_type: ["Dessert", "Végétarien"],
-    },
-    created_by: "Emilie",
-    created_at: new Date(),
-  },
-  {
-    recipe_id: "95",
-    recipe_name: "Soupe de lentilles",
-    directions: [
-      {
-        direction_description:
-          "Faites revenir les oignons et l'ail dans une grande casserole.",
-        direction_number: 1,
-      },
-      {
-        direction_description:
-          "Ajoutez les lentilles, l'eau, et les épices, puis laissez mijoter jusqu'à ce que les lentilles soient tendres.",
-        direction_number: 2,
-      },
-    ],
-    preparation_time_min: "10",
-    cooking_time_min: "40",
     isFavorite: true,
-    recipe_description:
-      "Une soupe de lentilles nourrissante, riche en saveurs et en nutriments.",
-    recipe_picture: "upload/soupe_de_lentilles.jpg",
-    recipe_types: {
-      recipe_type: ["Soupe", "Végan"],
-    },
-    created_by: "Jean",
+    recipe_description: "Un plat végétarien riche en couleurs et en saveurs.",
+    recipe_picture: "upload/ratatouille_nicoise.jpg",
+    type_id: "Vegetarien",
+    created_by: "Claire",
     created_at: new Date(),
   },
   {
-    recipe_id: "96",
-    recipe_name: "Risotto aux champignons",
+    recipe_name: "Falafels",
     directions: [
       {
         direction_description:
-          "Faites revenir les champignons et l'oignon dans une poêle avec un peu d'huile.",
+          "Mixez les pois chiches avec des herbes et des épices.",
         direction_number: 1,
       },
       {
-        direction_description:
-          "Ajoutez le riz et le bouillon progressivement, en remuant constamment, jusqu'à cuisson complète.",
+        direction_description: "Formez des boulettes et faites-les frire.",
         direction_number: 2,
       },
     ],
     preparation_time_min: "15",
-    cooking_time_min: "30",
+    cooking_time_min: "5",
     isFavorite: false,
     recipe_description:
-      "Un risotto crémeux aux champignons, plein de goût et facile à préparer.",
-    recipe_picture: "upload/risotto_aux_champignons.jpg",
-    recipe_types: {
-      recipe_type: ["Plat principal", "Végétarien"],
-    },
-    created_by: "Sophie",
+      "Des falafels croustillants et savoureux, parfaits en sandwich ou en salade.",
+    recipe_picture: "upload/falafels.jpg",
+    type_id: "Végan",
+    created_by: "Daniel",
     created_at: new Date(),
   },
   {
-    recipe_id: "97",
-    recipe_name: "Gâteau au chocolat",
+    recipe_name: "Pad Thaï",
     directions: [
       {
-        direction_description:
-          "Préchauffez votre four et mélangez les ingrédients secs dans un bol.",
+        direction_description: "Faites cuire les nouilles de riz.",
         direction_number: 1,
       },
       {
         direction_description:
-          "Ajoutez les ingrédients humides et mélangez jusqu'à obtenir une pâte lisse avant de cuire.",
+          "Sauté de nouilles avec des crevettes, des œufs, et des légumes.",
         direction_number: 2,
+      },
+      {
+        direction_description:
+          "Ajoutez des cacahuètes concassées avant de servir.",
+        direction_number: 3,
+      },
+    ],
+    preparation_time_min: "10",
+    cooking_time_min: "15",
+    isFavorite: true,
+    recipe_description:
+      "Un classique de la cuisine thaïlandaise, riche en saveurs.",
+    recipe_picture: "upload/pad_thai.jpg",
+    type_id: "Thaï",
+    created_by: "Eva",
+    created_at: new Date(),
+  },
+  {
+    recipe_name: "Pizza sans gluten",
+    directions: [
+      {
+        direction_description: "Préparez une pâte à pizza sans gluten.",
+        direction_number: 1,
+      },
+      {
+        direction_description:
+          "Garnissez de sauce tomate, fromage, et vos toppings préférés.",
+        direction_number: 2,
+      },
+      {
+        direction_description:
+          "Faites cuire au four à 220°C pendant 15 minutes.",
+        direction_number: 3,
       },
     ],
     preparation_time_min: "20",
-    cooking_time_min: "35",
-    isFavorite: true,
+    cooking_time_min: "15",
+    isFavorite: false,
     recipe_description:
-      "Un gâteau au chocolat moelleux et riche, idéal pour les amateurs de chocolat.",
-    recipe_picture: "upload/gateau_au_chocolat.jpg",
-    recipe_types: {
-      recipe_type: ["Dessert", "Végétarien"],
-    },
-    created_by: "Clara",
+      "Une pizza savoureuse adaptée aux intolérants au gluten.",
+    recipe_picture: "upload/pizza_sans_gluten.jpg",
+    type_id: "Sans gluten",
+    created_by: "François",
     created_at: new Date(),
   },
 ];
 
 async function insertRecipes() {
   try {
-    const createdRecipes = await Recipe.insertMany(recipe);
+    // C'est pour la génération des types de recettes, à garder jusqu'au prochain commentaire
+    const types = await Type.find({});
+    if (types.length === 0) {
+      throw new Error("Aucun type trouvé.");
+    }
+    const typeIds = types.map((type) => type._id);
+    console.log(typeIds);
+    const modifiedRecipes = recipes.map((recipe) => ({
+      ...recipe,
+      // Remplacez `type_id` par `recipe_types` et assurez-vous que c'est un tableau
+      recipe_types: [typeIds[Math.floor(Math.random() * typeIds.length)]],
+    }));
+    // Fin
+
+    const createdRecipes = await Recipe.insertMany(modifiedRecipes);
     console.log(`Recettes ajoutées avec succès: ${createdRecipes.length}`);
   } catch (error) {
-    console.error(`Erreur lors de l'ajout des recettes:`, error);
+    console.error("Erreur lors de l'ajout des recettes:", error);
   }
 }
+
 module.exports = insertRecipes;

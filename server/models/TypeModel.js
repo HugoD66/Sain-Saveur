@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const typeSchema = new mongoose.Schema({
-  type_id: String,
+  type_id: { type: String, required: true, unique: true },
   type_name: String,
 });
 

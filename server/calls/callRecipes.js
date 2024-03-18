@@ -5,9 +5,9 @@ const publishRecipeCreated = require("../db/redis/subscribeOnCreateRecipe");
 const getRecipe = async (req, res) => {
   try {
     const recipeId = req.params.recipe_id;
-    const user = await Recipe.findById(recipeId).populate("recipe_type");
-    if (user) {
-      res.json(user);
+    const recipe = await Recipe.findById(recipeId).populate("recipe_types");
+    if (recipe) {
+      res.json(recipe);
     } else {
       res.status(404).send("Utilisateur non trouvé.");
     }
@@ -18,7 +18,7 @@ const getRecipe = async (req, res) => {
 };
 const getRecipes = async (req, res) => {
   try {
-    const recipes = await Recipe.find({}).populate("recipe_type");
+    const recipes = await Recipe.find({}).populate("recipe_types");
     console.log(`${recipes.length} recettes récupérées avec succès`);
     res.json(recipes);
   } catch (err) {
