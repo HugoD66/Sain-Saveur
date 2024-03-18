@@ -1,17 +1,13 @@
-import React from 'react';
-import { createBrowserRouter, Navigate } from 'react-router-dom';
-import LoginPage from '../pages/security/LoginPage';
-import HomePage from '../pages/HomePage';
-import Register from '../pages/security/RegisterPage';
-import Logout from '../components/Logout';
-import AddRecipe from '../pages/recipes/AddRecipe';
+import React from "react";
+import { createBrowserRouter, Navigate } from "react-router-dom";
+import LoginPage from "../pages/security/LoginPage";
+import HomePage from "../pages/HomePage";
+import Register from "../pages/security/RegisterPage";
+import Logout from "../components/Logout";
+import AddRecipe from "../pages/recipes/AddRecipe";
 
 const isAuthenticated = (): boolean => {
-  if (localStorage.getItem('token')) {
-    return isAuthenticated();
-  } else {
-    return !isAuthenticated();
-  }
+  return localStorage.getItem("token") !== null;
 };
 
 export const router = createBrowserRouter([
@@ -20,23 +16,23 @@ export const router = createBrowserRouter([
   //   element: isAuthenticated ? <HomePage /> : <Navigate to="/login" />,
   // },
   {
-    path: '/',
+    path: "/",
     element: isAuthenticated() ? <HomePage /> : <Navigate to="/login" />,
   },
   {
-    path: '/login',
+    path: "/login",
     element: <LoginPage />,
   },
   {
-    path: '/register',
+    path: "/register",
     element: <Register />,
   },
   {
-    path: '/add-recipe',
+    path: "/add-recipe",
     element: <AddRecipe />,
   },
   {
-    path: '/logout',
+    path: "/logout",
     element: <Logout />,
   },
 ]);
