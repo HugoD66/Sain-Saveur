@@ -5,10 +5,14 @@ import { CarrousselRecipe } from '../components/CarrousselRecipe';
 import { Recipe } from '../components/Recipe';
 
 interface HomePageProps {
-  onLoginClick: () => void;
+  // onLogoutClick: () => void;
 }
 
-const HomePage: React.FC<HomePageProps> = ({ onLoginClick }) => {
+const HomePage: React.FC<HomePageProps> = ({}) => {
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    // setIsAuthenticated(false);
+  };
   return (
     <div className="homePage">
       <Header />

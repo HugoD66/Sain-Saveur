@@ -1,36 +1,36 @@
-import React, { useState, FC } from "react";
-import logo from "../../logo.svg";
-import { checkPasswordStrength } from "./check-methods/checkPasswordStrength";
+import React, { useState, FC } from 'react';
+import logo from '../../logo.svg';
+import { checkPasswordStrength } from './check-methods/checkPasswordStrength';
+import { useNavigate } from 'react-router';
 
-interface RegisterPageProps {
-  onLoginClick: () => void;
-}
+interface RegisterPageProps {}
 
-const RegisterPage: FC<RegisterPageProps> = ({ onLoginClick }) => {
-  const [email, setEmail] = useState<string>("");
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+const RegisterPage: FC<RegisterPageProps> = ({}) => {
+  const [email, setEmail] = useState<string>('');
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!checkPasswordStrength(password)) {
       alert(
-        "Le mot de passe doit contenir au moins 8 caractères, dont des lettres majuscules et minuscules, des chiffres et des caractères spéciaux.",
+        'Le mot de passe doit contenir au moins 8 caractères, dont des lettres majuscules et minuscules, des chiffres et des caractères spéciaux.'
       );
       return;
     }
 
     try {
       const response = await fetch(
-        "http://localhost:4700/api/security/register",
+        'http://localhost:4700/api/security/register',
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({ email, username, password }),
-        },
+        }
       );
 
       if (!response.ok) {
@@ -39,8 +39,8 @@ const RegisterPage: FC<RegisterPageProps> = ({ onLoginClick }) => {
 
       const data = await response.json();
 
-      localStorage.setItem("token", data.token);
-      console.log("Enregistrement réussi, token:", data.token);
+      localStorage.setItem('token', data.token);
+      console.log('Enregistrement réussi, token:', data.token);
       //TODO: Redirection page ?
     } catch (error) {
       console.error("Erreur lors de l'envoi des données", error);
@@ -85,10 +85,10 @@ const RegisterPage: FC<RegisterPageProps> = ({ onLoginClick }) => {
           </button>
         </form>
         <p className="login-prompt">
-          Si vous avez déjà un compte,{" "}
-          <span className="login-link" onClick={onLoginClick}>
+          Si vous avez déjà un compte,{' '}
+          <span className="login-link" onClick={() => navigate('/login')}>
             cliquez ici
-          </span>{" "}
+          </span>{' '}
           pour vous connecter.
         </p>
       </div>

@@ -5,10 +5,11 @@ import './App.css';
 import { fetchRecipes, fetchRecipe } from './calls/sqlite/recipe';
 import { fetchUser, fetchUsers } from './calls/sqlite/user';
 import HomePage from './pages/HomePage';
+import { RouterProvider } from 'react-router-dom';
+import ReactDOM from 'react-dom';
+import { router } from './Router/router';
 
 const App: React.FC = () => {
-  const [isSigningUp, setIsSigningUp] = useState(false);
-
   useEffect(() => {
     fetchRecipes()
       .then((data) => console.log(data))
@@ -27,15 +28,8 @@ const App: React.FC = () => {
       .catch((error) => console.error(error));
   }, []);
 
-  return (
-    <div className="App">
-      {isSigningUp ? (
-        <LoginPage onRegisterClick={() => setIsSigningUp(false)} />
-      ) : (
-        <HomePage onLoginClick={() => setIsSigningUp(true)} />
-      )}
-    </div>
-  );
+  return <RouterProvider router={router} />;
 };
 
+ReactDOM.render(<App />, document.getElementById('root'));
 export default App;
