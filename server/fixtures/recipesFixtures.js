@@ -198,7 +198,6 @@ async function insertRecipes() {
     console.log(typeIds);
     const modifiedRecipes = recipes.map((recipe) => ({
       ...recipe,
-      // Remplacez `type_id` par `recipe_types` et assurez-vous que c'est un tableau
       recipe_types: [typeIds[Math.floor(Math.random() * typeIds.length)]],
     }));
     // Fin

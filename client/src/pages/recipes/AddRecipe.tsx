@@ -22,6 +22,7 @@ const AddRecipe = () => {
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
+    console.log(name, value);
     setRecipe((prevRecipe) => ({
       ...prevRecipe,
       [name]: value,
@@ -30,15 +31,15 @@ const AddRecipe = () => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
+    console.log(recipe.recipe_types);
+    const test = types.map((type) => type.type_name);
+    console.log(test);
 
-    const selectedType = types.find(
-      (type) => type.type_name === recipe.recipe_types,
-    );
-
-    // Si on ne trouve pas le type, on peut lancer une erreur ou gérer ce cas spécifique
+    const selectedType = types.find((type) => type._id === recipe.recipe_types);
+    console.log(selectedType);
     if (!selectedType) {
       console.error("Type de recette non trouvé.");
-      return; // Stoppe la fonction
+      return;
     }
 
     // Création de l'objet FormData
@@ -48,7 +49,7 @@ const AddRecipe = () => {
     formData.append("recipe_description", recipe.description);
     formData.append("recipe_name", recipe.recipe_name);
 
-    formData.append("recipe_types", selectedType._id);
+    formData.append("recipe_types", recipe.recipe_types);
 
     // Accès au fichier sélectionné par l'utilisateur
     // Assurez-vous que l'input de type file ait l'attribut 'id' ou 'ref' pour y accéder
@@ -65,17 +66,16 @@ const AddRecipe = () => {
     try {
       const response = await fetch("http://localhost:4700/api/recipes/add", {
         method: "POST",
-        body: formData, // Pas besoin de définir 'Content-Type' ici
+        body: formData,
       });
       if (!response.ok) {
         throw new Error("Réponse réseau non OK");
       }
       const responseData = await response.json();
       console.log("Recette ajoutée avec succès:", responseData);
-      // Redirection ou mise à jour de l'UI ici
+      // REDIRECTION
     } catch (error) {
       console.error("Erreur lors de l'envoi du formulaire:", error);
-      // Gérer l'erreur ici
     }
   };
 

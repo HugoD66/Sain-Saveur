@@ -17,8 +17,6 @@ const recipeSchema = new mongoose.Schema({
   isFavorite: Boolean,
   recipe_description: String,
   recipe_picture: String,
-  // ??? recipe_type: { type: Schema.Types.ObjectId, ref: "Type" },
-  // ??? type_id: { type: String, ref: 'Type', required: true },
   recipe_types: [{ type: mongoose.Schema.Types.ObjectId, ref: "Type" }],
 });
 
