@@ -3,7 +3,7 @@
 // ----------- GET ----------- //
 
 export const fetchRecipe = (recipeId: number) => {
-  return fetch(`http://localhost:5000/api/recipe/${recipeId}`)
+  return fetch(`http://localhost:4700/api/recipe/${recipeId}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Réponse réseau non OK");
@@ -17,7 +17,7 @@ export const fetchRecipe = (recipeId: number) => {
 };
 
 export const fetchRecipes = () => {
-  return fetch("http://localhost:5000/api/recipes")
+  return fetch("http://localhost:4700/api/recipes")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Réponse réseau non OK");
@@ -33,7 +33,7 @@ export const fetchRecipes = () => {
 // ----------- REMOVE ----------- //
 
 export const removeRecipe = (recipeId: number) => {
-  return fetch(`http://localhost:5000/api/recipe/${recipeId}`, {
+  return fetch(`http://localhost:4700/api/recipe/${recipeId}`, {
     method: "DELETE",
   })
     .then((response) => {
@@ -49,7 +49,7 @@ export const removeRecipe = (recipeId: number) => {
 };
 
 export const removeRecipes = () => {
-  return fetch("http://localhost:5000/api/recipes", {
+  return fetch("http://localhost:4700/api/recipes", {
     method: "DELETE",
   })
     .then((response) => {

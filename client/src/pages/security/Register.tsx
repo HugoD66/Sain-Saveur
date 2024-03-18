@@ -23,7 +23,7 @@ const RegisterPage: FC<RegisterPageProps> = ({ onLoginClick }) => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/security/register",
+        "http://localhost:4700/api/security/register",
         {
           method: "POST",
           headers: {
