@@ -4,8 +4,8 @@ const { generateToken } = require('./tokenService');
 
 const loginUser = async (req, res) => {
   try {
-    // console.log('loginUser!!!');
-    // console.log(req.body);
+    console.log('loginUser!!!');
+    console.log(req.body);
     const { username, password } = req.body;
 
     if (!username || !password) {

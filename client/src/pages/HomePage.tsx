@@ -4,15 +4,9 @@ import { Searchbar } from '../components/Searchbar';
 import { CarrousselRecipe } from '../components/CarrousselRecipe';
 import { Recipe } from '../components/Recipe';
 
-interface HomePageProps {
-  // onLogoutClick: () => void;
-}
+interface HomePageProps {}
 
-const HomePage: React.FC<HomePageProps> = ({}) => {
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    // setIsAuthenticated(false);
-  };
+const HomePage: React.FC<HomePageProps> = () => {
   return (
     <div className="homePage">
       <Header />
