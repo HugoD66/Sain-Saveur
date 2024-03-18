@@ -1,3 +1,293 @@
+:root {
+  --white-font-color: #ffffff;
+  --black-font-color: #000000;
+  --light-green-color: #27bf3b;
+  --dark-green-color: #176f22;
+  --white-color: #ffffff;
+  --black-color: #000000;
+}
+
+/* ------------------------ HEADER -------------------------- */
+
+.header {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  background-color: var(--white-color);
+  color: var(--black-font-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.logoPannel {
+  display: flex;
+  flex-shrink: 1;
+  width: fit-content;
+  width: 10%;
+  align-items: center;
+  justify-content: center;
+}
+
+.header img {
+  width: 30%;
+  margin-left: 4%;
+}
+
+.pagePannel {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.header p {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--black-font-color);
+}
+
+.loginPannel {
+  display: flex;
+  justify-content: space-evenly;
+  margin-right: 8px;
+  width: 15%;
+}
+
+.header button {
+  border-radius: 15px;
+  border: 2px solid var(--light-green-color);
+  box-sizing: border-box;
+  background-color: transparent;
+  color: var(--black-font-color);
+  font-size: 16px;
+  font-weight: bold;
+  align-items: center;
+  height: 3rem;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.header button:hover {
+  background-color: var(--light-green-color);
+  transform: translateY(-2px);
+}
+
+.header .inputForm {
+  border-radius: 10px;
+  border: 1px solid grey;
+  width: auto;
+  margin-right: 20px;
+  width: 20%;
+}
+
+.header .searchIcon {
+  width: 30px;
+  height: 30px;
+  padding-left: 0px;
+  margin-left: 0px;
+}
+
+/* ------------------------ SEARCHBAR -------------------------- */
+
+.searchbar {
+  display: flex;
+  flex-direction: column;
+  /* padding: 10px; */
+  background-image: url('assets/background2.jpg');
+  background-size: cover;
+  background-position: center;
+  /* background-repeat: no-repeat; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40rem;
+}
+
+.titleSearchbar {
+  color: var(--white-font-color);
+  font-size: 48px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.inputForm {
+  border-radius: 10px;
+  /* border: 1px solid var(--black-color); */
+  background-color: var(--white-color);
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  /* width: 50%; */
+}
+
+.searchIcon {
+  width: 30px;
+  height: 30px;
+  padding-left: 10px;
+}
+
+.inputBar {
+  flex-grow: 1;
+  height: 100%;
+  outline: none;
+  /* padding: 16px; */
+  padding-left: 8px;
+  border: hidden;
+  font-size: 16px;
+}
+
+.inputBar:focus {
+  outline: none;
+}
+
+.searchButton {
+  border-radius: 10px;
+  border: 2px solid var(--light-green-color);
+  box-sizing: border-box;
+  background-color: var(--light-green-color);
+  color: var(--black-font-color);
+  font-size: 16px;
+  font-weight: bold;
+  align-items: center;
+  height: auto;
+  padding: 10px;
+}
+
+.searchButton:hover {
+  background-color: transparent;
+}
+
+/* ------------------------ CARROUSSEL --------------------------  */
+
+.carrousselRecipe {
+}
+
+/* ------------------------ TITLECATEGORY --------------------------  */
+
+.titleCategory {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  margin-left: 4%;
+  padding: 20px 20px 0px 20px;
+  font-weight: bold;
+  font-size: 24px;
+  color: var(--black-font-color);
+}
+
+/* ------------------------ RECIPECARD --------------------------  */
+
+.card {
+  position: relative;
+  width: 224px;
+  height: 254px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  color: #232323;
+  padding: 16px;
+  transition: all 0.5s ease-in-out;
+  overflow: hidden;
+  margin: 10px 15px 10px 15px;
+  background-image: url('assets/background.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.card-hidden {
+  display: flex;
+  transform: translateY(200%);
+  flex-direction: column;
+  gap: 0.5rem;
+  transition:
+    transform 0.5s ease-in,
+    opacity 0.3s ease-in;
+  opacity: 0;
+}
+
+/*Hovers*/
+.card:hover {
+  transform: translate(-15px, -15px);
+  border-color: #5bc0eb;
+}
+
+.card:hover .card-hidden {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.card:hover .title {
+  transform: translateY(200%);
+}
+
+/*Text*/
+.title {
+  position: absolute;
+  bottom: 1rem;
+  font-weight: 700;
+  font-size: 1.5rem;
+  transition: transform 0.25s ease-out;
+}
+
+.title-in {
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.styles-module_slider__o0fqa {
+  padding-top: 20px;
+  margin: 0 5% 0 5%;
+}
+
+/*Button*/
+.button {
+  display: inline-flex;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 24px;
+  font-weight: 600;
+  background-color: var(--light-green-color);
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.button:hover {
+  background-color: var(--dark-green-color);
+}
+
+.recipe-image {
+  width: 100%;
+  height: auto;
+  /* border-radius: 8px 8px 0 0; */
+  object-fit: cover;
+}
+
+/* ------------------------ RECIPE --------------------------  */
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(6, 31ch);
+  margin: 0 5% 0 5%;
+  gap: 20px;
+  padding-top: 20px;
+}
+
+@media (max-width: 1200px) {
+  .cards-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .cards-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ------------------------ APP -------------------------- */
+
 .App {
   text-align: center;
 }
