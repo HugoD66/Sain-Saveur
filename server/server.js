@@ -6,6 +6,7 @@ const initMongo = require("./db/mongoDB/mongoSetup");
 const recipeRoutes = require("./routes/recipeRoutes");
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
+const typeRoutes = require("./routes/typeRoutes");
 const fixturesRoutes = require("./routes/fixturesRoutes");
 
 const cors = require("cors");
@@ -17,6 +18,7 @@ const PORT = process.env.PORT || 4700;
 app.use(bodyParser.json());
 app.use(cors());
 
+app.use("/api/recipes-type", typeRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/recipes", recipeRoutes);
 app.use("/api/security", authRoutes);

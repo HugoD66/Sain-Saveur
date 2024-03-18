@@ -4,7 +4,7 @@ const publishRecipeCreated = require("../db/redis/subscribeOnCreateRecipe");
 
 const getRecipe = async (req, res) => {
   try {
-    const recipeId = req.params.userId;
+    const recipeId = req.params.recipe_id;
     const user = await Recipe.findById(recipeId);
     if (user) {
       res.json(user);
