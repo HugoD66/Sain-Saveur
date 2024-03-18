@@ -74,11 +74,38 @@ const removeAllRecipes = async (req, res) => {
     res.status(500).send("Erreur interne du serveur");
   }
 };
+const updateRecipe = async (req, res) => {
+  try {
+    const recipeId = req.params.recipeId;
+    const updateData = req.body;
+
+    // La méthode findByIdAndUpdate prend l'ID de la recette, les données de mise à jour,
+    // et un objet d'options où new: true retourne le document mis à jour.
+    const updatedRecipe = await Recipe.findByIdAndUpdate(recipeId, updateData, {
+      new: true,
+      runValidators: true, // Cela permet d'appliquer les validations définies dans le schéma
+    });
+
+    if (!updatedRecipe) {
+      return res.status(404).send("Recette non trouvée.");
+    }
+
+    console.log(`Recette ${recipeId} mise à jour avec succès`);
+    res.json(updatedRecipe);
+  } catch (err) {
+    console.error(err);
+    if (err.name === "ValidationError") {
+      return res.status(400).send("Validation Error");
+    }
+    res.status(500).send("Erreur interne du serveur");
+  }
+};
 
 module.exports = {
   getRecipe,
   getRecipes,
   addRecipe,
+  updateRecipe,
   removeRecipe,
   removeAllRecipes,
 };
