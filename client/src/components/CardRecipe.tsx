@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 interface CardRecipeProps {
   name: string;
@@ -7,8 +9,13 @@ interface CardRecipeProps {
 }
 
 export const CardRecipe: React.FC<CardRecipeProps> = ({ name }) => {
+  useEffect(() => {
+    AOS.init({
+      duration: 2000,
+    });
+  }, []);
   return (
-    <div className="card">
+    <div data-aos="fade-up" className="card">
       {/* <img
         src={'../assets/background2.jpg'} //image
         alt={name}

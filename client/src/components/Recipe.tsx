@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TitleCategory from './TitleCategory';
 import { CardRecipe } from './CardRecipe';
 
@@ -32,12 +32,7 @@ export const Recipe = () => {
       <TitleCategory title={'Nos Recettes'} />
       <div className="cards-container">
         {recipes.map((recipe, index) => (
-          <CardRecipe
-            data-aos="fade-up"
-            data-aos-duration="3000"
-            key={index}
-            name={recipe.name}
-          />
+          <CardRecipe key={index} name={recipe.name} />
         ))}
       </div>
     </div>
