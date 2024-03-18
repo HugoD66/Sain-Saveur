@@ -33,7 +33,7 @@
     "start:subscribe": "node server/calls/subscribeOnCreateRecipe.js",
     "starts:all": "cd server && node server.js"
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "http://localhost:4700",
   "devDependencies": {
     "@types/aos": "^3.0.7",
     "@types/react-slick": "^0.23.13",
