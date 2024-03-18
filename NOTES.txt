@@ -7,7 +7,7 @@ Pour lancer le projet, il faut lancer les commandes suivantes :
  yarn starts (lancer le serveur, et generation des "fixtures")
 
  nouveau terminal,
- yarn startf (lancer le front, la requete se fera sur le port 5000)
+ yarn startf (lancer le front, la requete se fera sur le port 4700)
 
 
 -------------------------------------
