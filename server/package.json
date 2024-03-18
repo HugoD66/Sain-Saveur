@@ -17,6 +17,7 @@
     "ioredis": "^5.3.2",
     "mongodb": "^6.4.0",
     "mongoose": "^8.2.1",
+    "multer": "^1.4.5-lts.1",
     "redis": "^4.6.13",
     "sqlite3": "^5.1.7",
     "typescript": "^5.3.3"

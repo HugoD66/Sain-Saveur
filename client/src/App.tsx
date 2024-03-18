@@ -1,12 +1,12 @@
-import './App.css';
-import { RouterProvider } from 'react-router-dom';
+import "./App.css";
+import { RouterProvider } from "react-router-dom";
 // import ReactDOM from 'react-dom';
-import { router } from './Router/router';
-import * as ReactDOM from 'react-dom/client';
+import { router } from "./Router/router";
+import * as ReactDOM from "react-dom/client";
 
-import React, { useEffect } from 'react';
-import { fetchRecipes, fetchRecipe } from './calls/sqlite/recipe';
-import { fetchUser, fetchUsers } from './calls/sqlite/user';
+import React, { useEffect } from "react";
+import { fetchRecipes, fetchRecipe } from "./calls/mongo/recipe";
+import { fetchUser, fetchUsers } from "./calls/mongo/user";
 
 const App: React.FC = () => {
   useEffect(() => {

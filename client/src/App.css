@@ -423,8 +423,9 @@
       margin: 2%;
       display: flex;
       align-items: center;
-      justify-content: center;
-      flex-direction: column;
+      width: 90%;
+      justify-content: space-between;
+      flex-direction: row;
     }
     input {
       margin: 2%;

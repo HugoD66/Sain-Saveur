@@ -32,15 +32,19 @@ const getRecipes = async (req, res) => {
 const addRecipe = async (req, res) => {
   try {
     const recipeData = req.body;
-    console.log(`recipeData: ${recipeData}`);
-    //if (!recipeData.recipe_name || recipeData.ingredients.length === 0) {
-    //  return res.status(400).json({
-    //    error: "Des informations essentielles sur la recette manquent.",
-    //  });
-    //}
+
+    if (req.file) {
+      console.log(`Photo téléchargée à l'emplacement : ${req.file.path}`);
+      recipeData.recipe_picture = req.file.path;
+    }
+
     const newRecipe = new Recipe(recipeData);
     const savedRecipe = await newRecipe.save();
 
+    console.log("newrecipe");
+    console.log(newRecipe);
+    console.log("savedrecipe");
+    console.log(savedRecipe);
     res.status(201).json(savedRecipe);
     await publishRecipeCreated(savedRecipe.recipe_name);
   } catch (err) {
