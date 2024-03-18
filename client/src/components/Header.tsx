@@ -1,7 +1,7 @@
 import React from "react";
 import Logo from "../logo.svg";
 import searchIcon from "../assets/searchIcon.svg";
-//import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
   return (
@@ -10,7 +10,11 @@ export const Header = () => {
         <img className="logo" src={Logo} alt="Logo" />
         <p className="logoName">Sain Saveur</p>
       </div>
-      <div className="pagePannel"></div>
+      <div className="pagePannel">
+        <Link to="/add-recipe">
+          <button className="add-recipe">TEMP ADD RECIPE</button>
+        </Link>
+      </div>
       <div className="inputForm">
         <img className="searchIcon" src={searchIcon} alt="searchIcon" />
         <input
@@ -26,8 +30,3 @@ export const Header = () => {
     </div>
   );
 };
-/*
- <Link to="/add-button">
-          <button className="add-recipe">TEMP ADD RECIPE</button>
-        </Link>
- */

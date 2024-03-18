@@ -1,28 +1,32 @@
-import React from 'react';
-import { createBrowserRouter, Navigate } from 'react-router-dom';
-import LoginPage from '../pages/security/LoginPage';
-import HomePage from '../pages/HomePage';
-import Register from '../pages/security/Register';
-import Logout from '../components/Logout';
+import React from "react";
+import { createBrowserRouter, Navigate } from "react-router-dom";
+import LoginPage from "../pages/security/LoginPage";
+import HomePage from "../pages/HomePage";
+import Register from "../pages/security/Register";
+import Logout from "../components/Logout";
+import AddRecipe from "../pages/recipes/AddRecipe";
 
-const isAuthenticated = () => !!localStorage.getItem('token');
+const isAuthenticated = () => !!localStorage.getItem("token");
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: isAuthenticated() ? <HomePage /> : <Navigate to="/login" />,
   },
   {
-    path: '/login',
-    element: !isAuthenticated() ? <LoginPage /> : <Navigate to="/" />,
+    path: "/login",
+    element: <LoginPage />,
   },
   {
-    path: '/register',
-    element: !isAuthenticated() ? <Register /> : <Navigate to="/" />,
+    path: "/register",
+    element: <Register />,
   },
-
   {
-    path: '/logout',
+    path: "/add-recipe",
+    element: !isAuthenticated() ? <AddRecipe /> : <Navigate to="/" />,
+  },
+  {
+    path: "/logout",
     element: <Logout />,
   },
 ]);

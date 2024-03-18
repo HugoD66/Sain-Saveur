@@ -28,6 +28,12 @@ const App: React.FC = () => {
     //  .catch((error) => console.error(error));
   }, []);
 
+  if (localStorage.getItem("token")) {
+    console.log("coucou");
+    console.log(localStorage.getItem("token"));
+  } else {
+    console.log("azea");
+  }
   return <RouterProvider router={router} />;
 };
 
