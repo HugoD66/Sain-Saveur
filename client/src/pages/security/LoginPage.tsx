@@ -25,8 +25,8 @@ const LoginPage: React.FC<LoginPageProps> = ({}) => {
         body: JSON.stringify({ username, password }),
       });
 
-      // console.log('loginUser');
-      // console.log(response);
+      console.log('loginUser');
+      console.log(response);
       const data = await response.json();
       console.log(data);
 

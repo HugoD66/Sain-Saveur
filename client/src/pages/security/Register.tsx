@@ -41,7 +41,7 @@ const RegisterPage: FC<RegisterPageProps> = ({}) => {
 
       localStorage.setItem('token', data.token);
       console.log('Enregistrement réussi, token:', data.token);
-      //TODO: Redirection page ?
+      navigate('/Login');
     } catch (error) {
       console.error("Erreur lors de l'envoi des données", error);
       alert("Une erreur est survenue lors de l'enregistrement.");
