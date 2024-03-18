@@ -23,6 +23,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/recipes", recipeRoutes);
 app.use("/api/security", authRoutes);
 app.use("/api/fixtures", fixturesRoutes);
+app.use("/api/types", typeRoutes);
 
 initMongo().catch(console.error);
 

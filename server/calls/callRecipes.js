@@ -5,7 +5,7 @@ const publishRecipeCreated = require("../db/redis/subscribeOnCreateRecipe");
 const getRecipe = async (req, res) => {
   try {
     const recipeId = req.params.recipe_id;
-    const user = await Recipe.findById(recipeId);
+    const user = await Recipe.findById(recipeId).populate("recipe_type");
     if (user) {
       res.json(user);
     } else {
@@ -18,7 +18,7 @@ const getRecipe = async (req, res) => {
 };
 const getRecipes = async (req, res) => {
   try {
-    const recipes = await Recipe.find({});
+    const recipes = await Recipe.find({}).populate("recipe_type");
     console.log(`${recipes.length} recettes récupérées avec succès`);
     res.json(recipes);
   } catch (err) {
