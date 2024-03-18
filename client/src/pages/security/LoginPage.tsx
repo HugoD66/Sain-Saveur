@@ -17,7 +17,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onRegisterClick }) => {
       return;
     }
     try {
-      const response = await fetch("http://localhost:5000/api/security/login", {
+      const response = await fetch("http://localhost:4700/api/security/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

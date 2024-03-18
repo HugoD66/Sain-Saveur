@@ -31,7 +31,7 @@ export const fetchExternalRecipes = async (): Promise<Recipe[]> => {
 
 
 export const fetchLocalRecipes = async (): Promise<Recipe[]> => {
-  const baseUrl = "http://localhost:5000/api/recipes"; 
+  const baseUrl = "http://localhost:4700/api/recipes"; 
 
   try {
     const response = await fetch(baseUrl, {
@@ -57,7 +57,7 @@ export const fetchLocalRecipes = async (): Promise<Recipe[]> => {
 // ----------- REMOVE ----------- //
 
 export const removeRecipe = (recipeId: number) => {
-  return fetch(`http://localhost:5000/api/recipe/${recipeId}`, {
+  return fetch(`http://localhost:4700/api/recipe/${recipeId}`, {
     method: "DELETE",
   })
     .then((response) => {
@@ -73,7 +73,7 @@ export const removeRecipe = (recipeId: number) => {
 };
 
 export const removeRecipes = () => {
-  return fetch("http://localhost:5000/api/recipes", {
+  return fetch("http://localhost:4700/api/recipes", {
     method: "DELETE",
   })
     .then((response) => {
