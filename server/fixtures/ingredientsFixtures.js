@@ -126,10 +126,10 @@ async function insertIngredients() {
   try {
     const createdIngredients = await Ingredient.insertMany(ingredients);
     console.log(
-      `${createdIngredients.length} types de plats différents ont été créés avec succès.`,
+      `${createdIngredients.length} types d'ingrédients ont été créés avec succès.`,
     );
   } catch (error) {
-    console.log("erreur");
+    console.error("Erreur lors de l'insertion des ingrédients :", error);
   }
 }
-module.exports = insertIngredients();
+module.exports = insertIngredients;

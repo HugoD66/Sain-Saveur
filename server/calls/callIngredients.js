@@ -61,3 +61,11 @@ const removeIngredients = async (req, res) => {
     res.status(500).send("Erreur serveur");
   }
 };
+
+module.exports = {
+  getIngredient,
+  getIngredients,
+  addIngredient,
+  removeIngredient,
+  removeIngredients,
+};
