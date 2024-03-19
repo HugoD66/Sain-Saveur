@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { addRecipe } from "../../calls/mongo/recipe";
 import { fetchTypes } from "../../calls/mongo/type";
 import { TypeModel } from "../../models/Type";
+import { IngredientModel } from "../../models/Ingredient";
+import { fetchIngredients } from "../../calls/mongo/ingredient";
 
 const AddRecipe = () => {
   const [recipe, setRecipe] = useState({
@@ -14,12 +16,26 @@ const AddRecipe = () => {
     recipe_directions: [{ direction_description: "", direction_number: 1 }],
   });
   const [types, setTypes] = useState<TypeModel[]>([]);
+  const [ingredients, setIngredients] = useState<IngredientModel[]>([]);
+  const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
+
+  useEffect(() => {
+    fetchIngredients().then(setIngredients).catch(console.error);
+  }, []);
 
   useEffect(() => {
     fetchTypes()
       .then((data: TypeModel[]) => setTypes(data))
       .catch(console.error);
   }, []);
+
+  const handleIngredientChange = (ingredientId: any) => {
+    setSelectedIngredients((prev: any[]): any[] =>
+      prev.includes(ingredientId)
+        ? prev.filter((id): boolean => id !== ingredientId)
+        : [...prev, ingredientId],
+    );
+  };
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -77,6 +93,8 @@ const AddRecipe = () => {
       "recipe_directions",
       JSON.stringify(recipe.recipe_directions),
     );
+    formData.append("recipe_ingredients", JSON.stringify(selectedIngredients));
+    console.log(JSON.stringify(selectedIngredients));
 
     const fileInput = document.querySelector(
       'input[type="file"]',
@@ -86,7 +104,6 @@ const AddRecipe = () => {
       // @ts-ignore
       formData.append("recipe_picture", fileInput.files[0]);
     }
-
     try {
       const response = await fetch("http://localhost:4700/api/recipes/add", {
         method: "POST",
@@ -162,6 +179,24 @@ const AddRecipe = () => {
             <button type="button" onClick={addDirection}>
               Ajouter une étape
             </button>
+          </div>
+
+          <div>
+            <h3>Ingrédients</h3>
+            {ingredients.map((ingredient: any) => (
+              <div key={ingredient._id}>
+                <input
+                  type="checkbox"
+                  id={ingredient._id}
+                  name="recipe_ingredients"
+                  value={ingredient._id}
+                  onChange={() => handleIngredientChange(ingredient._id)}
+                />
+                <label htmlFor={ingredient._id}>
+                  {ingredient.ingredient_name}
+                </label>
+              </div>
+            ))}
           </div>
 
           <label>

@@ -8,7 +8,9 @@ const getRecipe = async (req, res) => {
   try {
     const recipeId = req.params.recipe_id;
     console.log(recipe);
-    const recipe = await Recipe.findById(recipeId).populate("recipe_types");
+    const recipe = await Recipe.findById(recipeId)
+      .populate("recipe_types")
+      .populate("recipe_ingredients");
     console.log(recipe);
 
     if (recipe) {
@@ -23,7 +25,9 @@ const getRecipe = async (req, res) => {
 };
 const getRecipes = async (req, res) => {
   try {
-    const recipes = await Recipe.find({}).populate("recipe_types");
+    const recipes = await Recipe.find({})
+      .populate("recipe_types")
+      .populate("recipe_ingredients");
     console.log(`${recipes.length} recettes récupérées avec succès`);
     res.json(recipes);
   } catch (err) {
@@ -43,8 +47,10 @@ const addRecipe = async (req, res) => {
     if (typeof recipeData.recipe_directions === "string") {
       recipeData.recipe_directions = JSON.parse(recipeData.recipe_directions);
     }
-
-    console.log("recipeData parsé : ");
+    if (typeof recipeData.recipe_ingredients === "string") {
+      recipeData.recipe_ingredients = JSON.parse(recipeData.recipe_ingredients);
+    }
+    console.log("recipeData parsé DIRECTIONS : ");
     console.log(recipeData.recipe_directions);
 
     // Traitement de l'image
@@ -57,6 +63,9 @@ const addRecipe = async (req, res) => {
     if (!Array.isArray(recipeData.recipe_types)) {
       recipeData.recipe_types = [recipeData.recipe_types];
     }
+    recipeData.recipe_ingredients = Array.isArray(recipeData.recipe_ingredients)
+      ? recipeData.recipe_ingredients
+      : [recipeData.recipe_ingredients];
 
     for (const typeId of recipeData.recipe_types) {
       const typeExists = await Type.findById(typeId);
