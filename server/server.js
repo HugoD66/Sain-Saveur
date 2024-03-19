@@ -7,6 +7,7 @@ const recipeRoutes = require("./routes/recipeRoutes");
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
 const typeRoutes = require("./routes/typeRoutes");
+const ingredientRoutes = require("./routes/ingredientsRoutes");
 const fixturesRoutes = require("./routes/fixturesRoutes");
 
 const cors = require("cors");
@@ -24,6 +25,7 @@ app.use("/api/recipes", recipeRoutes);
 app.use("/api/security", authRoutes);
 app.use("/api/fixtures", fixturesRoutes);
 app.use("/api/types", typeRoutes);
+app.use("/api/ingredients", ingredientRoutes);
 
 initMongo().catch(console.error);
 

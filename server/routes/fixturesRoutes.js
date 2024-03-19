@@ -3,6 +3,7 @@ const router = express.Router();
 const insertRecipes = require("../fixtures/recipesFixtures");
 const insertUsers = require("../fixtures/userFixtures");
 const insertTypes = require("../fixtures/typesFixtures");
+const insertIngredients = require("../fixtures/ingredientsFixtures");
 
 router.post("/recipes", async (req, res) => {
   try {
@@ -33,6 +34,16 @@ router.post("/types", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send("Erreur lors de l'insertion des types de recettes.");
+  }
+});
+
+router.post("/ingredients", async (req, res) => {
+  try {
+    await insertIngredients();
+    res.send("Les ingredients  ont été insérés avec succès.");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Erreur lors de l'insertion des ingredients.");
   }
 });
 

@@ -34,29 +34,6 @@ const getRecipes = async (req, res) => {
 
 // -------------- POST ---------------- //
 
-/*const addRecipe = async (req, res) => {
-  try {
-    const recipeData = req.body;
-
-    if (req.file) {
-      console.log(`Photo téléchargée à l'emplacement : ${req.file.path}`);
-      recipeData.recipe_picture = req.file.path;
-    }
-
-    const newRecipe = new Recipe(recipeData);
-    const savedRecipe = await newRecipe.save();
-
-    console.log("newrecipe");
-    console.log(newRecipe);
-    console.log("savedrecipe");
-    console.log(savedRecipe);
-    res.status(201).json(savedRecipe);
-    await publishRecipeCreated(savedRecipe.recipe_name);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Erreur interne du serveur");
-  }
-};*/
 const addRecipe = async (req, res) => {
   try {
     let recipeData = req.body;
@@ -69,7 +46,8 @@ const addRecipe = async (req, res) => {
 
     console.log("recipeData parsé : ");
     console.log(recipeData.recipe_directions);
-    // Traitement de l'image, si présente
+
+    // Traitement de l'image
     if (req.file) {
       console.log(`Photo téléchargée à l'emplacement : ${req.file.path}`);
       recipeData.recipe_picture = req.file.path;
@@ -80,7 +58,6 @@ const addRecipe = async (req, res) => {
       recipeData.recipe_types = [recipeData.recipe_types];
     }
 
-    // Vérification de l'existence des types de recettes
     for (const typeId of recipeData.recipe_types) {
       const typeExists = await Type.findById(typeId);
       if (!typeExists) {
@@ -89,24 +66,6 @@ const addRecipe = async (req, res) => {
           .send(`Type de recette non trouvé pour l'ID : ${typeId}`);
       }
     }
-
-    /*
-    // Ajout des directions si présentes
-    if (
-      recipeData.recipe_directions &&
-      Array.isArray(recipeData.recipe_directions)
-    ) {
-      recipeData.recipe_directions = recipeData.recipe_directions.map(
-        (dir, index) => ({
-          direction_description: dir.direction_description,
-          direction_number: index + 1,
-        }),
-      );
-    } else {
-      recipeData.recipe_directions = [];
-    }
-
- */
 
     const newRecipe = new Recipe({
       ...recipeData,
