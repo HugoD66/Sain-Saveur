@@ -11,6 +11,7 @@ const AddRecipe = () => {
     recipe_name: "",
     recipe_types: "",
     recipe_picture: "",
+    recipe_directions: [{ direction_description: "", direction_number: 1 }],
   });
   const [types, setTypes] = useState<TypeModel[]>([]);
 
@@ -22,18 +23,42 @@ const AddRecipe = () => {
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setRecipe((prevRecipe) => ({
       ...prevRecipe,
       [name]: value,
     }));
   };
 
+  // Gestion des changements spécifiquement pour les directions
+  const handleDirectionChange = (index: any, value: any) => {
+    const newDirections = [...recipe.recipe_directions];
+    newDirections[index] = {
+      ...newDirections[index],
+      direction_description: value,
+    };
+    setRecipe((prevRecipe) => ({
+      ...prevRecipe,
+      recipe_directions: newDirections,
+    }));
+  };
+
+  // Ajout d'une nouvelle direction
+  const addDirection = () => {
+    setRecipe((prevRecipe) => ({
+      ...prevRecipe,
+      recipe_directions: [
+        ...prevRecipe.recipe_directions,
+        {
+          direction_description: "",
+          direction_number: prevRecipe.recipe_directions.length + 1,
+        },
+      ],
+    }));
+  };
+
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     console.log(recipe.recipe_types);
-    const test = types.map((type) => type.type_name);
-    console.log(test);
 
     const selectedType = types.find((type) => type._id === recipe.recipe_types);
     console.log(selectedType);
@@ -42,17 +67,17 @@ const AddRecipe = () => {
       return;
     }
 
-    // Création de l'objet FormData
     const formData = new FormData();
     formData.append("cooking_time_min", recipe.cooking_time_min);
     formData.append("preparation_time_min", recipe.preparation_time_min);
     formData.append("recipe_description", recipe.description);
     formData.append("recipe_name", recipe.recipe_name);
-
     formData.append("recipe_types", recipe.recipe_types);
+    formData.append(
+      "recipe_directions",
+      JSON.stringify(recipe.recipe_directions),
+    );
 
-    // Accès au fichier sélectionné par l'utilisateur
-    // Assurez-vous que l'input de type file ait l'attribut 'id' ou 'ref' pour y accéder
     const fileInput = document.querySelector(
       'input[type="file"]',
     ) as HTMLInputElement;
@@ -62,7 +87,6 @@ const AddRecipe = () => {
       formData.append("recipe_picture", fileInput.files[0]);
     }
 
-    console.log(recipe);
     try {
       const response = await fetch("http://localhost:4700/api/recipes/add", {
         method: "POST",
@@ -121,6 +145,24 @@ const AddRecipe = () => {
               onChange={handleChange}
             />
           </label>
+
+          <div>
+            <h3>Directions</h3>
+            {recipe.recipe_directions.map((direction, index) => (
+              <div key={index}>
+                <input
+                  type="text"
+                  name={`direction_description_${index}`}
+                  value={direction.direction_description}
+                  onChange={(e) => handleDirectionChange(index, e.target.value)}
+                  placeholder={`Step ${index + 1}`}
+                />
+              </div>
+            ))}
+            <button type="button" onClick={addDirection}>
+              Ajouter une étape
+            </button>
+          </div>
 
           <label>
             Type de plat

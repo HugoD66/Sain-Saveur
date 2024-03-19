@@ -14,7 +14,7 @@ const getRecipe = async (req, res) => {
     if (recipe) {
       res.json(recipe);
     } else {
-      res.status(404).send("Utilisateur non trouvé.");
+      res.status(404).send("Recette non trouvé.");
     }
   } catch (err) {
     console.error(err);
@@ -60,14 +60,22 @@ const getRecipes = async (req, res) => {
 const addRecipe = async (req, res) => {
   try {
     let recipeData = req.body;
+    console.log("Recipe Data , à l'arrivé du formulaire");
+    console.log(req.body);
 
+    if (typeof recipeData.recipe_directions === "string") {
+      recipeData.recipe_directions = JSON.parse(recipeData.recipe_directions);
+    }
+
+    console.log("recipeData parsé : ");
+    console.log(recipeData.recipe_directions);
     // Traitement de l'image, si présente
     if (req.file) {
       console.log(`Photo téléchargée à l'emplacement : ${req.file.path}`);
       recipeData.recipe_picture = req.file.path;
     }
 
-    // Conversion de recipe_types en un tableau d'ObjectId s'il ne l'est pas déjà
+    // Conversion de recipe_types en un tableau d'ObjectId
     if (!Array.isArray(recipeData.recipe_types)) {
       recipeData.recipe_types = [recipeData.recipe_types];
     }
@@ -82,21 +90,34 @@ const addRecipe = async (req, res) => {
       }
     }
 
+    /*
     // Ajout des directions si présentes
-    if (recipeData.directions && Array.isArray(recipeData.directions)) {
-      recipeData.directions = recipeData.directions.map((dir, index) => ({
-        direction_description: dir.direction_description,
-        direction_number: index + 1,
-      }));
+    if (
+      recipeData.recipe_directions &&
+      Array.isArray(recipeData.recipe_directions)
+    ) {
+      recipeData.recipe_directions = recipeData.recipe_directions.map(
+        (dir, index) => ({
+          direction_description: dir.direction_description,
+          direction_number: index + 1,
+        }),
+      );
     } else {
-      recipeData.directions = [];
+      recipeData.recipe_directions = [];
     }
 
-    const newRecipe = new Recipe(recipeData);
+ */
+
+    const newRecipe = new Recipe({
+      ...recipeData,
+      directions: recipeData.recipe_directions || [],
+    });
     const savedRecipe = await newRecipe.save();
 
     console.log("Nouvelle recette créée avec succès");
     res.status(201).json(savedRecipe);
+
+    //Appel Redis !
     await publishRecipeCreated(savedRecipe.recipe_name);
   } catch (err) {
     console.error("Erreur lors de l'ajout de la recette:", err);

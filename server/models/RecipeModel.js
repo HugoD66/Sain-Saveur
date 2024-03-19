@@ -23,3 +23,7 @@ const recipeSchema = new mongoose.Schema({
 const Recipe = mongoose.model("Recipe", recipeSchema);
 
 module.exports = Recipe;
+
+/*
+[{"direction_description": "Mixez les pois chiches avec des herbes et des épices.", "direction_number": new NumberInt("1"), "_id": new ObjectId("65f94aea21b97dfde4b08bc0")}, {"direction_description": "Formez des boulettes et faites-les frire.", "direction_number": new NumberInt("2"), "_id": new ObjectId("65f94aea21b97dfde4b08bc1")}]
+ */
