@@ -6,12 +6,11 @@ const Type = require("../models/TypeModel");
 
 const getRecipe = async (req, res) => {
   try {
-    const recipeId = req.params.recipe_id;
-    console.log(recipe);
+    const recipeId = req.params.recipeId;
+
     const recipe = await Recipe.findById(recipeId)
       .populate("recipe_types")
       .populate("recipe_ingredients");
-    console.log(recipe);
 
     if (recipe) {
       res.json(recipe);

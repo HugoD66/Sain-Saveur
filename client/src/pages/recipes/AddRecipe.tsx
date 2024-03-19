@@ -138,104 +138,115 @@ const AddRecipe = () => {
       <div className="content-form">
         <form onSubmit={handleSubmit}>
           <label>
-            Temps de cuisson
             <input
-              type="text"
-              name="cooking_time_min"
-              value={recipe.cooking_time_min}
-              onChange={handleChange}
-            />
-          </label>
-
-          <label>
-            Temps de préparation
-            <input
-              type="text"
-              name="preparation_time_min"
-              value={recipe.preparation_time_min}
-              onChange={handleChange}
-            />
-          </label>
-
-          <label>
-            Description
-            <textarea
-              name="description"
-              value={recipe.description}
-              onChange={handleChange}
-            />
-          </label>
-
-          <label>
-            Nom
-            <input
+              className="formName"
+              placeholder={"Nom de la recette"}
               type="text"
               name="recipe_name"
               value={recipe.recipe_name}
               onChange={handleChange}
             />
           </label>
-
-          <div>
-            <h3>Directions</h3>
-            {recipe.recipe_directions.map((direction, index) => (
-              <div key={index}>
-                <input
-                  type="text"
-                  name={`direction_description_${index}`}
-                  value={direction.direction_description}
-                  onChange={(e) => handleDirectionChange(index, e.target.value)}
-                  placeholder={`Step ${index + 1}`}
-                />
-              </div>
-            ))}
-            <button type="button" onClick={addDirection}>
-              Ajouter une étape
-            </button>
+          <div className="formTimes">
+            <label>
+              <p>Temps de cuisson</p>
+              <input
+                placeholder={"45 min"}
+                type="text"
+                name="cooking_time_min"
+                value={recipe.cooking_time_min}
+                onChange={handleChange}
+              />
+            </label>
+            <label>
+              <p>Temps de préparation</p>
+              <input
+                placeholder={"25 min"}
+                type="text"
+                name="preparation_time_min"
+                value={recipe.preparation_time_min}
+                onChange={handleChange}
+              />
+            </label>
           </div>
-
-          <div>
-            <h3>Rechercher un ingrédient</h3>
-            <input
-              type="text"
-              placeholder="Rechercher..."
-              value={searchTerm}
-              onChange={handleSearchChange}
+          <label className="formDescription">
+            <textarea
+              placeholder={"Description de la recette"}
+              name="description"
+              value={recipe.description}
+              onChange={handleChange}
             />
-          </div>
+          </label>
 
-          <div>
-            <h3>Résultats de la recherche</h3>
-            {searchTerm.length >= 3 && (
-              <ul>
-                {filteredIngredients.map((ingredient) => (
-                  <li
-                    key={ingredient._id}
-                    onClick={() => handleAddIngredient(ingredient._id)}
-                  >
-                    {ingredient.ingredient_name}
-                  </li>
+          <div className="formSteps">
+            <h3>Les étapes de préparation</h3>
+            <div className="formStep">
+              <div className="inputs">
+                {recipe.recipe_directions.map((direction, index) => (
+                  <div key={index}>
+                    <input
+                      type="text"
+                      name={`direction_description_${index}`}
+                      value={direction.direction_description}
+                      onChange={(e) =>
+                        handleDirectionChange(index, e.target.value)
+                      }
+                      placeholder={`Step ${index + 1}`}
+                    />
+                  </div>
                 ))}
-              </ul>
-            )}
+              </div>
+              <button type="button" onClick={addDirection}>
+                Ajouter une étape
+              </button>
+            </div>
           </div>
 
-          <div>
-            <h3>Ingrédients sélectionnés</h3>
-            <ul>
-              {selectedIngredients.map((ingredientId) => {
-                const ingredient = ingredients.find(
-                  (ing) => ing._id === ingredientId,
-                );
-                return (
-                  <li key={ingredientId}>{ingredient?.ingredient_name}</li>
-                );
-              })}
-            </ul>
+          <div className="formIngredients">
+            <h3>Rechercher un ingrédient</h3>
+            <div className="ingredientsParts">
+              <div className="responseSearch">
+                <h4>Ingrédients disponibles</h4>
+                {searchTerm.length >= 3 && (
+                  <ul>
+                    {filteredIngredients.map((ingredient) => (
+                      <li
+                        key={ingredient._id}
+                        onClick={() => handleAddIngredient(ingredient._id)}
+                      >
+                        {ingredient.ingredient_name}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              <input
+                className="inputIngredients"
+                type="text"
+                placeholder="Rechercher..."
+                value={searchTerm}
+                onChange={handleSearchChange}
+              />
+
+              <div className="choosenIngredients">
+                <h4>Vos ingrédients</h4>
+                <ul>
+                  {selectedIngredients.map((ingredientId) => {
+                    const ingredient = ingredients.find(
+                      (ing) => ing._id === ingredientId,
+                    );
+                    return (
+                      <li key={ingredientId}>{ingredient?.ingredient_name}</li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
           </div>
 
-          <label>
-            Type de plat
+          <label className="formTypes">
+            <h3>Rechercher un type</h3>
             <select
               name="recipe_types"
               value={recipe.recipe_types}
@@ -250,8 +261,8 @@ const AddRecipe = () => {
             </select>
           </label>
 
-          <label>
-            Photo du plat
+          <label className="formPicture">
+            <h3>Une photo du plat ? </h3>
             <input
               type="file"
               name="recipe_picture"
@@ -260,7 +271,7 @@ const AddRecipe = () => {
             />
           </label>
 
-          <input className="inputForm" type="submit" value="Envoyer" />
+          <input className="submitRecipe" type="submit" value="Envoyer" />
         </form>
       </div>
       <div className="back-form"></div>
