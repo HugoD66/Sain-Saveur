@@ -18,6 +18,7 @@ const AddRecipe = () => {
   const [types, setTypes] = useState<TypeModel[]>([]);
   const [ingredients, setIngredients] = useState<IngredientModel[]>([]);
   const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     fetchIngredients().then(setIngredients).catch(console.error);
@@ -29,6 +30,18 @@ const AddRecipe = () => {
       .catch(console.error);
   }, []);
 
+  const filteredIngredients = ingredients.filter((ingredient) =>
+    ingredient.ingredient_name.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
+
+  const handleSearchChange = (e: any) => {
+    setSearchTerm(e.target.value);
+  };
+  const handleAddIngredient = (ingredientId: string) => {
+    if (!selectedIngredients.includes(ingredientId)) {
+      setSelectedIngredients([...selectedIngredients, ingredientId]);
+    }
+  };
   const handleIngredientChange = (ingredientId: any) => {
     setSelectedIngredients((prev: any[]): any[] =>
       prev.includes(ingredientId)
@@ -182,21 +195,43 @@ const AddRecipe = () => {
           </div>
 
           <div>
-            <h3>Ingrédients</h3>
-            {ingredients.map((ingredient: any) => (
-              <div key={ingredient._id}>
-                <input
-                  type="checkbox"
-                  id={ingredient._id}
-                  name="recipe_ingredients"
-                  value={ingredient._id}
-                  onChange={() => handleIngredientChange(ingredient._id)}
-                />
-                <label htmlFor={ingredient._id}>
-                  {ingredient.ingredient_name}
-                </label>
-              </div>
-            ))}
+            <h3>Rechercher un ingrédient</h3>
+            <input
+              type="text"
+              placeholder="Rechercher..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
+          </div>
+
+          <div>
+            <h3>Résultats de la recherche</h3>
+            {searchTerm.length >= 3 && (
+              <ul>
+                {filteredIngredients.map((ingredient) => (
+                  <li
+                    key={ingredient._id}
+                    onClick={() => handleAddIngredient(ingredient._id)}
+                  >
+                    {ingredient.ingredient_name}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          <div>
+            <h3>Ingrédients sélectionnés</h3>
+            <ul>
+              {selectedIngredients.map((ingredientId) => {
+                const ingredient = ingredients.find(
+                  (ing) => ing._id === ingredientId,
+                );
+                return (
+                  <li key={ingredientId}>{ingredient?.ingredient_name}</li>
+                );
+              })}
+            </ul>
           </div>
 
           <label>
