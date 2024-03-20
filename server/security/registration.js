@@ -1,7 +1,6 @@
 // security/registration.js
 const User = require("../models/UserModel");
 const { hashPassword } = require("./authHelpers");
-const publishUserTempCreated = require("../db/redis/test");
 const { generateToken } = require("./tokenService");
 
 const registerUser = async (req, res) => {
@@ -27,8 +26,6 @@ const registerUser = async (req, res) => {
 
     const savedUser = await newUser.save();
     const token = generateToken(savedUser);
-
-    await publishUserTempCreated(savedUser.username);
 
     res.status(201).json({ user: savedUser, token });
   } catch (err) {

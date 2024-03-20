@@ -1,5 +1,4 @@
 const User = require("../models/UserModel");
-const publishUserTempCreated = require("../db/redis/test");
 
 // ---------- GET ---------------- //
 const getUser = async (req, res) => {
@@ -47,7 +46,6 @@ const addUser = async (req, res) => {
     const newUser = new User({ email, username, password });
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
-    await publishUserTempCreated(savedUser.username);
   } catch (err) {
     console.error(err);
     res.status(500).send("Erreur interne du serveur");
