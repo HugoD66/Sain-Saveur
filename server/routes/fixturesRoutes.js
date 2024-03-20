@@ -4,6 +4,10 @@ const insertRecipes = require("../fixtures/recipesFixtures");
 const insertUsers = require("../fixtures/userFixtures");
 const insertTypes = require("../fixtures/typesFixtures");
 const insertIngredients = require("../fixtures/ingredientsFixtures");
+const { removeAllRecipes } = require("../calls/callRecipes");
+const { removeAllUsers } = require("../calls/callUsers");
+const { removeTypes } = require("../calls/callTypes");
+const { removeIngredients } = require("../calls/callIngredients");
 
 router.post("/recipes", async (req, res) => {
   try {
@@ -52,10 +56,26 @@ router.post("/all", async (req, res) => {
     await insertRecipes();
     await insertUsers();
     await insertTypes();
+    await insertIngredients();
     res.send("Toutes les fixtures ont été insérées avec succès.");
   } catch (error) {
     console.error(error);
     res.status(500).send("Erreur lors de l'insertion de toutes les fixtures.");
+  }
+});
+
+router.delete("/all-delete", async (req, res) => {
+  try {
+    await removeAllRecipes();
+    await removeAllUsers();
+    await removeTypes();
+    await removeIngredients();
+    res.send("Toutes les fixtures ont été supprimées avec succès.");
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .send("Erreur lors de la suppression de toutes les fixtures.");
   }
 });
 

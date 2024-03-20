@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Recipe = require("../models/RecipeModel");
 const Type = require("../models/TypeModel");
+const Ingredient = require("../models/IngredientModel");
 
 const recipes = [
   {
@@ -19,13 +20,11 @@ const recipes = [
     ],
     preparation_time_min: "15",
     cooking_time_min: "45",
-    isFavorite: true,
     recipe_description:
       "Un délicieux poulet au curry, parfait pour un repas en famille.",
-    recipe_picture: "upload/poulet_curry.jpg",
+    recipe_picture: "uploads/poulet_curry.jpg",
     type_id: "1", // Ceci sera remplacé par un _id de type existant
-    created_by: "Hugo",
-    created_at: new Date(),
+    ingredients_id: ["12", "21", "22"],
   },
   {
     recipe_name: "Quiche aux épinards",
@@ -49,10 +48,9 @@ const recipes = [
     cooking_time_min: "25",
     isFavorite: false,
     recipe_description: "Une quiche savoureuse riche en légumes.",
-    recipe_picture: "upload/quiche_epinards.jpg",
+    recipe_picture: "uploads/quiche_epinards.jpg",
     type_id: "Vegetarien",
-    created_by: "Alice",
-    created_at: new Date(),
+    ingredients_id: ["3", "43", "44"],
   },
   {
     recipe_name: "Sushi Maki",
@@ -73,12 +71,10 @@ const recipes = [
     ],
     preparation_time_min: "30",
     cooking_time_min: "0",
-    isFavorite: true,
     recipe_description: "Des sushis Maki frais et délicieux.",
-    recipe_picture: "upload/sushi_maki.jpg",
+    recipe_picture: "uploads/sushi_maki.jpg",
     type_id: "Japonaise",
-    created_by: "Ben",
-    created_at: new Date(),
+    ingredients_id: ["8", "64", "77"],
   },
   {
     recipe_name: "Ratatouille niçoise",
@@ -99,12 +95,10 @@ const recipes = [
     ],
     preparation_time_min: "20",
     cooking_time_min: "45",
-    isFavorite: true,
     recipe_description: "Un plat végétarien riche en couleurs et en saveurs.",
-    recipe_picture: "upload/ratatouille_nicoise.jpg",
+    recipe_picture: "uploads/ratatouille_nicoise.jpg",
     type_id: "Vegetarien",
-    created_by: "Claire",
-    created_at: new Date(),
+    ingredients_id: ["64", "61", "63"],
   },
   {
     recipe_name: "Falafels",
@@ -124,10 +118,9 @@ const recipes = [
     isFavorite: false,
     recipe_description:
       "Des falafels croustillants et savoureux, parfaits en sandwich ou en salade.",
-    recipe_picture: "upload/falafels.jpg",
+    recipe_picture: "uploads/falafels.jpg",
     type_id: "Végan",
-    created_by: "Daniel",
-    created_at: new Date(),
+    ingredients_id: ["51", "56", "57"],
   },
   {
     recipe_name: "Pad Thaï",
@@ -149,13 +142,11 @@ const recipes = [
     ],
     preparation_time_min: "10",
     cooking_time_min: "15",
-    isFavorite: true,
     recipe_description:
       "Un classique de la cuisine thaïlandaise, riche en saveurs.",
-    recipe_picture: "upload/pad_thai.jpg",
+    recipe_picture: "uploads/pad_thai.jpg",
     type_id: "Thaï",
-    created_by: "Eva",
-    created_at: new Date(),
+    ingredients_id: ["38", "54", "57"],
   },
   {
     recipe_name: "Pizza sans gluten",
@@ -180,27 +171,38 @@ const recipes = [
     isFavorite: false,
     recipe_description:
       "Une pizza savoureuse adaptée aux intolérants au gluten.",
-    recipe_picture: "upload/pizza_sans_gluten.jpg",
+    recipe_picture: "uploads/pizza_sans_gluten.jpg",
     type_id: "Sans gluten",
-    created_by: "François",
-    created_at: new Date(),
+    ingredients_id: ["1", "18", "20"],
   },
 ];
 
 async function insertRecipes() {
   try {
-    // C'est pour la génération des types de recettes, à garder jusqu'au prochain commentaire
     const types = await Type.find({});
-    if (types.length === 0) {
-      throw new Error("Aucun type trouvé.");
+    const ingredients = await Ingredient.find({});
+
+    if (types.length === 0 || ingredients.length === 0) {
+      throw new Error("Types ou ingrédients non trouvés.");
     }
-    const typeIds = types.map((type) => type._id);
-    console.log(typeIds);
-    const modifiedRecipes = recipes.map((recipe) => ({
-      ...recipe,
-      recipe_types: [typeIds[Math.floor(Math.random() * typeIds.length)]],
-    }));
-    // Fin
+
+    const modifiedRecipes = recipes.map((recipe) => {
+      const type = types[Math.floor(Math.random() * types.length)];
+
+      const selectedIngredientIds = recipe.ingredients_id
+        .map((tempId) => {
+          const foundIngredient = ingredients.find(
+            (ingredient) => ingredient.ingredient_id === tempId,
+          );
+          return foundIngredient ? foundIngredient._id : null;
+        })
+        .filter((id) => id !== null); // Filtrer pour éliminer les éventuels nulls
+      return {
+        ...recipe,
+        recipe_types: [type._id],
+        recipe_ingredients: selectedIngredientIds,
+      };
+    });
 
     const createdRecipes = await Recipe.insertMany(modifiedRecipes);
     console.log(`Recettes ajoutées avec succès: ${createdRecipes.length}`);

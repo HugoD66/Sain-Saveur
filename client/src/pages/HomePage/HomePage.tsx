@@ -15,6 +15,7 @@ const HomePage: React.FC<HomePageProps> = () => {
     fetchRecipes()
       .then((data: RecipeModel[]) => {
         const reversedData = [...data].reverse();
+        console.log(reversedData);
         setRecipes(reversedData);
       })
       .catch((error) => console.error(error));
