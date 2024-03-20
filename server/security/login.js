@@ -1,37 +1,41 @@
-const User = require('../models/UserModel');
-const bcrypt = require('bcrypt');
-const { generateToken } = require('./tokenService');
+const User = require("../models/UserModel");
+const bcrypt = require("bcrypt");
+const { generateToken } = require("./tokenService");
+const { getIo } = require("../db/socketIo/socket");
 
 const loginUser = async (req, res) => {
   try {
-    console.log('loginUser!!!');
+    console.log("loginUser!!!");
     console.log(req.body);
     const { username, password } = req.body;
 
     if (!username || !password) {
       return res
         .status(400)
-        .json({ error: 'Email et mot de passe sont requis.' });
+        .json({ error: "Email et mot de passe sont requis." });
     }
 
     const user = await User.findOne({ username });
 
     if (!user) {
-      return res.status(404).json({ error: 'Utilisateur non trouvé.' });
+      return res.status(404).json({ error: "Utilisateur non trouvé." });
     }
 
     const validPassword = await bcrypt.compare(password, user.password);
 
     if (!validPassword) {
-      return res.status(401).json({ error: 'Mot de passe incorrect.' });
+      return res.status(401).json({ error: "Mot de passe incorrect." });
     }
 
     const token = generateToken(user);
 
-    res.json({ message: 'Connexion réussie', token });
+    const io = getIo();
+    io.emit("test", { message: "Hello from server after login" });
+
+    res.json({ message: "Connexion réussie", token });
   } catch (error) {
-    console.error('Erreur lors de la connexion:', error);
-    res.status(500).send('Erreur interne du serveur.');
+    console.error("Erreur lors de la connexion:", error);
+    res.status(500).send("Erreur interne du serveur.");
   }
 };
 

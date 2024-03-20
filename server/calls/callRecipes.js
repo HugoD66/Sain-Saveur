@@ -85,7 +85,7 @@ const addRecipe = async (req, res) => {
     res.status(201).json(savedRecipe);
 
     //Appel Redis !
-    await publishRecipeCreated(savedRecipe);
+    //await publishRecipeCreated(savedRecipe);
   } catch (err) {
     console.error("Erreur lors de l'ajout de la recette:", err);
     res.status(500).send("Erreur interne du serveur");

@@ -9,23 +9,6 @@ const redisPublisher = new Redis({
   host: "127.0.0.1",
 });
 
-const io = socketIo(
-  server,
-  {
-    cors: {
-      origin: "*",
-      methods: ["GET", "POST"],
-    },
-  },
-  { transports: ["websocket"] },
-);
-/*
-const io = socketIo(server, {
-    cors: {
-        origin: "*",
-    },
-});
- */
 const publishRecipeCreated = (recipe) => {
   return new Promise((resolve, reject) => {
     // Préparer les messages pour Redis et Socket.IO
@@ -34,7 +17,7 @@ const publishRecipeCreated = (recipe) => {
     //  recipeName: recipe.recipe_name,
     //});
     const socketMessage = JSON.stringify({ action: "recipeCreated", recipe });
-    io.emit("recipeCreated", socketMessage);
+    //io.emit("recipeCreated", socketMessage);
 
     //redisPublisher
     //  .publish("recipesChannel", redisMessage)

@@ -1,23 +1,27 @@
-import React from 'react';
-import TitleCategory from './TitleCategory';
-import { ScrollingCarousel } from '@trendyol-js/react-carousel';
-import { CardRecipe } from './CardRecipe';
+import React, { useEffect, useState } from "react";
+import TitleCategory from "./TitleCategory";
+import { ScrollingCarousel } from "@trendyol-js/react-carousel";
+import { CardRecipe } from "./CardRecipe";
+import { fetchRecipes } from "../calls/mongo/recipe";
+import { RecipeModel } from "../models/Recipe";
 
 export const CarrousselRecipe = () => {
+  const [recipes, setRecipes] = useState<RecipeModel[]>([]);
+
+  useEffect(() => {
+    fetchRecipes()
+      .then((data: RecipeModel[]) => setRecipes(data))
+      .catch((error) => console.error(error));
+  }, []);
+
   return (
     <div className="carrousselRecipe">
-      <TitleCategory title={'Nos 10 dernières recettes'} />
+      <TitleCategory title={"Nos 10 dernières recettes"} />
+
       <ScrollingCarousel>
-        <CardRecipe name={'Salade'} />
-        <CardRecipe name={'Poulet'} />
-        <CardRecipe name={'Poisson'} />
-        <CardRecipe name={'Dessert'} />
-        <CardRecipe name={'Boisson'} />
-        <CardRecipe name={'Boisson'} />
-        <CardRecipe name={'Boisson'} />
-        <CardRecipe name={'Boisson'} />
-        <CardRecipe name={'Boisson'} />
-        <CardRecipe name={'Boisson'} />
+        {recipes.map((recipe, index) => (
+          <CardRecipe key={index} recipe={recipe} />
+        ))}
       </ScrollingCarousel>
     </div>
   );

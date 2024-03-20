@@ -37,7 +37,7 @@ export const Header = () => {
       </div>
       <div className="pagePannel">
         <Link to="/add-recipe">
-          <button className="add-recipe">TEMP ADD RECIPE</button>
+          <button className="add-recipe">Ajouter une recette</button>
         </Link>
       </div>
       <div className="inputForm">
@@ -49,8 +49,6 @@ export const Header = () => {
         />
       </div>
       <div className="loginPannel">
-        <button className="login">Connexion</button>
-        <button className="register">Inscription</button>
         {notifications.length > 0 && (
           <div
             className="notification-icon"

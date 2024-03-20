@@ -12,7 +12,7 @@ const isAuthenticated = (): boolean => {
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/homePage",
     element: isAuthenticated() ? <HomePage /> : <Navigate to="/login" />,
   },
   {
@@ -30,5 +30,9 @@ export const router = createBrowserRouter([
   {
     path: "/logout",
     element: <Logout />,
+  },
+  {
+    path: "/",
+    element: isAuthenticated() ? <HomePage /> : <Navigate to="/login" />,
   },
 ]);

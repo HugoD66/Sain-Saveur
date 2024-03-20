@@ -4,8 +4,10 @@ import { fetchTypes } from "../../calls/mongo/type";
 import { TypeModel } from "../../models/Type";
 import { IngredientModel } from "../../models/Ingredient";
 import { fetchIngredients } from "../../calls/mongo/ingredient";
+import { useNavigate } from "react-router";
 
 const AddRecipe = () => {
+  const navigate = useNavigate();
   const [recipe, setRecipe] = useState({
     cooking_time_min: "",
     preparation_time_min: "",
@@ -127,6 +129,7 @@ const AddRecipe = () => {
       }
       const responseData = await response.json();
       console.log("Recette ajoutée avec succès:", responseData);
+      navigate("/homePage");
       // REDIRECTION
     } catch (error) {
       console.error("Erreur lors de l'envoi du formulaire:", error);
