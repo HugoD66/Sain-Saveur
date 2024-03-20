@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import searchIcon from "../assets/searchIcon.svg";
-
+import ingredient from "../assets/ingredient.png";
+import recipe from "../assets/recipe.png";
+import type from "../assets/type.png";
 export const Searchbar = () => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
@@ -36,14 +38,26 @@ export const Searchbar = () => {
   const renderItem = (item: any) => {
     switch (item.type) {
       case "ingredient":
-        return;
-        <div>
-          <li key={item._id}>{item.ingredient_name}</li>;
-        </div>;
+        return (
+          <div className="responseInputUnit">
+            <img src={ingredient} alt="ing" />
+            <p key={item._id}>{item.ingredient_name}</p>
+          </div>
+        );
       case "recipe":
-        return <li key={item._id}>{item.recipe_name}</li>;
+        return (
+          <div className="responseInputUnit">
+            <img src={recipe} alt="recipe" />
+            <p key={item._id}>{item.recipe_name}</p>
+          </div>
+        );
       case "type":
-        return <li key={item._id}>{item.type_name}</li>;
+        return (
+          <div className="responseInputUnit">
+            <img src={type} alt="type" />
+            <p key={item._id}>{item.type_name}</p>
+          </div>
+        );
       default:
         return null;
     }
