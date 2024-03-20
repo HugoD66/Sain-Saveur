@@ -169,6 +169,7 @@
 /* ------------------------ CARROUSSEL --------------------------  */
 
 .carrousselRecipe {
+  margin-bottom: 40px;
 }
 
 /* ------------------------ TITLECATEGORY --------------------------  */
@@ -188,8 +189,8 @@
 
 .card {
   position: relative;
-  width: 224px;
-  height: 254px;
+  width: 400px;
+  height: 220px;
   background: #f5f5f5;
   border-radius: 8px;
   color: #232323;
@@ -197,25 +198,38 @@
   transition: all 0.5s ease-in-out;
   overflow: hidden;
   margin: 10px 15px 10px 15px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
   .picture-recipe-unit {
-    width: 100%;
+    width: 50%;
     height: 100%;
     border-radius: 8px 8px 0 0;
   }
-  /*background-image: url('assets/background.jpg');
-  background-size: cover;
-  background-position: center;*/
 }
+.content-card {
 
+}
 .card-hidden {
+  height: 70%;
   display: flex;
   transform: translateY(200%);
   flex-direction: column;
   gap: 0.5rem;
+  width: 80%;
+  margin-left: 10px;
   transition:
     transform 0.5s ease-in,
     opacity 0.3s ease-in;
   opacity: 0;
+  .footer-card {
+    bottom: 5px;
+    right: 5px;
+    position: absolute;
+    font-style: italic;
+    font-size: 0.9rem;
+    font-weight: bolder;
+  }
 }
 
 /*Hovers*/
@@ -243,6 +257,8 @@
 }
 
 .title-in {
+  text-align: start;
+  z-index: 4;
   font-weight: 700;
   font-size: 1.25rem;
 }

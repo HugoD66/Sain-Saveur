@@ -15,13 +15,28 @@ export const CardRecipe: React.FC<CardRecipeProps> = ({ recipe }) => {
     });
   }, []);
   const imageUrl = `http://localhost:4700/${recipe.recipe_picture}`;
+  // @ts-ignore
+  const firstType = recipe.recipe_types?.[0]?.type_name || "Type non spécifié";
+
+  const truncateDescription = (description: string, maxLength: number) => {
+    return description.length > maxLength
+      ? description.substring(0, maxLength) + "..."
+      : description;
+  };
+  const truncatedDescription = truncateDescription(
+    recipe.recipe_description || "",
+    50,
+  );
 
   return (
     <div data-aos="fade-up" className="card">
       <img src={imageUrl} alt="recette" className="picture-recipe-unit" />
-      <div className="card-hidden">
+      <div className="content-card">
         <p className="title-in">{recipe.recipe_name}</p>
-        <button className="button">View Recipe</button>
+        <div className="card-hidden">
+          <p className="description">{truncatedDescription}</p>
+          <p className="footer-card"> {firstType} </p>
+        </div>
       </div>
     </div>
   );

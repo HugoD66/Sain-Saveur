@@ -15,5 +15,5 @@ export interface RecipeModel {
   recipe_description?: string;
   recipe_picture?: string;
   recipe_ingredients?: IngredientModel[];
-  recipe_types?: TypeModel[];
+  recipe_types?: TypeModel;
 }
