@@ -12,7 +12,9 @@ const fixturesRoutes = require("./routes/fixturesRoutes");
 const cors = require("cors");
 const http = require("http");
 const socketIo = require("socket.io");
-
+const Recipe = require("./models/RecipeModel");
+const Ingredient = require("./models/IngredientModel");
+const Type = require("./models/TypeModel");
 const PORT = process.env.PORT || 4700;
 
 const app = express();
@@ -47,6 +49,35 @@ app.use("/uploads", express.static("./uploads"));
 
 initMongo().catch(console.error);
 setupWebSocket(io);
+
+app.get("/api/search", async (req, res) => {
+  const { query } = req.query;
+  try {
+    const searchRegex = new RegExp(query, "i"); // Expression régulière insensible à la casse
+    const recipeResults = await Recipe.find({
+      recipe_name: { $regex: searchRegex },
+    });
+    const ingredientResults = await Ingredient.find({
+      ingredient_name: { $regex: searchRegex },
+    });
+    const typeResults = await Type.find({
+      type_name: { $regex: searchRegex },
+    });
+    const results = [
+      ...recipeResults.map((item) => ({ ...item.toObject(), type: "recipe" })),
+      ...ingredientResults.map((item) => ({
+        ...item.toObject(),
+        type: "ingredient",
+      })),
+      ...typeResults.map((item) => ({ ...item.toObject(), type: "type" })),
+    ];
+
+    res.json(results);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Erreur lors de la recherche.");
+  }
+});
 
 server.listen(PORT, () => {
   console.log(`Serveur en cours d'exécution sur le port ${PORT}`);

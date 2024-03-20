@@ -1,7 +1,7 @@
 import React from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import LoginPage from "../pages/security/LoginPage";
-import HomePage from "../pages/HomePage";
+import HomePage from "../pages/HomePage/HomePage";
 import Register from "../pages/security/RegisterPage";
 import Logout from "../components/Logout";
 import AddRecipe from "../pages/recipes/AddRecipe";

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Header } from "../components/Header";
-import { Searchbar } from "../components/Searchbar";
-import { CarrousselRecipe } from "../components/CarrousselRecipe";
-import { Recipe } from "../components/Recipe";
-import { fetchRecipes } from "../calls/mongo/recipe";
-import { RecipeModel } from "../models/Recipe";
+import { Header } from "../../components/Header";
+import { Searchbar } from "../../components/Searchbar";
+import { CarrousselRecipe } from "../../components/CarrousselRecipe";
+import { Recipe } from "../../components/Recipe";
+import { fetchRecipes } from "../../calls/mongo/recipe";
+import { RecipeModel } from "../../models/Recipe";
 
 interface HomePageProps {}
 

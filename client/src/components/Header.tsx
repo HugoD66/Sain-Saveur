@@ -40,14 +40,6 @@ export const Header = () => {
           <button className="add-recipe">Ajouter une recette</button>
         </Link>
       </div>
-      <div className="inputForm">
-        <img className="searchIcon" src={searchIcon} alt="searchIcon" />
-        <input
-          className="inputBar"
-          type="text"
-          placeholder="Recherche un ingrédient ou d'une recette"
-        />
-      </div>
       <div className="loginPannel">
         {notifications.length > 0 && (
           <div
