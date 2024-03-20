@@ -3,7 +3,10 @@ import searchIcon from "../assets/searchIcon.svg";
 import ingredient from "../assets/ingredient.png";
 import recipe from "../assets/recipe.png";
 import type from "../assets/type.png";
+import { useNavigate } from "react-router";
 export const Searchbar = () => {
+  const navigate = useNavigate();
+
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
 
@@ -27,6 +30,10 @@ export const Searchbar = () => {
     }
   };
 
+  const naviateOnIngredients = async () => {
+    navigate("/ingredients/:id");
+  };
+
   useEffect(() => {
     const timerId = setTimeout(() => {
       fetchSearchResults(query);
@@ -36,26 +43,39 @@ export const Searchbar = () => {
   }, [query]);
 
   const renderItem = (item: any) => {
+    const navigateToDetail = (type: string, id: string) => {
+      navigate(`/${type}/${id}`);
+    };
+
     switch (item.type) {
       case "ingredient":
         return (
-          <div className="responseInputUnit">
+          <div
+            className="responseInputUnit"
+            onClick={() => navigateToDetail("ingredients", item._id)}
+          >
             <img src={ingredient} alt="ing" />
-            <p key={item._id}>{item.ingredient_name}</p>
+            <p>{item.ingredient_name}</p>
           </div>
         );
       case "recipe":
         return (
-          <div className="responseInputUnit">
+          <div
+            className="responseInputUnit"
+            onClick={() => navigateToDetail("recipes", item._id)}
+          >
             <img src={recipe} alt="recipe" />
-            <p key={item._id}>{item.recipe_name}</p>
+            <p>{item.recipe_name}</p>
           </div>
         );
       case "type":
         return (
-          <div className="responseInputUnit">
+          <div
+            className="responseInputUnit"
+            onClick={() => navigateToDetail("types", item._id)}
+          >
             <img src={type} alt="type" />
-            <p key={item._id}>{item.type_name}</p>
+            <p>{item.type_name}</p>
           </div>
         );
       default:
