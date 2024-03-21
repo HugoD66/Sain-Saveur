@@ -24,7 +24,7 @@ export const addRecipe = (formData: any) => {
 // ----------- GET ----------- //
 
 export const fetchRecipe = (recipeId: number) => {
-  return fetch(`http://localhost:4700/api/recipe/${recipeId}`)
+  return fetch(`http://localhost:4700/api/recipes/${recipeId}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Réponse réseau non OK");
@@ -37,6 +37,41 @@ export const fetchRecipe = (recipeId: number) => {
     });
 };
 
+export const fetchRecipeByIngredient = async (ingredientId: string) => {
+  try {
+    const response = await fetch(
+      `http://localhost:4700/api/recipes/by-ingredient/${ingredientId}`,
+    );
+    if (!response.ok) {
+      throw new Error("Réponse réseau non OK");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(
+      "Erreur lors de la récupération de la liste des recettes :",
+      error,
+    );
+    throw error;
+  }
+};
+
+export const fetchRecipeByType = async (typeId: string) => {
+  try {
+    const response = await fetch(
+      `http://localhost:4700/api/recipes/by-type/${typeId}`,
+    );
+    if (!response.ok) {
+      throw new Error("Réponse réseau non OK");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(
+      "Erreur lors de la récupération de la liste des recettes :",
+      error,
+    );
+    throw error;
+  }
+};
 export const fetchRecipes = () => {
   return fetch("http://localhost:4700/api/recipes")
     .then((response) => {

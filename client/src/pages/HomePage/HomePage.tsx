@@ -5,6 +5,7 @@ import { CarrousselRecipe } from "../../components/CarrousselRecipe";
 import { Recipe } from "../../components/Recipe";
 import { fetchRecipes } from "../../calls/mongo/recipe";
 import { RecipeModel } from "../../models/Recipe";
+import TitleCategory from "../../components/TitleCategory";
 
 interface HomePageProps {}
 
@@ -25,6 +26,7 @@ const HomePage: React.FC<HomePageProps> = () => {
     <div className="homePage">
       <Header />
       <Searchbar />
+      <TitleCategory title={"Nos 10 dernières recettes"} />
       <CarrousselRecipe recipes={recipes} />
       <Recipe />
     </div>

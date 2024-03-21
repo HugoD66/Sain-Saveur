@@ -22,6 +22,23 @@ export const addType = (formData: FormData) => {
 
 // ----------- GET ----------- //
 
+export const fetchType = async (typeId: string) => {
+  return fetch(`http://localhost:4700/api/types/${typeId}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Réponse réseau non OK");
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.error(
+        "Erreur lors de la récupération des types de recettes:",
+        error,
+      );
+      throw error;
+    });
+};
+
 export const fetchTypes = () => {
   return fetch("http://localhost:4700/api/types")
     .then((response) => {

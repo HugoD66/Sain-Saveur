@@ -2,10 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchIngredient } from "../../calls/mongo/ingredient";
 import { IngredientModel } from "../../models/Ingredient";
+import { fetchRecipeByIngredient } from "../../calls/mongo/recipe";
+import { RecipeModel } from "../../models/Recipe";
+import { Header } from "../../components/Header";
+import { CarrousselRecipe } from "../../components/CarrousselRecipe";
 
 export const Ingredients = () => {
   const { id } = useParams();
   const [ingredient, setIngredient] = useState<IngredientModel | null>(null);
+  const [recipes, setRecipes] = useState<RecipeModel[]>([]);
 
   useEffect(() => {
     if (id) {
@@ -14,24 +19,36 @@ export const Ingredients = () => {
           console.log(data);
           setIngredient(data);
         })
-        .catch((error) => console.error(error));
+        .catch((error) =>
+          console.error(
+            "Erreur lors de la récupération de l'ingrédient:",
+            error,
+          ),
+        );
+
+      fetchRecipeByIngredient(id)
+        .then((recipes: RecipeModel[]) => {
+          console.log(recipes);
+          setRecipes(recipes);
+        })
+        .catch((error) =>
+          console.error("Erreur lors de la récupération des recettes:", error),
+        );
     }
   }, [id]);
 
   return (
-    <>
-      <div className="ingredient-details">
-        <h1>Ingredient Details</h1>
-        {ingredient ? (
-          <div>
-            <h2>{ingredient.ingredient_name}</h2>
-            {/* Autres détails de l'ingrédient */}
-          </div>
-        ) : (
-          <p>Chargement...</p>
-        )}
+    <div>
+      <Header />
+      <div className="search-screen">
+        <h1>Nos recettes avec {ingredient?.ingredient_name}</h1>
+        <div className="recipes-container">
+          {recipes.map((recipe) => (
+            <CarrousselRecipe recipes={recipes} />
+          ))}
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

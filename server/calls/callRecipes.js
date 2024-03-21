@@ -4,6 +4,42 @@ const { findById } = require("../models/TypeModel");
 const Type = require("../models/TypeModel");
 // ---------- GET ---------------- //
 
+const getRecipesByIngredient = async (req, res) => {
+  try {
+    const ingredientId = req.params.ingredientId;
+
+    const recipes = await Recipe.find({
+      recipe_ingredients: ingredientId,
+    }).populate("recipe_ingredients");
+
+    if (recipes.length > 0) {
+      res.json(recipes);
+    } else {
+      res.status(404).send("Aucune recette trouvée avec cet ingrédient.");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Erreur serveur");
+  }
+};
+const getRecipesByType = async (req, res) => {
+  try {
+    const typeId = req.params.typeId;
+
+    const recipes = await Recipe.find({
+      recipe_types: typeId,
+    }).populate("recipe_ingredients");
+
+    if (recipes.length > 0) {
+      res.json(recipes);
+    } else {
+      res.status(404).send("Aucune recette trouvée avec cet ingrédient.");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Erreur serveur");
+  }
+};
 const getRecipe = async (req, res) => {
   try {
     const recipeId = req.params.recipeId;
@@ -151,4 +187,6 @@ module.exports = {
   updateRecipe,
   removeRecipe,
   removeAllRecipes,
+  getRecipesByType,
+  getRecipesByIngredient,
 };

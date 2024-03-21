@@ -749,3 +749,16 @@ h3, h4 {
     margin-bottom: 30px;
   }
 }
+
+
+
+.ingredient-details {
+  padding: 20px;
+}
+
+.recipes-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 20px 0;
+}
