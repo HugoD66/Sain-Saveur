@@ -6,6 +6,7 @@ export interface DirectionModel {
   direction_number?: number;
 }
 export interface RecipeModel {
+  _id: string;
   recipe_id?: string;
   recipe_name: string;
   directions?: DirectionModel[];

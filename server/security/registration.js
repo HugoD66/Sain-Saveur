@@ -1,4 +1,3 @@
-// security/registration.js
 const User = require("../models/UserModel");
 const { hashPassword } = require("./authHelpers");
 const { generateToken } = require("./tokenService");

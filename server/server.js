@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 
 const corsOptions = {
   origin: "http://localhost:3000",
-  credentials: true, //access-control-allow-credentials:true
+  credentials: true,
   optionSuccessStatus: 200,
 };
 const io = socketIo(server, {
@@ -53,7 +53,7 @@ setupWebSocket(io);
 app.get("/api/search", async (req, res) => {
   const { query } = req.query;
   try {
-    const searchRegex = new RegExp(query, "i"); // Expression régulière insensible à la casse
+    const searchRegex = new RegExp(query, "i");
     const recipeResults = await Recipe.find({
       recipe_name: { $regex: searchRegex },
     });
@@ -85,9 +85,5 @@ server.listen(PORT, () => {
 io.on("connection", (socket) => {
   console.log("Client connected");
 });
-/*
-app.listen(PORT, () => {
-  console.log(`Serveur en cours d'exécution sur le port ${PORT}`);
-});
- */
+
 module.exports = { app, server, io };

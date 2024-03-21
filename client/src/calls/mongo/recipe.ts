@@ -23,7 +23,7 @@ export const addRecipe = (formData: any) => {
 
 // ----------- GET ----------- //
 
-export const fetchRecipe = (recipeId: number) => {
+export const fetchRecipe = (recipeId: string) => {
   return fetch(`http://localhost:4700/api/recipes/${recipeId}`)
     .then((response) => {
       if (!response.ok) {

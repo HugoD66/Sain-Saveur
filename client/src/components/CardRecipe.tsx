@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { RecipeModel } from "../models/Recipe";
+import { useNavigate } from "react-router";
 
 interface CardRecipeProps {
   key: number;
@@ -9,6 +10,7 @@ interface CardRecipeProps {
 }
 
 export const CardRecipe: React.FC<CardRecipeProps> = ({ recipe }) => {
+  const navigate = useNavigate();
   useEffect(() => {
     AOS.init({
       duration: 2000,
@@ -28,8 +30,12 @@ export const CardRecipe: React.FC<CardRecipeProps> = ({ recipe }) => {
     50,
   );
 
+  const navigateToRecipe = () => {
+    navigate(`/recipes/${recipe._id}`);
+  };
+
   return (
-    <div data-aos="fade-up" className="card">
+    <div data-aos="fade-up" className="card" onClick={() => navigateToRecipe()}>
       <img src={imageUrl} alt="recette" className="picture-recipe-unit" />
       <div className="content-card">
         <p className="title-in">{recipe.recipe_name}</p>

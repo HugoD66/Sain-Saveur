@@ -13,8 +13,6 @@ const generateToken = (user) => {
     { expiresIn: "24h" },
   );
 };
-
-// Vérification d'un token
 const verifyToken = (token) => {
   try {
     return jwt.verify(token, secretKey);

@@ -76,7 +76,7 @@ const getRecipes = async (req, res) => {
 const addRecipe = async (req, res) => {
   try {
     let recipeData = req.body;
-    console.log("Recipe Data , à l'arrivé du formulaire");
+    console.log("RecipeDetail Data , à l'arrivé du formulaire");
     console.log(req.body);
 
     if (typeof recipeData.recipe_directions === "string") {

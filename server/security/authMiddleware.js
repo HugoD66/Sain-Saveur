@@ -2,8 +2,6 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 
 dotenv.config();
-
-// Middleware pour vérifier le token JWT
 const authMiddleware = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1]; // Bearer <token>
 
