@@ -5,10 +5,12 @@ import { Link } from "react-router-dom";
 import Logo from "../logo.svg";
 import searchIcon from "../assets/searchIcon.svg";
 import { RecipeModel } from "../models/Recipe";
+import { useNavigate } from "react-router";
 
 const socket = io("http://localhost:4700");
 
 export const Header = () => {
+  const navigate = useNavigate();
   const [notifications, setNotifications] = useState<RecipeModel[]>([]);
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeModel | null>(
     null,
@@ -29,9 +31,12 @@ export const Header = () => {
     };
   }, []);
 
+  const navigateToHomePage = () => {
+    navigate("/homePage");
+  };
   return (
     <div className="header">
-      <div className="logoPannel">
+      <div className="logoPannel" onClick={() => navigateToHomePage()}>
         <img className="logo" src={Logo} alt="Logo" />
         <p className="logoName">Sain Saveur</p>
       </div>

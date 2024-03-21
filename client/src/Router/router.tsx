@@ -7,6 +7,7 @@ import Logout from "../components/Logout";
 import AddRecipe from "../pages/recipes/AddRecipe";
 import Ingredients from "../pages/search/Ingredients";
 import Types from "../pages/search/Types";
+import { Recipe } from "../components/Recipe";
 
 const isAuthenticated = (): boolean => {
   return localStorage.getItem("token") !== null;
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
   {
     path: "/ingredients/:id",
     element: <Ingredients />,
+  },
+  {
+    path: "/recipes/:id",
+    element: <Recipe />,
   },
   {
     path: "/types/:id",

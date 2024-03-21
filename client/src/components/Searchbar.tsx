@@ -30,20 +30,17 @@ export const Searchbar = () => {
     }
   };
 
-  const naviateOnIngredients = async () => {
-    navigate("/ingredients/:id");
-  };
-
   useEffect(() => {
     const timerId = setTimeout(() => {
       fetchSearchResults(query);
-    }, 500); // Délai de 500 ms
+    }, 500);
 
     return () => clearTimeout(timerId);
   }, [query]);
 
   const renderItem = (item: any) => {
     const navigateToDetail = (type: string, id: string) => {
+      console.log(type, id);
       navigate(`/${type}/${id}`);
     };
 

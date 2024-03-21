@@ -20,6 +20,21 @@ export const addIngredient = (formData: FormData) => {
 
 // ------------- GET ------------- //
 
+export const fetchIngredient = async (ingredientId: string) => {
+  //string ?
+  try {
+    const response = await fetch(
+      `http://localhost:4700/api/ingredients/${ingredientId}`,
+    );
+    if (!response.ok) {
+      throw new Error("Réponse réseau non OK");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Erreur lors de la récupération de l'ingrédient:", error);
+    throw error;
+  }
+};
 export const fetchIngredients = () => {
   return fetch("http://localhost:4700/api/ingredients")
     .then((response) => {

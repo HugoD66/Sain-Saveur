@@ -4,8 +4,8 @@ const Ingredient = require("../models/IngredientModel");
 
 const getIngredient = async (req, res) => {
   try {
-    const ingredientId = req.params.ingredient_id;
-    const ingredient = await Ingredient.findById({ ingredientId });
+    const ingredientId = req.params.Ingredient_id;
+    const ingredient = await Ingredient.findById(ingredientId);
     if (ingredient) {
       res.json(ingredient);
     }

@@ -1,5 +1,5 @@
 :root {
-  --white-font-color: #ffffff;
+  --white-font-color: #000000;
   --black-font-color: #000000;
   --light-green-color: #27bf3b;
   --dark-green-color: #176f22;
@@ -29,6 +29,7 @@
   width: 10%;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .helloDude {
@@ -142,12 +143,13 @@
       justify-content: center;
       flex-direction: column;
       padding: 3px;
+      cursor: pointer;
     }
   }
 }
 
 .titleSearchbar {
-  color: var(--white-font-color);
+  color: white;
   font-size: 48px;
   font-weight: bold;
   text-align: center;
@@ -731,5 +733,19 @@ h3, h4 {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+
+.search-screen {
+  width: 100%;
+  height: 100%;
+  h1 {
+    margin-left: 5%;
+    text-align: start;
+    margin-top: 100px;
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 30px;
   }
 }

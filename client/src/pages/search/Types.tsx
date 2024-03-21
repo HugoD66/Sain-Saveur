@@ -1,9 +1,13 @@
 import React from "react";
+import { Header } from "../../components/Header";
 
 export const Types = () => {
   return (
     <div>
-      <h1>Types</h1>
+      <Header />
+      <div className="search-screen">
+        <h1>Ingredients</h1>
+      </div>
     </div>
   );
 };
