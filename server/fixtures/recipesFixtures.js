@@ -23,7 +23,7 @@ const recipes = [
     recipe_description:
       "Un délicieux poulet au curry, parfait pour un repas en famille.",
     recipe_picture: "uploads/poulet_curry.jpg",
-    type_id: "1", // Ceci sera remplacé par un _id de type existant
+    type_id: "1",
     ingredients_id: ["12", "21", "22"],
   },
   {
@@ -196,10 +196,10 @@ async function insertRecipes() {
           );
           return foundIngredient ? foundIngredient._id : null;
         })
-        .filter((id) => id !== null); // Filtrer pour éliminer les éventuels nulls
+        .filter((id) => id !== null);
       return {
         ...recipe,
-        recipe_types: [type._id],
+        recipe_types: type._id,
         recipe_ingredients: selectedIngredientIds,
       };
     });

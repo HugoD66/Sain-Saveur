@@ -40,13 +40,13 @@ export const Ingredients = () => {
   return (
     <div>
       <Header />
-      <div className="search-screen">
+      <div className="carousel-search-sreen">
         <h1>Nos recettes avec {ingredient?.ingredient_name}</h1>
-        <div className="recipes-container">
-          {recipes.map((recipe) => (
-            <CarrousselRecipe recipes={recipes} />
-          ))}
-        </div>
+        {recipes.length > 0 ? (
+          <CarrousselRecipe recipes={recipes} />
+        ) : (
+          <p>Aucune recette trouvée pour cet ingrédient.</p>
+        )}
       </div>
     </div>
   );

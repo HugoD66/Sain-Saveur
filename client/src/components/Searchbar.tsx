@@ -96,11 +96,11 @@ export const Searchbar = () => {
             onChange={(e) => setQuery(e.target.value)}
           />
         </div>
-      </div>
-      <div className="response">
-        {results.length > 0 && (
-          <div className="search-results">{results.map(renderItem)}</div>
-        )}
+        <div className="response">
+          {results.length > 0 && (
+            <div className="search-results">{results.map(renderItem)}</div>
+          )}
+        </div>
       </div>
     </div>
   );

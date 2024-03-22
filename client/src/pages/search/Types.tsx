@@ -14,6 +14,8 @@ export const Types = () => {
 
   useEffect(() => {
     if (id) {
+      console.log(id);
+
       fetchType(id)
         .then((data: TypeModel) => {
           console.log(data);
@@ -25,6 +27,7 @@ export const Types = () => {
             error,
           ),
         );
+      console.log(id);
       fetchRecipeByType(id)
         .then((recipes: RecipeModel[]) => {
           console.log(recipes);
@@ -38,12 +41,14 @@ export const Types = () => {
   return (
     <div>
       <Header />
-      <div className="search-screen">
+      <div className="carousel-search-sreen">
         <h1>Nos recettes de type {type?.type_name}</h1>
         <div className="recipes-container">
-          {recipes.map((recipe) => (
+          {recipes.length > 0 ? (
             <CarrousselRecipe recipes={recipes} />
-          ))}
+          ) : (
+            <p>Aucune recette trouvée pour ce type.</p>
+          )}
         </div>
       </div>
     </div>

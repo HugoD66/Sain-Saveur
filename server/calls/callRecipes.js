@@ -10,7 +10,9 @@ const getRecipesByIngredient = async (req, res) => {
 
     const recipes = await Recipe.find({
       recipe_ingredients: ingredientId,
-    }).populate("recipe_ingredients");
+    })
+      .populate("recipe_ingredients")
+      .populate("recipe_types");
 
     if (recipes.length > 0) {
       res.json(recipes);
@@ -28,7 +30,9 @@ const getRecipesByType = async (req, res) => {
 
     const recipes = await Recipe.find({
       recipe_types: typeId,
-    }).populate("recipe_ingredients");
+    })
+      .populate("recipe_ingredients")
+      .populate("recipe_types");
 
     if (recipes.length > 0) {
       res.json(recipes);

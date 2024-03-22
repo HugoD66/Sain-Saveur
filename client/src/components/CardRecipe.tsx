@@ -19,7 +19,6 @@ export const CardRecipe: React.FC<CardRecipeProps> = ({ recipe }) => {
   const imageUrl = `http://localhost:4700/${recipe.recipe_picture}`;
   // @ts-ignore
   const firstType = recipe.recipe_types?.[0]?.type_name || "Type non spécifié";
-
   const truncateDescription = (description: string, maxLength: number) => {
     return description.length > maxLength
       ? description.substring(0, maxLength) + "..."

@@ -26,7 +26,9 @@ const HomePage: React.FC<HomePageProps> = () => {
     <div className="homePage">
       <Header />
       <Searchbar />
-      <TitleCategory title={"Nos 10 dernières recettes"} />
+      <div className="titleHomePage">
+        <TitleCategory title={"Nos dernières recettes"} />
+      </div>
       <CarrousselRecipe recipes={recipes} />
       <Recipe />
     </div>
