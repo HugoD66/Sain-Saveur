@@ -18,24 +18,29 @@ export const RecipeDetail = () => {
         .then((recipe: RecipeModel) => {
           console.log(recipe);
           setRecipe(recipe);
-          console.log(recipe!.recipe_types);
-          // @ts-ignore
-          setType(recipe!.recipe_types);
+          if (recipe.recipe_types && recipe.recipe_types.length > 0) {
+            console.log("recipe.recipe_types[0]");
+            console.log(recipe.recipe_types[0]);
+            const typeId = recipe.recipe_types[0];
+            fetchRecipeByType(typeId._id)
+              .then((recipes: RecipeModel[]) => {
+                console.log(recipes);
+                setRecipes(recipes);
+              })
+              .catch((error) =>
+                console.error(
+                  "Erreur lors de la récupération des recettes:",
+                  error,
+                ),
+              );
+          }
         })
         .catch((error) =>
           console.error("Erreur lors de la récupération de la recette:", error),
         );
-      // @ts-ignore
-      fetchRecipeByType(type?._id)
-        .then((recipes: RecipeModel[]) => {
-          console.log(recipes);
-          setRecipes(recipes);
-        })
-        .catch((error) =>
-          console.error("Erreur lors de la récupération des recettes:", error),
-        );
     }
   }, [id]);
+
   /*
   useEffect(() => {
   if (id) {
