@@ -6,6 +6,9 @@ const getIngredient = async (req, res) => {
   try {
     const ingredientId = req.params.Ingredient_id;
     const ingredient = await Ingredient.findById(ingredientId);
+    if (!ingredient) {
+      res.status(404).send("Ingrédient non trouvé");
+    }
     if (ingredient) {
       res.json(ingredient);
     }
