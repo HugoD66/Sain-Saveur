@@ -61,7 +61,6 @@
   margin-right: 8px;
   width: 15%;
   height: 50px;
-  background-color: red;
 }
 
 .header button {
@@ -78,9 +77,10 @@
   padding-right: 5%;
 }
 
-.header button:hover {
+.add-recipe:hover {
   background-color: var(--light-green-color);
   transform: translateY(-2px);
+  cursor: pointer;
 }
 
 .header .inputForm {
@@ -850,29 +850,76 @@ h4 {
   width: 50%;
   max-height: 50%;
   overflow-y: auto;
+  h2 {
+
+  }
 }
 
 .close-modal {
   float: right;
-  font-size: 1.5em;
+    cursor: pointer;
+  .close-modal-icon {
+    width: 20px;
+    height: 20px;
+  }
 }
 
-.accordion {
-  background-color: #eee;
-  color: #444;
-  cursor: pointer;
-  padding: 18px;
-  width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 15px;
-  transition: 0.4s;
-}
 
 .panel {
   padding: 0 18px;
   background-color: white;
   display: none;
   overflow: hidden;
+}
+.notificationButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  &:hover {
+    background-color: #ffffff;
+  }
+  .notifCount {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+  .notifPicture {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.notification-unit {
+  border-radius: 15px;
+  background-color: #f2ffec;
+  padding: 10px;
+  margin: 15px;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+  .description-notif {
+    font-size: 1em;
+  }
+  .description-notif-recipe {
+    font-size: 1em;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    .icon-detail-recipe {
+      width: 20px;
+      height: 30px;
+    }
+  }
+  .date {
+    align-self: end;
+    margin-right: 10px;
+    font-size: 0.8em;
+  }
 }

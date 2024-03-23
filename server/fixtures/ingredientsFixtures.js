@@ -34,6 +34,7 @@ const ingredients = [
   { ingredient_id: "31", ingredient_name: "Avocat" },
   { ingredient_id: "32", ingredient_name: "Quinoa" },
   { ingredient_id: "33", ingredient_name: "Lentilles" },
+  { ingredient_id: "34", ingredient_name: "Lentilles corail" },
   { ingredient_id: "35", ingredient_name: "Amandes" },
   { ingredient_id: "36", ingredient_name: "Noix" },
   { ingredient_id: "37", ingredient_name: "Bacon" },

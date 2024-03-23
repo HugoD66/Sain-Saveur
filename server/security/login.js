@@ -6,8 +6,6 @@ const { v4: uuidv4 } = require("uuid");
 
 const loginUser = async (req, res) => {
   try {
-    /*console.log("loginUser!!!");
-    console.log(req.body);*/
     const { username, password } = req.body;
 
     if (!username || !password) {
@@ -34,7 +32,7 @@ const loginUser = async (req, res) => {
     io.emit("notification", {
       id: uuidv4(),
       type: "user",
-      title: "Nouvel utilisateur connecté",
+      title: "Un utilisateur s'est connecté",
       content: {
         pseudo: user.username,
         message: "Bienvenue !",

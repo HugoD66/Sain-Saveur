@@ -41,6 +41,7 @@ const registerUser = async (req, res) => {
       date: new Date().toISOString(),
       seen: false,
     });
+
     const userId = savedUser._id.toString();
     const getUserSocketId = (userId) => {
       console.log(userId);

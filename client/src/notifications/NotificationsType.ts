@@ -1,6 +1,6 @@
 // NotificationTypes.ts
 export interface BaseNotification {
-  type: "user" | "recipe";
+  type: "user" | "recipe" | "user-welcome";
   title: string;
   date: string;
   seen: boolean;
@@ -16,4 +16,12 @@ export interface RecipeNotification extends BaseNotification {
   content: { recipeId: string; recipeName: string };
 }
 
-export type Notification = UserNotification | RecipeNotification;
+export interface WelcomeUserNotification extends BaseNotification {
+  type: "user-welcome";
+  content: "Bienvenu sur l'application Sain-Saveur !";
+}
+
+export type Notification =
+  | UserNotification
+  | RecipeNotification
+  | WelcomeUserNotification;

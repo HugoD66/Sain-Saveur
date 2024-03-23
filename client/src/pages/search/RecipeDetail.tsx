@@ -41,34 +41,6 @@ export const RecipeDetail = () => {
     }
   }, [id]);
 
-  /*
-  useEffect(() => {
-  if (id) {
-    fetchRecipe(id)
-      .then((recipeData: RecipeModel) => {
-        console.log(recipeData);
-        setRecipe(recipeData);
-        // Après avoir défini la recette, utilisez l'ID de type de cette recette pour chercher des recettes associées
-        if (recipeData && recipeData.recipe_types && recipeData.recipe_types.length > 0) {
-          const typeId = recipeData.recipe_types[0]._id;
-          fetchRecipeByType(typeId)
-            .then((associatedRecipes: RecipeModel[]) => {
-              console.log(associatedRecipes);
-              setRecipes(associatedRecipes);
-            })
-            .catch((error) =>
-              console.error("Erreur lors de la récupération des recettes associées:", error)
-            );
-        }
-      })
-      .catch((error) =>
-        console.error("Erreur lors de la récupération de la recette:", error)
-      );
-  }
-}, [id]); // Vous avez besoin d'ajouter recipe dans les dépendances ici si vous voulez refetch quand recipe change, ce qui n'est probablement pas le cas ici.
-
-   */
-
   const imageUrl = recipe?.recipe_picture
     ? `http://localhost:4700/${recipe.recipe_picture}`
     : "";

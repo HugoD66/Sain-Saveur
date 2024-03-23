@@ -1,5 +1,9 @@
 import React from "react";
 import { Notification } from "../notifications/NotificationsType";
+import ClosePicture from "../assets/close.png";
+import { useNavigate } from "react-router";
+import recipePicture from "../assets/recipe.png";
+
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -7,6 +11,7 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, notifications }) => {
+  const navigate = useNavigate();
   if (!isOpen) return null;
 
   const renderNotificationContent = (notification: Notification) => {
@@ -14,14 +19,30 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, notifications }) => {
       case "user":
         return (
           <>
-            <p>Pseudo: {notification.content.pseudo}</p>
-            <p>Email: {notification.content.email}</p>
+            <p className="description-notif">
+              Pseudo: {notification.content.pseudo}
+            </p>
+            <p className="description-notif">
+              Email: {notification.content.email}
+            </p>
           </>
         );
       case "recipe":
         return (
           <>
-            <p>Nom de la recette: {notification.content.recipeName}</p>
+            <p
+              className="description-notif-recipe"
+              onClick={() => navitageOnRecipe(notification.content.recipeId)}
+            >
+              <img src={recipePicture} alt="" className="icon-detail-recipe" />
+              Nom de la recette: {notification.content.recipeName}
+            </p>
+          </>
+        );
+      case "user-welcome":
+        return (
+          <>
+            <p>Bienvenu sur l'application ! </p>
           </>
         );
       default:
@@ -29,19 +50,22 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, notifications }) => {
     }
   };
 
+  const navitageOnRecipe = (recipeId: string) => {
+    navigate(`/recipes/${recipeId}`);
+  };
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="close-modal" onClick={onClose}>
-          &times;
+          <img src={ClosePicture} alt="Close" className="close-modal-icon" />
         </button>
-        <h2>Notifications</h2>
+        <h2>Vos dernières notifications</h2>
         {notifications.length > 0 ? (
           notifications.map((notification, index) => (
-            <div key={index} className="notification">
+            <div key={index} className="notification-unit">
               <h3>{notification.title}</h3>
               {renderNotificationContent(notification)}
-              <p>Date: {notification.date}</p>
+              <p className="date">Date: {notification.date}</p>
             </div>
           ))
         ) : (

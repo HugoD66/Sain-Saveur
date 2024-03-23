@@ -1,4 +1,3 @@
-// Dans Header.js
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 import Modal from "./Modal";
@@ -6,6 +5,8 @@ import Logo from "../logo.svg";
 import { Link } from "react-router-dom";
 import { Notification } from "../notifications/NotificationsType";
 import { useNavigate } from "react-router";
+import NotifGif from "../assets/notif.gif";
+import NotifDown from "../assets/notif-down.png";
 export const Header = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,6 +27,16 @@ export const Header = () => {
   const navigateToHomePage = () => {
     navigate("/homePage");
   };
+  const unseenNotificationsCount = notifications.filter(
+    (notif) => !notif.seen,
+  ).length;
+
+  const markNotificationsAsSeen = () => {
+    setNotifications(
+      notifications.map((notification) => ({ ...notification, seen: true })),
+    );
+  };
+
   return (
     <div className="header">
       <div className="logoPannel" onClick={() => navigateToHomePage()}>
@@ -38,14 +49,39 @@ export const Header = () => {
         </Link>
       </div>
       <div className="loginPannel">
-        <button onClick={() => setIsModalOpen(true)}>
-          Notifications ({notifications.length})
-        </button>
+        <div className="loginPannel">
+          <button
+            className="notificationButton"
+            onClick={() => setIsModalOpen(true)}
+          >
+            {unseenNotificationsCount > 0 ? (
+              <>
+                <img
+                  src={NotifGif}
+                  alt="Notifications"
+                  className="notifPicture"
+                />
+                <span className="notifCount">{unseenNotificationsCount}</span>
+              </>
+            ) : (
+              <img
+                src={NotifDown}
+                alt="No Notifications"
+                className="notifPicture"
+              />
+            )}
+          </button>
+        </div>
       </div>
       <Modal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        notifications={notifications}
+        onClose={() => {
+          setIsModalOpen(false);
+          markNotificationsAsSeen();
+        }}
+        notifications={notifications.filter(
+          (notification) => !notification.seen,
+        )}
       />
     </div>
   );
