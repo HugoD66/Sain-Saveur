@@ -60,7 +60,7 @@ const AddRecipe = () => {
     }));
   };
 
-  // Gestion des changements spécifiquement pour les directions
+  // Gestion des changements spécifiquement pour les différentes étape
   const handleDirectionChange = (index: any, value: any) => {
     const newDirections = [...recipe.recipe_directions];
     newDirections[index] = {
@@ -73,7 +73,7 @@ const AddRecipe = () => {
     }));
   };
 
-  // Ajout d'une nouvelle direction
+  // Ajout d'une nouvelle étape
   const addDirection = () => {
     setRecipe((prevRecipe) => ({
       ...prevRecipe,
@@ -130,7 +130,6 @@ const AddRecipe = () => {
       const responseData = await response.json();
       console.log("Recette ajoutée avec succès:", responseData);
       navigate("/homePage");
-      // REDIRECTION
     } catch (error) {
       console.error("Erreur lors de l'envoi du formulaire:", error);
     }

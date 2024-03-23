@@ -3,18 +3,17 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./Router/router";
 import React, { useEffect } from "react";
 
-//Mise en place socketIo
 import io from "socket.io-client";
 const socket = io("http://localhost:4700");
 
 const App: React.FC = () => {
   useEffect(() => {
-    socket.on("userLoggedIn", (data) => {
-      console.log("Un utilisateur s'est connecté:", data);
+    socket.on("notification", (notification) => {
+      console.log("Notification reçue:", notification);
     });
 
     return () => {
-      socket.off("userLoggedIn");
+      socket.off("notification");
     };
   }, []);
 

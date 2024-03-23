@@ -3,7 +3,7 @@ import logo from "../../logo.svg";
 import { checkPasswordStrength } from "./check-methods/checkPasswordStrength";
 import { useNavigate } from "react-router";
 import io from "socket.io-client";
-
+const socket = io("http://localhost:4700");
 interface RegisterPageProps {}
 
 const RegisterPage: FC<RegisterPageProps> = () => {
@@ -54,6 +54,14 @@ const RegisterPage: FC<RegisterPageProps> = () => {
       const data = await response.json();
 
       localStorage.setItem("token", data.token);
+      localStorage.setItem("userId", data._id);
+
+      console.log("data._id");
+      console.log(data.user._id);
+      socket.emit("registerUserSocket", data.user._id);
+      if (socket.emit("registerUserSocket", data.user._id)) {
+        console.log("SOCKER BIEN ENVOYE");
+      }
       console.log("Enregistrement réussi, token:", data.token);
       navigate("/login");
     } catch (error) {

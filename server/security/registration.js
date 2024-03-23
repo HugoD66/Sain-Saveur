@@ -1,8 +1,9 @@
 const User = require("../models/UserModel");
 const { hashPassword } = require("./authHelpers");
 const { generateToken } = require("./tokenService");
-const { getIo } = require("../db/socketIo/socket");
+const { getIo, getUserSocketId } = require("../db/socketIo/socket");
 const { v4: uuidv4 } = require("uuid");
+const userSockets = {};
 
 const registerUser = async (req, res) => {
   try {
@@ -40,6 +41,25 @@ const registerUser = async (req, res) => {
       date: new Date().toISOString(),
       seen: false,
     });
+    const userId = savedUser._id.toString();
+    const getUserSocketId = (userId) => {
+      console.log(userId);
+      return userSockets[userId];
+    };
+
+    console.log(savedUser._id.toString());
+    const socketId = getUserSocketId(userId);
+    console.log(socketId);
+
+    io.to(socketId).emit("notification", {
+      id: uuidv4(),
+      type: "user-welcome",
+      title: "Bienvenue dans notre application Sain Saveur !",
+      content: { username: savedUser.username, email: savedUser.email },
+      date: new Date().toISOString(),
+      seen: false,
+    });
+
     res.status(201).json({ user: savedUser, token });
   } catch (err) {
     console.error(err);

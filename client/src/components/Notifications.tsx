@@ -5,7 +5,7 @@ import { UserModel } from "../models/User";
 
 interface Notification {
   title: string;
-  content: UserModel | RecipeModel;
+  content: UserModel | RecipeModel | string;
   date: string;
   seen: boolean;
 }
@@ -17,8 +17,9 @@ const NotificationComponent = () => {
     const socket = io("http://localhost:4700");
 
     socket.on(
-      "newUserNotification",
+      "notification",
       (notificationData: {
+        type: "user" | "recipe" | "user-welcome";
         title: string;
         content: UserModel | RecipeModel;
         date: string;
