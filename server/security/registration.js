@@ -1,6 +1,8 @@
 const User = require("../models/UserModel");
 const { hashPassword } = require("./authHelpers");
 const { generateToken } = require("./tokenService");
+const { getIo } = require("../db/socketIo/socket");
+const { v4: uuidv4 } = require("uuid");
 
 const registerUser = async (req, res) => {
   try {
@@ -26,6 +28,18 @@ const registerUser = async (req, res) => {
     const savedUser = await newUser.save();
     const token = generateToken(savedUser);
 
+    const io = getIo();
+    io.emit("notification", {
+      id: uuidv4(),
+      type: "user",
+      title: "Nouvel utilisateur inscrit",
+      content: {
+        username: savedUser.username,
+        email: savedUser.email,
+      },
+      date: new Date().toISOString(),
+      seen: false,
+    });
     res.status(201).json({ user: savedUser, token });
   } catch (err) {
     console.error(err);

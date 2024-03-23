@@ -7,7 +7,6 @@ import Logout from "../components/Logout";
 import AddRecipe from "../pages/recipes/AddRecipe";
 import Ingredients from "../pages/search/Ingredients";
 import Types from "../pages/search/Types";
-import { Recipe } from "../components/Recipe";
 import RecipeDetail from "../pages/search/RecipeDetail";
 
 const isAuthenticated = (): boolean => {

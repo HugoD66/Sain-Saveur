@@ -1,7 +1,8 @@
-import React, { useState, FC } from "react";
+import React, { useState, FC, useEffect } from "react";
 import logo from "../../logo.svg";
 import { checkPasswordStrength } from "./check-methods/checkPasswordStrength";
 import { useNavigate } from "react-router";
+import io from "socket.io-client";
 
 interface RegisterPageProps {}
 
@@ -11,6 +12,17 @@ const RegisterPage: FC<RegisterPageProps> = () => {
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const socket = io("http://localhost:4700");
+
+    socket.on("newUserCreated", (data) => {
+      alert(data.message);
+    });
+    return () => {
+      socket.off("newUserCreated");
+    };
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

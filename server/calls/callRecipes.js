@@ -2,6 +2,8 @@ const Recipe = require("../models/RecipeModel");
 const publishRecipeCreated = require("../db/redis/subscribeOnCreateRecipe");
 const { findById } = require("../models/TypeModel");
 const Type = require("../models/TypeModel");
+const { getIo } = require("../db/socketIo/socket");
+const { v4: uuidv4 } = require("uuid");
 // ---------- GET ---------------- //
 
 const getRecipesByIngredient = async (req, res) => {
@@ -123,6 +125,19 @@ const addRecipe = async (req, res) => {
 
     console.log("Nouvelle recette créée avec succès");
     res.status(201).json(savedRecipe);
+
+    const io = getIo();
+    io.emit("notification", {
+      id: uuidv4(),
+      type: "recipe",
+      title: "Nouvelle recette ajoutée",
+      content: {
+        recipeId: savedRecipe._id.toString(),
+        recipeName: savedRecipe.recipe_name,
+      },
+      date: new Date().toISOString(),
+      seen: false,
+    });
 
     //Appel Redis !
     //await publishRecipeCreated(savedRecipe);

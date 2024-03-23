@@ -2,6 +2,7 @@ const User = require("../models/UserModel");
 const bcrypt = require("bcrypt");
 const { generateToken } = require("./tokenService");
 const { getIo } = require("../db/socketIo/socket");
+const { v4: uuidv4 } = require("uuid");
 
 const loginUser = async (req, res) => {
   try {
@@ -30,7 +31,20 @@ const loginUser = async (req, res) => {
     const token = generateToken(user);
 
     const io = getIo();
-    io.emit("test", { message: "Hello from server after login" });
+    //TODO
+    // Ici, au lieu d'émettre à tous, vous pouvez émettre à un seul utilisateur si vous avez son identifiant de socket
+    // Pour cet exemple, nous émettons globalement
+    io.emit("notification", {
+      id: uuidv4(),
+      type: "user",
+      title: "Connexion réussie",
+      content: {
+        pseudo: user.username,
+        message: "Bienvenue !",
+      },
+      date: new Date().toISOString(),
+      seen: false,
+    });
 
     res.json({ message: "Connexion réussie", token });
   } catch (error) {

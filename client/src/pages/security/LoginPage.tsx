@@ -32,10 +32,10 @@ const LoginPage: React.FC<LoginPageProps> = ({}) => {
 
       if (data.token) {
         localStorage.setItem("token", data.token);
+        navigate("/homePage");
 
         console.log("Connexion réussie. Token stocké.");
         console.log("Token:", data.token);
-        navigate("/homePage");
       } else if (data.error) {
         setError(data.error);
       }

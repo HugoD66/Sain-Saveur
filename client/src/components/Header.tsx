@@ -1,36 +1,28 @@
+// Dans Header.js
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 import Modal from "./Modal";
-import { Link } from "react-router-dom";
 import Logo from "../logo.svg";
-import searchIcon from "../assets/searchIcon.svg";
-import { RecipeModel } from "../models/Recipe";
+import { Link } from "react-router-dom";
+import { Notification } from "../notifications/NotificationsType";
 import { useNavigate } from "react-router";
-
-const socket = io("http://localhost:4700");
-
 export const Header = () => {
   const navigate = useNavigate();
-  const [notifications, setNotifications] = useState<RecipeModel[]>([]);
-  const [selectedRecipe, setSelectedRecipe] = useState<RecipeModel | null>(
-    null,
-  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
   useEffect(() => {
-    socket.on("recipeCreated", (message) => {
-      const data = JSON.parse(message);
-      const newRecipe: RecipeModel = data.recipe;
+    const socket = io("http://localhost:4700");
+    socket.on("notification", (notification: Notification) => {
       setNotifications((prevNotifications) => [
         ...prevNotifications,
-        newRecipe,
+        notification,
       ]);
     });
-
     return () => {
-      socket.off("recipeCreated");
+      socket.off("notification");
     };
   }, []);
-
   const navigateToHomePage = () => {
     navigate("/homePage");
   };
@@ -46,23 +38,15 @@ export const Header = () => {
         </Link>
       </div>
       <div className="loginPannel">
-        {notifications.length > 0 && (
-          <div
-            className="notification-icon"
-            onClick={() => setSelectedRecipe(notifications[0])}
-          >
-            {notifications.length}
-          </div>
-        )}
+        <button onClick={() => setIsModalOpen(true)}>
+          Notifications ({notifications.length})
+        </button>
       </div>
-      {selectedRecipe && (
-        <Modal
-          isOpen={!!selectedRecipe}
-          onClose={() => setSelectedRecipe(null)}
-        >
-          <h2>{selectedRecipe.recipe_name}</h2>
-        </Modal>
-      )}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        notifications={notifications}
+      />
     </div>
   );
 };
