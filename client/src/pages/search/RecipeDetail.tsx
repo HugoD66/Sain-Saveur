@@ -10,21 +10,16 @@ export const RecipeDetail = () => {
   const { id } = useParams();
   const [recipe, setRecipe] = useState<RecipeModel | null>(null);
   const [recipes, setRecipes] = useState<RecipeModel[]>([]);
-  const [type, setType] = useState<TypeModel | null>(null);
 
   useEffect(() => {
     if (id) {
       fetchRecipe(id)
         .then((recipe: RecipeModel) => {
-          console.log(recipe);
           setRecipe(recipe);
           if (recipe.recipe_types && recipe.recipe_types.length > 0) {
-            console.log("recipe.recipe_types[0]");
-            console.log(recipe.recipe_types[0]);
             const typeId = recipe.recipe_types[0];
             fetchRecipeByType(typeId._id)
               .then((recipes: RecipeModel[]) => {
-                console.log(recipes);
                 setRecipes(recipes);
               })
               .catch((error) =>
@@ -46,43 +41,58 @@ export const RecipeDetail = () => {
     : "";
 
   return (
-    <div className="search-screen">
-      <Header />
-      <h1>
-        <img src={recipePicture} alt="" className="icon-detail-recipe" />
-        {recipe?.recipe_name}
-      </h1>
-      <div className="content-recipe-detail">
-        <img src={imageUrl} alt="Recette" className="picture-recipe-detail" />
-        <div className="description-recipe-detail">
-          <p>{recipe?.recipe_description}</p>
-          <p>Temps de préparation: {recipe?.preparation_time_min} minutes</p>
-          <p>Temps de cuisson: {recipe?.cooking_time_min} minutes</p>
-          <h3>Ingrédients</h3>
-          <ul>
-            {recipe?.recipe_ingredients?.map((ingredient) => (
-              <li key={ingredient._id}>{ingredient.ingredient_name}</li>
-            ))}
-          </ul>
-          <h3>Étapes de préparation</h3>
-          <ol>
-            {recipe?.directions?.map((direction) => (
-              <li key={direction.direction_number}>
-                {direction.direction_description}
-              </li>
-            ))}
-          </ol>
+    <>
+      <div className="search-screen">
+        <Header />
+        <h1>
+          <img src={recipePicture} alt="" className="icon-detail-recipe" />
+          {recipe?.recipe_name}
+        </h1>
+        <div className="divider"></div>
+        <div className="content-recipe-detail">
+          <img src={imageUrl} alt="Recette" className="picture-recipe-detail" />
+          <div className="description-recipe-detail">
+            <p>{recipe?.recipe_description}</p>
+            <p>
+              Temps de préparation:{" "}
+              <b> {recipe?.preparation_time_min} minutes</b>
+            </p>
+            <p>
+              Temps de cuisson: <b>{recipe?.cooking_time_min} minutes</b>
+            </p>
+            <div className="ingr-step">
+              <div className="ing">
+                <h3>Ingrédients</h3>
+                <ul>
+                  {recipe?.recipe_ingredients?.map((ingredient) => (
+                    <li key={ingredient._id}>{ingredient.ingredient_name}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="step">
+                <h3>Étapes de préparation</h3>
+                <ol>
+                  {recipe?.directions?.map((direction) => (
+                    <li key={direction.direction_number}>
+                      {direction.direction_description}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className="associate-recipes">
         <h2>Recettes associées</h2>
+        <div className="divider"></div>
         {recipes.length > 0 ? (
           <CarrousselRecipe recipes={recipes} />
         ) : (
           <p>Aucune recette trouvée pour ce type.</p>
         )}
       </div>
-    </div>
+    </>
   );
 };
 

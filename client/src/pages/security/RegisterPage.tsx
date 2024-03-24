@@ -29,7 +29,7 @@ const RegisterPage: FC<RegisterPageProps> = () => {
 
     if (!checkPasswordStrength(password)) {
       setError(
-        "Le mot de passe doit contenir au moins 8 caractères, dont des lettres majuscules et minuscules, des chiffres et des caractères spéciaux."
+        "Le mot de passe doit contenir au moins 8 caractères, dont des lettres majuscules et minuscules, des chiffres et des caractères spéciaux.",
       );
       return;
     }
@@ -43,7 +43,7 @@ const RegisterPage: FC<RegisterPageProps> = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ email, username, password }),
-        }
+        },
       );
 
       if (!response.ok) {
@@ -52,16 +52,10 @@ const RegisterPage: FC<RegisterPageProps> = () => {
       }
 
       const data = await response.json();
-
       localStorage.setItem("token", data.token);
       localStorage.setItem("userId", data.user._id);
 
-      console.log(data.user._id);
       socket.emit("registerUserSocket", data.user._id);
-      if (socket.emit("registerUserSocket", data.user._id)) {
-        console.log("SOCKER BIEN ENVOYE");
-      }
-      console.log("Enregistrement réussi, token:", data.token);
       navigate("/login");
     } catch (error) {
       console.error("Erreur lors de l'envoi des données", error);

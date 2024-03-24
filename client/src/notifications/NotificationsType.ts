@@ -1,4 +1,3 @@
-// NotificationTypes.ts
 export interface BaseNotification {
   type: "user" | "recipe" | "user-welcome";
   title: string;

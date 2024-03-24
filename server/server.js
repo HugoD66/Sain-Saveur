@@ -44,7 +44,6 @@ app.use("/api/security", authRoutes);
 app.use("/api/fixtures", fixturesRoutes);
 app.use("/api/types", typeRoutes);
 app.use("/api/ingredients", ingredientRoutes);
-
 app.use("/uploads", express.static("./uploads"));
 
 initMongo().catch(console.error);
@@ -82,8 +81,6 @@ app.get("/api/search", async (req, res) => {
 server.listen(PORT, () => {
   console.log(`Serveur en cours d'exécution sur le port ${PORT}`);
 });
-io.on("connection", (socket) => {
-  console.log("Client connected");
-});
+io.on("connection", (socket) => {});
 
 module.exports = { app, server, io };

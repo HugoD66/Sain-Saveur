@@ -29,14 +29,13 @@
     "startd": "cd server && docker-compose up -d",
     "stopd": "cd server && docker-compose down",
     "startf": "cd client && yarn start",
-    "starts": "cd server && npm-run-all --parallel start:server start:subscribe",
+    "starts:all": "cd server && node server.js",
     "startd:clean": "cd server && docker-compose up -d --force-recreate",
     "format:fix": "prettier --ignore-unknown --write .",
     "lint:fix": "eslint --fix .",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "start:server": "node server/server.js",
+    "starts": "node server/server.js",
     "start:subscribe": "node server/calls/subscribeOnCreateRecipe.js",
-    "starts:all": "cd server && node server.js"
   },
   "proxy": "http://127.0.0.1:4700",
   "devDependencies": {
