@@ -7,10 +7,14 @@ import { Notification } from "../notifications/NotificationsType";
 import { useNavigate } from "react-router";
 import NotifGif from "../assets/notif.gif";
 import NotifDown from "../assets/notif-down.png";
+import Settings from "../assets/settings.png";
+import UserInfos from "./UserInfos";
+
 export const Header = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [isModalOpenSettings, setIsModalOpenSettings] = useState(false);
 
   useEffect(() => {
     const socket = io("http://localhost:4700");
@@ -28,12 +32,12 @@ export const Header = () => {
     navigate("/homePage");
   };
   const unseenNotificationsCount = notifications.filter(
-    (notif) => !notif.seen,
+    (notif) => !notif.seen
   ).length;
 
   const markNotificationsAsSeen = () => {
     setNotifications(
-      notifications.map((notification) => ({ ...notification, seen: true })),
+      notifications.map((notification) => ({ ...notification, seen: true }))
     );
   };
 
@@ -73,6 +77,16 @@ export const Header = () => {
           </button>
         </div>
       </div>
+      <div className="loginPannel">
+        <div className="loginPannel">
+          <button
+            className="notificationButton"
+            onClick={() => setIsModalOpenSettings(true)}
+          >
+            <img src={Settings} alt="Settings" className="notifPicture" />
+          </button>
+        </div>
+      </div>
       <Modal
         isOpen={isModalOpen}
         onClose={() => {
@@ -80,8 +94,14 @@ export const Header = () => {
           markNotificationsAsSeen();
         }}
         notifications={notifications.filter(
-          (notification) => !notification.seen,
+          (notification) => !notification.seen
         )}
+      />
+      <UserInfos
+        isOpen={isModalOpenSettings}
+        onClose={() => {
+          setIsModalOpenSettings(false);
+        }}
       />
     </div>
   );

@@ -25,17 +25,16 @@ const LoginPage: React.FC<LoginPageProps> = ({}) => {
         body: JSON.stringify({ username, password }),
       });
 
-      console.log("loginUser");
-      console.log(response);
+      console.log("la reponse est " + response);
       const data = await response.json();
-      console.log(data);
 
       if (data.token) {
         localStorage.setItem("token", data.token);
-        navigate("/homePage");
+        localStorage.setItem("userId", data.user._id);
 
         console.log("Connexion réussie. Token stocké.");
         console.log("Token:", data.token);
+        navigate("/homePage");
       } else if (data.error) {
         setError(data.error);
       }
@@ -69,9 +68,9 @@ const LoginPage: React.FC<LoginPageProps> = ({}) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button type="submit" className="submit-btn">
+          <span className="submit-btn" onClick={() => navigate("/homePage")}>
             Valider
-          </button>
+          </span>
         </form>
         <p className="login-prompt">
           Si vous n'avez pas de compte{" "}

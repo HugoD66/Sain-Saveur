@@ -1,8 +1,8 @@
 // --- CALLS API USERS --- //
 
 // ----------- GET ----------- //
-export const fetchUser = (userId: number) => {
-  return fetch(`http://localhost:4700/api/user/${userId}`)
+export const fetchUser = (userId: string) => {
+  return fetch(`http://localhost:4700/api/users/${userId}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Réponse réseau non OK");
@@ -31,7 +31,7 @@ export const fetchUsers = () => {
 
 // ----------- REMOVE ----------- //
 
-export const removeUser = (userId: number) => {
+export const removeUser = (userId: string) => {
   return fetch(`http://localhost:4700/api/user/${userId}`, {
     method: "DELETE",
   })
