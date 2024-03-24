@@ -35,7 +35,7 @@
     "lint:fix": "eslint --fix .",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "starts": "node server/server.js",
-    "start:subscribe": "node server/calls/subscribeOnCreateRecipe.js",
+    "start:subscribe": "node server/calls/subscribeOnCreateRecipe.js"
   },
   "proxy": "http://127.0.0.1:4700",
   "devDependencies": {
