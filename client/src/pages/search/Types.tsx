@@ -14,8 +14,6 @@ export const Types = () => {
 
   useEffect(() => {
     if (id) {
-      console.log(id);
-
       fetchType(id)
         .then((data: TypeModel) => {
           console.log(data);
@@ -27,10 +25,8 @@ export const Types = () => {
             error,
           ),
         );
-      console.log(id);
       fetchRecipeByType(id)
         .then((recipes: RecipeModel[]) => {
-          console.log(recipes);
           setRecipes(recipes);
         })
         .catch((error) =>

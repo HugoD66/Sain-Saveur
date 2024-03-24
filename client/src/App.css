@@ -127,7 +127,7 @@
     justify-content: center;
     flex-direction: row;
     animation: fadeIn 0.5s ease-out;
-    background: #fff;
+    background: transparent;
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -140,8 +140,9 @@
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      padding: 3px;
+      padding: 5px;
       cursor: pointer;
+      font-family: "Montserrat", sans-serif;
     }
   }
 }
@@ -226,7 +227,7 @@
   position: relative;
   width: 400px;
   height: 220px;
-  background: #f5f5f5;
+  background-color: rgba(233, 252, 233, 0.81);
   border-radius: 8px;
   color: #232323;
   padding: 16px;
@@ -245,6 +246,7 @@
 .content-card {
 }
 .card-hidden {
+  cursor: pointer;
   height: 70%;
   display: flex;
   transform: translateY(200%);
@@ -256,6 +258,7 @@
     transform 0.5s ease-in,
     opacity 0.3s ease-in;
   opacity: 0;
+  font-family: "Wix Madefor Text", sans-serif;
   .footer-card {
     bottom: 5px;
     right: 5px;
@@ -263,6 +266,7 @@
     font-style: italic;
     font-size: 0.9rem;
     font-weight: bolder;
+    font-family: "Montserrat", sans-serif;
   }
 }
 
@@ -295,6 +299,8 @@
   z-index: 4;
   font-weight: 700;
   font-size: 1.25rem;
+  margin-left: 4px;
+  font-family: "Montserrat", sans-serif;
 }
 
 .styles-module_slider__o0fqa {
@@ -475,7 +481,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Bahnschrift", sans-serif;
+  font-family: "Wix Madefor Text", sans-serif;
   form {
     background-color: rgba(233, 252, 233, 0.81);
     border-radius: 20px;
@@ -693,7 +699,7 @@ h4 {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(255, 255, 255, 0.55);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -701,7 +707,7 @@ h4 {
 }
 
 .modal-content {
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.55);
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -746,6 +752,8 @@ h4 {
     font-size: 48px;
     font-weight: bold;
     margin-bottom: 30px;
+    font-family: "Montserrat", sans-serif;
+    color: #004105;
   }
   .content-recipe-detail {
     display: flex;
@@ -753,20 +761,43 @@ h4 {
     justify-content: center;
     flex-direction: row;
     width: 90%;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: rgba(233, 252, 233, 0.81);
     .picture-recipe-detail {
       width: 30%;
       height: auto;
+      border-radius: 15px;
     }
     .description-recipe-detail {
       width: 70%;
       margin-left: 10%;
+      text-align: center;
+      font-family: "Wix Madefor Text", sans-serif;
+      .ingr-step {
+        display: flex;
+        align-items: start;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        margin: auto;
+        .ing {
+          width: 100%;
+        }
+        .step {
+          width: 100%;
+        }
+      }
       p {
+        font-family: "Wix Madefor Text", sans-serif;
         margin-left: 5%;
       }
       h3 {
-        font-size: 36px;
+        font-size: 30px;
         font-weight: bold;
         margin-bottom: 20px;
+        font-family: "Montserrat", sans-serif;
+
       }
       ul {
         list-style: none;
@@ -774,30 +805,22 @@ h4 {
         margin: 0 0 0 5%;
         li {
           margin-bottom: 10px;
-          font-size: 20px;
+          font-size: 18px;
         }
       }
       ol {
         list-style: none;
         padding: 0;
         margin-bottom: 60px;
+        width: 100%;
         li {
           margin-bottom: 10px;
-          font-size: 20px;
+          font-size: 18px;
         }
       }
     }
   }
-  h2 {
-    margin-top: 4%;
-    width: 100%;
-    text-align: center;
-    font-size: 36px;
-    font-weight: bold;
-    .associate-recipes {
-      margin-top: 5%;
-    }
-  }
+
 }
 
 .ingredient-details {
@@ -810,7 +833,20 @@ h4 {
   gap: 20px;
   padding: 20px 0;
 }
+h2 {
+  margin-top: 4%;
+  width: 100%;
+  text-align: center;
+  font-size: 36px;
+  font-weight: bold;
+  font-family: "Montserrat", sans-serif;
+  color: #004105;
+  .associate-recipes {
+    margin-top: 5%;
+    width: 90%;
 
+  }
+}
 .titleHomePage {
   width: 100%;
   height: 100%;
@@ -904,6 +940,7 @@ h4 {
   flex-direction: column;
   .description-notif {
     font-size: 1em;
+    font-family: "Wix Madefor Text", sans-serif;
   }
   .description-notif-recipe {
     font-size: 1em;
@@ -912,6 +949,7 @@ h4 {
     display: flex;
     align-items: center;
     justify-content: start;
+    font-family: "Wix Madefor Text", sans-serif;
     .icon-detail-recipe {
       width: 20px;
       height: 30px;
@@ -921,5 +959,15 @@ h4 {
     align-self: end;
     margin-right: 10px;
     font-size: 0.8em;
+    font-style: italic;
+    font-family: "Segoe UI Emoji", sans-serif;
   }
+}
+
+
+.divider {
+  margin: auto;
+  width: 70%;
+  border: 1px solid #004105;
+  margin-bottom: 30px;
 }

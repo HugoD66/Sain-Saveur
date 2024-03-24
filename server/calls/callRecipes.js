@@ -1,5 +1,4 @@
 const Recipe = require("../models/RecipeModel");
-const publishRecipeCreated = require("../db/redis/subscribeOnCreateRecipe");
 const { findById } = require("../models/TypeModel");
 const Type = require("../models/TypeModel");
 const { getIo } = require("../db/socketIo/socket");
@@ -123,7 +122,6 @@ const addRecipe = async (req, res) => {
     });
     const savedRecipe = await newRecipe.save();
 
-    console.log("Nouvelle recette créée avec succès");
     res.status(201).json(savedRecipe);
 
     const io = getIo();

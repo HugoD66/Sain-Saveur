@@ -52,17 +52,10 @@ const RegisterPage: FC<RegisterPageProps> = () => {
       }
 
       const data = await response.json();
-
       localStorage.setItem("token", data.token);
       localStorage.setItem("userId", data._id);
 
-      console.log("data._id");
-      console.log(data.user._id);
       socket.emit("registerUserSocket", data.user._id);
-      if (socket.emit("registerUserSocket", data.user._id)) {
-        console.log("SOCKER BIEN ENVOYE");
-      }
-      console.log("Enregistrement réussi, token:", data.token);
       navigate("/login");
     } catch (error) {
       console.error("Erreur lors de l'envoi des données", error);

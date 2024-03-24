@@ -49,7 +49,18 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, notifications }) => {
         return <p>Notification inconnue</p>;
     }
   };
-
+  const formatDate = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    };
+    return new Date(dateString).toLocaleString(undefined, options);
+  };
   const navitageOnRecipe = (recipeId: string) => {
     navigate(`/recipes/${recipeId}`);
   };
@@ -65,7 +76,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, notifications }) => {
             <div key={index} className="notification-unit">
               <h3>{notification.title}</h3>
               {renderNotificationContent(notification)}
-              <p className="date">Date: {notification.date}</p>
+              <p className="date">{formatDate(notification.date)}</p>
             </div>
           ))
         ) : (

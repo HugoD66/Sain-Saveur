@@ -24,18 +24,11 @@ const LoginPage: React.FC<LoginPageProps> = ({}) => {
         },
         body: JSON.stringify({ username, password }),
       });
-
-      console.log("loginUser");
-      console.log(response);
       const data = await response.json();
-      console.log(data);
 
       if (data.token) {
         localStorage.setItem("token", data.token);
         navigate("/homePage");
-
-        console.log("Connexion réussie. Token stocké.");
-        console.log("Token:", data.token);
       } else if (data.error) {
         setError(data.error);
       }

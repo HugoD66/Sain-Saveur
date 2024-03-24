@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Header } from "../../components/Header";
 import { Searchbar } from "../../components/Searchbar";
 import { CarrousselRecipe } from "../../components/CarrousselRecipe";
-import { Recipe } from "../../components/Recipe";
 import { fetchRecipes } from "../../calls/mongo/recipe";
 import { RecipeModel } from "../../models/Recipe";
 import TitleCategory from "../../components/TitleCategory";
@@ -30,7 +29,6 @@ const HomePage: React.FC<HomePageProps> = () => {
         <TitleCategory title={"Nos dernières recettes"} />
       </div>
       <CarrousselRecipe recipes={recipes} />
-      <Recipe />
     </div>
   );
 };
